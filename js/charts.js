@@ -1,39 +1,71 @@
-  // =============================================
-// FILE: js/charts.js
+// =============================================
+// FILE: js/charts.js (DEBUG VERSION)
 // Global Textile Exports Visualization
 // =============================================
 
 // Load and display both charts
 async function loadAndDisplayCharts() {
+  console.log("1. Script started - loading charts...");
+  
   try {
-    // Fetch and parse the CSV data
-    const response = await fetch('data/wiki_exports_cleaned.csv');
-    const csvText = await response.text();
+    // Try multiple possible paths for the CSV file
+    let csvData = null;
+    let pathsToTry = [
+      'data/wiki_exports_cleaned.csv',      // Original path
+      '../data/wiki_exports_cleaned.csv',   // One level up
+      'wiki_exports_cleaned.csv',            // Same folder
+      './wiki_exports_cleaned.csv'           // Explicit current folder
+    ];
     
-    // Parse CSV (handling headers and numbers)
-    const lines = csvText.trim().split('\n');
-    const headers = lines[0].split(',');
-    const csvData = [];
-    
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',');
-      const row = {
-        country: values[0],
-        trade_value: parseFloat(values[1]),
-        share: parseFloat(values[2])
-      };
-      csvData.push(row);
+    for (let path of pathsToTry) {
+      try {
+        console.log(`Trying to load: ${path}`);
+        const response = await fetch(path);
+        if (response.ok) {
+          const csvText = await response.text();
+          console.log(`✅ Successfully loaded from: ${path}`);
+          
+          // Parse CSV
+          const lines = csvText.trim().split('\n');
+          const headers = lines[0].split(',');
+          csvData = [];
+          
+          for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',');
+            const row = {
+              country: values[0].trim(),
+              trade_value: parseFloat(values[1]),
+              share: parseFloat(values[2])
+            };
+            csvData.push(row);
+          }
+          
+          console.log(`✅ Loaded ${csvData.length} countries`);
+          break; // Exit loop if successful
+        }
+      } catch (err) {
+        console.log(`Failed to load from ${path}`);
+      }
     }
     
-    console.log(`Loaded ${csvData.length} countries`); // Check if data loaded
+    if (!csvData) {
+      throw new Error("Could not find CSV file in any expected location");
+    }
+    
+    // Log first few rows to verify data
+    console.log("Sample data (first 3 rows):", csvData.slice(0, 3));
     
     // Create both charts
     createChoropleth(csvData);
     createBarChart(csvData);
     
   } catch (error) {
-    console.error('Error loading data:', error);
-    document.getElementById('choropleth').innerHTML = '<p style="color: red; text-align: center; padding: 50px;">❌ Error loading textile exports data. Make sure the CSV file exists at data/wiki_exports_cleaned.csv</p>';
+    console.error('❌ Error loading data:', error);
+    document.getElementById('choropleth').innerHTML = `<p style="color: red; text-align: center; padding: 50px;">
+      ❌ Error: Could not load textile exports data.<br>
+      Make sure wiki_exports_cleaned.csv is in the data folder.<br>
+      Console error: ${error.message}
+    </p>`;
   }
 }
 
@@ -41,6 +73,8 @@ async function loadAndDisplayCharts() {
 // CHART 1 — Choropleth Map
 // =============================================
 function createChoropleth(csvData) {
+  console.log("Creating choropleth map...");
+  
   const choroplethSpec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
@@ -91,17 +125,27 @@ function createChoropleth(csvData) {
   };
   
   vegaEmbed("#choropleth", choroplethSpec, {"actions": false})
-    .catch(error => console.error("Choropleth error:", error));
+    .then(() => console.log("✅ Choropleth map rendered"))
+    .catch(error => {
+      console.error("❌ Choropleth error:", error);
+      document.getElementById('choropleth').innerHTML = `<p style="color: red; text-align: center; padding: 50px;">
+        Choropleth map error: ${error.message}
+      </p>`;
+    });
 }
 
 // =============================================
 // CHART 2 — Bar Chart: Top 20 Exporters
 // =============================================
 function createBarChart(csvData) {
+  console.log("Creating bar chart...");
+  
   // Sort and get top 20
   const top20 = [...csvData]
     .sort((a, b) => b.trade_value - a.trade_value)
     .slice(0, 20);
+  
+  console.log(`Top 20 countries ready: ${top20.length} items`);
   
   const barChartSpec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -156,10 +200,21 @@ function createBarChart(csvData) {
   };
   
   vegaEmbed("#bar_chart", barChartSpec, {"actions": false})
-    .catch(error => console.error("Bar chart error:", error));
+    .then(() => console.log("✅ Bar chart rendered"))
+    .catch(error => {
+      console.error("❌ Bar chart error:", error);
+      document.getElementById('bar_chart').innerHTML = `<p style="color: red; text-align: center; padding: 50px;">
+        Bar chart error: ${error.message}
+      </p>`;
+    });
 }
 
 // =============================================
 // START EVERYTHING
 // =============================================
-loadAndDisplayCharts();
+// Wait for the page to fully load first
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadAndDisplayCharts);
+} else {
+  loadAndDisplayCharts();
+}
