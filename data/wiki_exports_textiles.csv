@@ -1,1 +1,227 @@
-
+Country,Trade value,Share (%)
+China,"267,717,841",32.486
+Bangladesh,"45,964,126",5.577
+Vietnam,"41,355,461",5.018
+Germany,"39,440,350",4.786
+Italy,"38,328,783",4.651
+India,"36,216,984",4.395
+Turkey,"33,551,489",4.071
+United States,"25,171,304",3.054
+Pakistan,"17,921,593",2.175
+Spain,"17,791,873",2.159
+France,"17,599,574",2.136
+Netherlands,"14,892,235",1.807
+Indonesia,"12,884,585",1.563
+Cambodia,"11,748,858",1.426
+Belgium,"10,116,113",1.228
+Japan,"7,940,196",0.963
+United Kingdom,"7,514,836",0.912
+Poland,"7,462,718",0.906
+Mexico,"7,352,356",0.892
+Taiwan,"7,263,568",0.881
+South Korea,"7,078,866",0.859
+Thailand,"6,864,877",0.833
+Portugal,"6,631,311",0.805
+Myanmar,"6,033,967",0.732
+Morocco,"5,915,414",0.718
+Sri Lanka,"5,639,688",0.684
+Australia,"5,380,166",0.653
+Egypt,"5,218,423",0.633
+Czech Republic,"5,107,068",0.62
+Austria,"4,995,604",0.606
+Romania,"4,819,320",0.585
+Denmark,"4,761,832",0.578
+Tunisia,"4,119,289",0.5
+Brazil,"4,096,508",0.497
+Switzerland,"4,038,662",0.49
+Hong Kong,"3,854,207",0.468
+Uzbekistan,"3,822,608",0.464
+United Arab Emirates,"3,670,480",0.445
+Honduras,"3,135,540",0.38
+Canada,"3,089,459",0.375
+Malaysia,"2,800,140",0.34
+Sweden,"2,770,414",0.336
+Bulgaria,"2,671,922",0.324
+Jordan,"2,515,846",0.305
+El Salvador,"2,361,899",0.287
+Guatemala,"2,040,315",0.248
+Hungary,"2,025,242",0.246
+Nicaragua,"1,957,928",0.238
+Slovakia,"1,913,140",0.232
+Greece,"1,771,637",0.215
+Lithuania,"1,676,424",0.203
+Peru,"1,654,649",0.201
+Singapore,"1,431,395",0.174
+Philippines,"1,314,755",0.16
+South Africa,"1,297,317",0.157
+Dominican Republic,"1,267,096",0.154
+Serbia,"1,230,872",0.149
+Croatia,"1,207,331",0.147
+Slovenia,"1,053,577",0.128
+Israel,"982,740",0.119
+Luxembourg,"935,073",0.113
+Madagascar,"907,071",0.11
+Haiti,"868,668",0.105
+Colombia,"808,339",0.098
+Albania,"780,111",0.095
+Saudi Arabia,"694,646",0.084
+Finland,"676,940",0.082
+Ireland,"666,554",0.081
+Russia,"630,583",0.077
+North Macedonia,"597,361",0.072
+Latvia,"592,247",0.072
+Moldova,"575,529",0.07
+Bosnia and Herzegovina,"541,816",0.066
+New Zealand,"535,121",0.065
+Benin,"525,737",0.064
+Mauritius,"491,213",0.06
+Estonia,"480,925",0.058
+Ukraine,"468,282",0.057
+Kenya,"466,307",0.057
+Laos,"458,737",0.056
+Lesotho,"455,365",0.055
+Chile,"432,544",0.052
+Armenia,"426,406",0.052
+Ethiopia,"418,834",0.051
+Nepal,"391,238",0.047
+Norway,"379,716",0.046
+Tanzania,"358,768",0.044
+Mongolia,"339,356",0.041
+Georgia,"331,255",0.04
+Paraguay,"320,763",0.039
+Kazakhstan,"316,626",0.038
+Argentina,"301,280",0.037
+Cote d'Ivoire,"284,051",0.034
+Burkina Faso,"267,821",0.032
+Macau,"250,688",0.03
+Sudan,"247,332",0.03
+Eswatini,"234,607",0.028
+Azerbaijan,"199,724",0.024
+Kyrgyzstan,"191,949",0.023
+Costa Rica,"190,527",0.023
+Belarus,"185,198",0.022
+Turkmenistan,"166,443",0.02
+Uruguay,"165,302",0.02
+Afghanistan,"161,261",0.02
+Iran,"158,018",0.019
+Tajikistan,"142,042",0.017
+Bahrain,"124,909",0.015
+Ecuador,"96,825",0.012
+Syria,"87,979",0.011
+Lebanon,"81,816",0.01
+Malta,"80,316",0.01
+Panama,"77,297",0.009
+Mozambique,"71,378",0.009
+Fiji,"70,630",0.009
+Oman,"70,394",0.009
+Nigeria,"69,330",0.008
+Senegal,"68,696",0.008
+Kuwait,"64,763",0.008
+Uganda,"63,540",0.008
+Mali,"55,219",0.007
+Zimbabwe,"47,161",0.006
+Zambia,"46,018",0.006
+Ghana,"45,558",0.006
+Cameroon,"40,121",0.005
+Cyprus,"38,859",0.005
+Qatar,"30,140",0.004
+Botswana,"25,734",0.003
+Iceland,"23,289",0.003
+Rwanda,"19,220",0.002
+Algeria,"17,659",0.002
+Togo,"17,049",0.002
+Bolivia,"15,067",0.002
+Chad,"12,095",0.001
+San Marino,"11,945",0.001
+Namibia,"11,622",0.001
+Malawi,"11,114",0.001
+Brunei,"11,008",0.001
+Andorra,"9,128",0.001
+Eritrea,"8,748",0.001
+Venezuela,"8,647",0.001
+North Korea,"8,237",0.001
+Djibouti,"7,698",0.001
+Montenegro,"7,507",0.001
+Falkland Islands,"6,574",0.001
+Cape Verde,"5,717",0.001
+Curacao,"5,163",0.001
+Sierra Leone,"4,199",0.001
+Anguilla,"3,984",0
+Jamaica,"3,898",0
+Iraq,"3,527",0
+Niger,"2,977",0
+Tokelau,"2,791",0
+Bahamas,"2,631",0
+DR Congo,"2,465",0
+Trinidad and Tobago,"2,181",0
+Mauritania,"2,090",0
+Greenland,"1,895",0
+Libya,"1,892",0
+Barbados,"1,691",0
+Central African Republic,"1,571",0
+Seychelles,"1,532",0
+Belize,"1,495",0
+Saint Kitts and Nevis,"1,338",0
+Gibraltar,"1,257",0
+Suriname,"1,256",0
+Liberia,"1,225",0
+Gabon,"1,073",0
+Marshall Islands,"1,010",0
+Turks and Caicos Islands,948,0
+Nauru,889,0
+Aruba,866,0
+British Virgin Islands,813,0
+Cook Islands,753,0
+Gambia,717,0
+Antigua and Barbuda,657,0
+Micronesia,641,0
+Yemen,626,0
+Cayman Islands,571,0
+Angola,472,0
+Saint Barthelemy,458,0
+Guam,441,0
+Burundi,412,0
+French Polynesia,384,0
+Guinea,383,0
+Kiribati,381,0
+Dominica,356,0
+Cocos (Keeling) Islands,306,0
+Niue,284,0
+Samoa,282,0
+Maldives,267,0
+New Caledonia,265,0
+Guyana,261,0
+Cuba,256,0
+Saint Vincent and the Grenadines,232,0
+Grenada,229,0
+Bermuda,223,0
+Palestine,210,0
+Saint Martin,206,0
+Republic of the Congo,191,0
+American Samoa,174,0
+Timor-Leste,167,0
+Comoros,163,0
+Christmas Island,159,0
+Papua New Guinea,139,0
+Saint Lucia,104,0
+Somalia,98,0
+British Indian Ocean Territory,92,0
+Bonaire,80,0
+South Sudan,77,0
+Montserrat,76,0
+Tuvalu,74,0
+Palau,73,0
+Bhutan,72,0
+Tonga,68,0
+Sao Tome and Principe,60,0
+Saint Helena,53,0
+Vanuatu,38,0
+Wallis and Futuna,34,0
+Solomon Islands,34,0
+French South Antarctic Territory,33,0
+Northern Mariana Islands,27,0
+Norfolk Island,15,0
+Guinea-Bissau,15,0
+Equatorial Guinea,13,0
+Pitcairn Islands,10,0
+Saint Pierre and Miquelon,7,0
