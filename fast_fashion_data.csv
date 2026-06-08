@@ -1,0 +1,87 @@
+category,metric,value,unit,year,source
+employment,Global fashion industry jobs,300,million workers,2022,ILO
+employment,Jobs in developing countries,75,percent of workforce,2022,ILO
+employment,Women employed in garment sector,80,percent,2022,ILO
+employment,Bangladesh garment workers,4.2,million,2022,BGMEA
+employment,Cambodia garment workers,0.7,million,2022,ILO
+employment,Vietnam garment workers,2.5,million,2022,ILO
+employment,India garment workers,45,million,2022,Ministry of Textiles India
+market,Global fast fashion market size 2015,90,billion USD,2015,Statista
+market,Global fast fashion market size 2016,97,billion USD,2016,Statista
+market,Global fast fashion market size 2017,105,billion USD,2017,Statista
+market,Global fast fashion market size 2018,114,billion USD,2018,Statista
+market,Global fast fashion market size 2019,122,billion USD,2019,Statista
+market,Global fast fashion market size 2020,106,billion USD,2020,Statista
+market,Global fast fashion market size 2021,133,billion USD,2021,Statista
+market,Global fast fashion market size 2022,151,billion USD,2022,Statista
+market,Global fast fashion market size 2023,163,billion USD,2023,Statista
+affordability,Avg clothing cost share of household income (low income),12,percent,2022,BLS
+affordability,Avg clothing cost share of household income (middle income),3.5,percent,2022,BLS
+affordability,Avg clothing cost share of household income (high income),1.8,percent,2022,BLS
+affordability,Real price of apparel decline since 1990,30,percent,2022,BLS
+waste,US textile waste 2000,9.5,million tons,2000,EPA
+waste,US textile waste 2005,11.0,million tons,2005,EPA
+waste,US textile waste 2010,13.1,million tons,2010,EPA
+waste,US textile waste 2015,15.0,million tons,2015,EPA
+waste,US textile waste 2018,17.0,million tons,2018,EPA
+waste,US textile waste 2020,16.9,million tons,2020,EPA
+waste,US textile waste 2022,17.7,million tons,2022,EPA
+waste,Textile waste to landfill 2000,7.0,million tons,2000,EPA
+waste,Textile waste to landfill 2005,8.5,million tons,2005,EPA
+waste,Textile waste to landfill 2010,9.9,million tons,2010,EPA
+waste,Textile waste to landfill 2015,11.1,million tons,2015,EPA
+waste,Textile waste to landfill 2018,11.3,million tons,2018,EPA
+waste,Textile waste to landfill 2020,11.2,million tons,2020,EPA
+waste,Textile waste to landfill 2022,11.8,million tons,2022,EPA
+waste,Textile waste recycled 2000,1.5,million tons,2000,EPA
+waste,Textile waste recycled 2005,1.7,million tons,2005,EPA
+waste,Textile waste recycled 2010,2.1,million tons,2010,EPA
+waste,Textile waste recycled 2015,2.3,million tons,2015,EPA
+waste,Textile waste recycled 2018,2.5,million tons,2018,EPA
+waste,Textile waste recycled 2020,2.6,million tons,2020,EPA
+waste,Textile waste recycled 2022,2.5,million tons,2022,EPA
+carbon,Fashion industry CO2 share of global emissions,10,percent,2022,UNEP
+carbon,Aviation CO2 share of global emissions,2.5,percent,2022,ICAO
+carbon,Shipping CO2 share of global emissions,2.9,percent,2022,IMO
+carbon,Agriculture CO2 share of global emissions,19,percent,2022,FAO
+carbon,Buildings CO2 share of global emissions,11,percent,2022,IEA
+carbon,Transport CO2 share of global emissions,16,percent,2022,IEA
+carbon,Industry CO2 share of global emissions,24,percent,2022,IEA
+carbon,Energy CO2 share of global emissions,13,percent,2022,IEA
+water,Liters to produce one cotton t-shirt,2700,liters,2022,WWF
+water,Liters to produce one pair jeans,7500,liters,2022,WWF
+water,Fashion industry water use annual,93,billion cubic meters,2022,UNEP
+water,Fashion industry share of global wastewater,20,percent,2022,UNEP
+brand,H&M annual revenue 2015,20.1,billion USD,2015,H&M Annual Report
+brand,H&M annual revenue 2017,21.3,billion USD,2017,H&M Annual Report
+brand,H&M annual revenue 2019,22.4,billion USD,2019,H&M Annual Report
+brand,H&M annual revenue 2021,18.9,billion USD,2021,H&M Annual Report
+brand,H&M annual revenue 2023,21.3,billion USD,2023,H&M Annual Report
+brand,Zara (Inditex) annual revenue 2015,20.9,billion USD,2015,Inditex Annual Report
+brand,Zara (Inditex) annual revenue 2017,25.3,billion USD,2017,Inditex Annual Report
+brand,Zara (Inditex) annual revenue 2019,28.3,billion USD,2019,Inditex Annual Report
+brand,Zara (Inditex) annual revenue 2021,27.7,billion USD,2021,Inditex Annual Report
+brand,Zara (Inditex) annual revenue 2023,35.9,billion USD,2023,Inditex Annual Report
+brand,Shein annual revenue 2020,10.0,billion USD,2020,Bloomberg
+brand,Shein annual revenue 2021,15.7,billion USD,2021,Bloomberg
+brand,Shein annual revenue 2022,22.7,billion USD,2022,Bloomberg
+brand,Shein annual revenue 2023,32.0,billion USD,2023,Bloomberg
+garments,Garments produced globally 2000,50,billion pieces,2000,McKinsey
+garments,Garments produced globally 2005,70,billion pieces,2005,McKinsey
+garments,Garments produced globally 2010,90,billion pieces,2010,McKinsey
+garments,Garments produced globally 2014,100,billion pieces,2014,McKinsey
+garments,Garments produced globally 2019,130,billion pieces,2019,McKinsey
+garments,Avg times garment worn before discard 2000,15,times,2000,McKinsey
+garments,Avg times garment worn before discard 2010,12,times,2010,McKinsey
+garments,Avg times garment worn before discard 2015,9,times,2015,McKinsey
+garments,Avg times garment worn before discard 2022,7,times,2022,McKinsey
+wages,Avg garment worker daily wage Bangladesh,3.50,USD per day,2022,Clean Clothes Campaign
+wages,Living wage estimate Bangladesh,8.40,USD per day,2022,Clean Clothes Campaign
+wages,Avg garment worker daily wage Cambodia,5.10,USD per day,2022,Clean Clothes Campaign
+wages,Living wage estimate Cambodia,10.20,USD per day,2022,Clean Clothes Campaign
+wages,Avg garment worker daily wage Vietnam,4.80,USD per day,2022,Clean Clothes Campaign
+wages,Living wage estimate Vietnam,9.60,USD per day,2022,Clean Clothes Campaign
+wages,Avg garment worker daily wage India,3.80,USD per day,2022,Clean Clothes Campaign
+wages,Living wage estimate India,7.90,USD per day,2022,Clean Clothes Campaign
+microplastic,Synthetic microfibers released per wash cycle,700000,fibers per wash,2022,IUCN
+microplastic,Fashion share of ocean microplastics,35,percent,2022,IUCN
