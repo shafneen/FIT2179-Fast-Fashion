@@ -1,154 +1,60 @@
-// =============================================
-// FILE: js/charts.js
-// Global Textile Exports Visualization
-// =============================================
+// Main chart loader - loads all data once and distributes to chart functions
+window.chartData = {};
 
-async function loadAndDisplayCharts() {
+async function loadAllData() {
   try {
-    // Load your CSV data
-    const response = await fetch('https://shafneen.github.io/FIT2179-Fast-Fashion/data/wiki_exports_cleaned.csv');
-    const csvText = await response.text();
+    // Load Dataset #2: Wikipedia Exports
+    const response2 = await fetch('data/wiki_exports_cleaned.csv');
+    const text2 = await response2.text();
+    window.chartData.trade = parseCSV(text2, ['country', 'trade_value', 'share']);
     
-    // Parse CSV
-    const lines = csvText.trim().split('\n');
-    const data = [];
+    // Load Dataset #4: WageIndicator (adjust column names to match your CSV)
+    const response4 = await fetch('data/wage_indicator.csv');
+    const text4 = await response4.text();
+    window.chartData.labour = parseCSV(text4);
     
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',');
-      let countryName = values[0].trim();
-      
-      // Fix country names to match GeoJSON
-      if (countryName === "United States") countryName = "United States of America";
-      if (countryName === "Czech Republic") countryName = "Czechia";
-      if (countryName === "South Korea") countryName = "South Korea";
-      if (countryName === "United Kingdom") countryName = "United Kingdom";
-      
-      data.push({
-        country: countryName,
-        trade_value: parseFloat(values[1])
-      });
-    }
+    // Load Dataset #1: National Waste
+    const response1 = await fetch('data/national_waste.csv');
+    const text1 = await response1.text();
+    window.chartData.waste = parseCSV(text1);
     
-    console.log(`Loaded ${data.length} countries`);
+    // Load Dataset #5: Fast Fashion Data
+    const response5 = await fetch('data/fast_fashion_data.csv');
+    const text5 = await response5.text();
+    window.chartData.consumer = parseCSV(text5);
     
-    // Create the choropleth map using your working structure
-    const choroplethSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {
-        "text": "Global Textile Export Value by Country",
-        "subtitle": "Trade value in USD — darker = higher exports",
-        "fontSize": 16,
-        "subtitleFontSize": 12,
-        "color": "#f0f0f0",
-        "subtitleColor": "#aaa"
-      },
-      "width": "container",
-      "height": 450,
-      "background": "#1a1a1a",
-      "projection": {"type": "naturalEarth1"},
-      "layer": [
-        {
-          "data": {
-            "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
-            "format": {"type": "json", "property": "features"}
-          },
-          "mark": {"type": "geoshape", "fill": "#2a2a2a", "stroke": "#444", "strokeWidth": 0.5}
-        },
-        {
-          "data": {"values": data},
-          "transform": [
-            {
-              "lookup": "country",
-              "from": {
-                "data": {
-                  "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
-                  "format": {"type": "json", "property": "features"}
-                },
-                "key": "properties.NAME",
-                "fields": ["type", "geometry", "properties"]
-              }
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "#444", "strokeWidth": 0.3},
-          "encoding": {
-            "shape": {"field": "geometry", "type": "geojson"},
-            "color": {
-              "field": "trade_value",
-              "type": "quantitative",
-              "scale": {"type": "log", "scheme": "orangered"},
-              "legend": {"title": "Export Value (USD)", "format": "~s", "labelColor": "#f0f0f0", "titleColor": "#f0f0f0"}
-            },
-            "tooltip": [
-              {"field": "country", "type": "nominal", "title": "Country"},
-              {"field": "trade_value", "type": "quantitative", "title": "Export Value (USD)", "format": ",.0f"}
-            ]
-          }
-        }
-      ]
-    };
+    console.log('All data loaded:', window.chartData);
     
-    // Create bar chart for top 20
-    const top20 = [...data]
-      .sort((a, b) => b.trade_value - a.trade_value)
-      .slice(0, 20);
-    
-    const barChartSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {
-        "text": "Top 20 Textile Exporters",
-        "subtitle": "By total export value (USD)",
-        "fontSize": 16,
-        "subtitleFontSize": 12,
-        "color": "#f0f0f0",
-        "subtitleColor": "#aaa"
-      },
-      "width": "container",
-      "height": 400,
-      "background": "#1a1a1a",
-      "data": {"values": top20},
-      "mark": {"type": "bar", "cornerRadiusEnd": 3},
-      "encoding": {
-        "y": {
-          "field": "country",
-          "type": "nominal",
-          "sort": "-x",
-          "title": null,
-          "axis": {"labelColor": "#f0f0f0", "labelFontSize": 12, "labelLimit": 300}
-        },
-        "x": {
-          "field": "trade_value",
-          "type": "quantitative",
-          "title": "Export Value (USD)",
-          "axis": {"format": "~s", "labelColor": "#aaa", "titleColor": "#aaa", "gridColor": "#333"}
-        },
-        "color": {
-          "field": "trade_value",
-          "type": "quantitative",
-          "scale": {"scheme": "orangered"},
-          "legend": null
-        },
-        "tooltip": [
-          {"field": "country", "type": "nominal", "title": "Country"},
-          {"field": "trade_value", "type": "quantitative", "title": "Export Value (USD)", "format": ",.0f"}
-        ]
-      }
-    };
-    
-    // Embed both charts
-    vegaEmbed("#choropleth", choroplethSpec, {"actions": false})
-      .then(() => console.log("✅ Choropleth map loaded"));
-      
-    vegaEmbed("#bar_chart", barChartSpec, {"actions": false})
-      .then(() => console.log("✅ Bar chart loaded"));
+    // Render all charts
+    if (typeof renderTradeCharts === 'function') renderTradeCharts();
+    if (typeof renderLabourCharts === 'function') renderLabourCharts();
+    if (typeof renderWasteCharts === 'function') renderWasteCharts();
+    if (typeof renderConsumerCharts === 'function') renderConsumerCharts();
     
   } catch (error) {
-    console.error("Error:", error);
-    document.getElementById('choropleth').innerHTML = `<p style="color: red; padding: 50px; text-align: center;">
-      Error loading data: ${error.message}<br>
-      Make sure wiki_exports_cleaned.csv is in the data folder
-    </p>`;
+    console.error('Error loading data:', error);
   }
 }
 
-// Start everything when page loads
-document.addEventListener('DOMContentLoaded', loadAndDisplayCharts);
+// Helper: Parse CSV with headers
+function parseCSV(csvText, customHeaders = null) {
+  const lines = csvText.trim().split('\n');
+  const headers = customHeaders || lines[0].split(',');
+  const data = [];
+  
+  for (let i = customHeaders ? 0 : 1; i < lines.length; i++) {
+    const values = lines[i].split(',');
+    const row = {};
+    for (let j = 0; j < headers.length; j++) {
+      let value = values[j]?.trim();
+      // Try to convert to number if possible
+      if (!isNaN(value) && value !== '') value = parseFloat(value);
+      row[headers[j]] = value;
+    }
+    data.push(row);
+  }
+  return data;
+}
+
+// Start loading when page is ready
+document.addEventListener('DOMContentLoaded', loadAllData);
