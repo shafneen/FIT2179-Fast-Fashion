@@ -7,7 +7,8 @@ async function loadAllData() {
     const response2 = await fetch('data/wiki_exports_cleaned.csv');
     const text2 = await response2.text();
     window.chartData.trade = parseCSV(text2, ['country', 'trade_value', 'share']);
-    
+
+    /*
     // Load Dataset #4: WageIndicator (adjust column names to match your CSV)
     const response4 = await fetch('data/wage_indicator.csv');
     const text4 = await response4.text();
@@ -22,7 +23,7 @@ async function loadAllData() {
     const response5 = await fetch('data/fast_fashion_data.csv');
     const text5 = await response5.text();
     window.chartData.consumer = parseCSV(text5);
-    
+    */
     console.log('All data loaded:', window.chartData);
     
     // Render all charts
