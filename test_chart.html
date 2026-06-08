@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+    <div id="test_chart"></div>
+    
+    <script>
+        // Simple test chart
+        const testSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "description": "A simple bar chart to test Vega-Lite",
+            "data": {
+                "values": [
+                    {"country": "China", "value": 100},
+                    {"country": "India", "value": 80},
+                    {"country": "USA", "value": 60}
+                ]
+            },
+            "mark": "bar",
+            "encoding": {
+                "y": {"field": "country", "type": "nominal"},
+                "x": {"field": "value", "type": "quantitative"}
+            }
+        };
+        
+        vegaEmbed("#test_chart", testSpec)
+            .then(() => console.log("Test chart loaded!"))
+            .catch(err => console.error("Test chart error:", err));
+    </script>
+</body>
+</html>
