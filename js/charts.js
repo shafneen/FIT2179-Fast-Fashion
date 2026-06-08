@@ -6,7 +6,7 @@
 async function loadAndDisplayCharts() {
   try {
     // Load your CSV data
-    const response = await fetch('data/wiki_exports_cleaned.csv');
+    const response = await fetch('https://shafneen.github.io/FIT2179-Fast-Fashion/data/wiki_exports_cleaned.csv');
     const csvText = await response.text();
     
     // Parse CSV
