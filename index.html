@@ -5,85 +5,226 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The True Cost of Fast Fashion</title>
 
-  <!-- Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #111;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    .hero {
+      background-color: #1a1a1a;
+      text-align: center;
+      padding: 60px 20px;
+      border-bottom: 2px solid #333;
+    }
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #ff6b35;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: #aaa;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .section {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .section h2 {
+      font-size: 1.8em;
+      color: #ff6b35;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+    .chart-container {
+      background-color: #1a1a1a;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: #555;
+      font-size: 0.85em;
+      border-top: 1px solid #222;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- SECTION 01: HERO (no chart - stat callouts) -->
   <div class="hero">
     <h1>The True Cost of Fast Fashion</h1>
-    <div class="stats-grid" id="hero-stats">
-      <div class="stat-card">
-        <div class="stat-number">300M+</div>
-        <div class="stat-label">Workers employed globally</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">10%</div>
-        <div class="stat-label">of global CO₂ emissions</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">100B+</div>
-        <div class="stat-label">garments/year</div>
-      </div>
+    <p>Every year, the global fashion industry produces over 100 billion garments, 
+    employs 300 million workers, and generates 10% of global carbon emissions.</p>
+  </div>
+
+  <div class="section">
+    <h2>Section 02 — Global Trade</h2>
+    <p>The global textile trade is dominated by a handful of countries. China alone accounts for nearly a third of all garment exports worldwide.</p>
+
+    <div class="chart-container">
+      <div id="choropleth"></div>
+    </div>
+
+    <div class="chart-container">
+      <div id="bar_chart"></div>
     </div>
   </div>
 
-  <!-- SECTION 02: Global Trade -->
-  <div class="section">
-    <h2>Section 02 — Global Trade Flows</h2>
-    <p>China dominates global textile exports, accounting for nearly one-third of all trade value. These visualizations explore which countries drive the fashion supply chain.</p>
-    
-    <div class="chart-container"><div id="chart1_choropleth"></div></div>
-    <div class="chart-container"><div id="chart2_ranked_bar"></div></div>
-    <div class="chart-container"><div id="chart3_diverging_bar"></div></div>
-  </div>
-
-  <!-- SECTION 03: Labour Conditions -->
-  <div class="section">
-    <h2>Section 03 — Labour Rights Around the World</h2>
-    <p>Working conditions vary dramatically across textile-producing nations. The Labour Rights Index (LRI) scores countries on a 0-100 scale.</p>
-    
-    <div class="chart-container"><div id="chart4_lri_map"></div></div>
-    <div class="chart-container"><div id="chart5_lri_bar"></div></div>
-    <div class="chart-container"><div id="chart6_slope"></div></div>
-    <div class="chart-container"><div id="chart7_dotplot"></div></div>
-    <div class="chart-container"><div id="chart8_heatmap"></div></div>
-  </div>
-
-  <!-- SECTION 04: Australian Waste -->
-  <div class="section">
-    <h2>Section 04 — Australia's Textile Waste Crisis</h2>
-    <p>Australians are among the world's largest consumers of fast fashion per capita. Where does all this clothing end up?</p>
-    
-    <div class="chart-container"><div id="chart9_dumbbell"></div></div>
-    <div class="chart-container"><div id="chart10_stacked_bar"></div></div>
-    <div class="chart-container"><div id="chart11_small_multiples"></div></div>
-  </div>
-
-  <!-- SECTION 05: Consumer Behaviour -->
-  <div class="section">
-    <h2>Section 05 — The Consumer's Role</h2>
-    <p>Small changes in individual behaviour add up to massive environmental impact.</p>
-    
-    <div class="chart-container"><div id="chart12_lollipop"></div></div>
-  </div>
-
   <div class="footer">
-    <p>Data sources: Wikipedia Textile Exports, WageIndicator Labour Rights Index, Australian National Waste Report, Fashion Revolution | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
+    <p>Data source: Wikipedia Textile Exports | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
   </div>
 
-  <!-- Load all chart modules -->
-  <script src="js/section2_trade.js"></script>
-  <script src="js/section3_labour.js"></script>
-  <script src="js/section5_australia.js"></script>
-  <script src="js/section6_closing.js"></script>
-  <script src="js/charts.js"></script>
+  <script>
+    // Load CSV data
+    async function loadCharts() {
+      try {
+        const response = await fetch('data/wiki_exports_cleaned.csv');
+        const csvText = await response.text();
+        
+        // Parse CSV
+        const lines = csvText.trim().split('\n');
+        const data = [];
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(',');
+          let countryName = values[0].trim();
+          // Fix country names to match GeoJSON
+          if (countryName === "United States") countryName = "United States of America";
+          if (countryName === "Czech Republic") countryName = "Czechia";
+          
+          data.push({
+            country: countryName,
+            trade_value: parseFloat(values[1])
+          });
+        }
+        
+        console.log(`Loaded ${data.length} countries`);
+        
+        // CHART 1: Choropleth Map (using YOUR working pattern)
+        const choroplethSpec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "Global Textile Export Value by Country",
+            "subtitle": "Trade value in USD — darker = higher exports",
+            "fontSize": 16,
+            "subtitleFontSize": 12,
+            "color": "#f0f0f0",
+            "subtitleColor": "#aaa"
+          },
+          "width": "container",
+          "height": 450,
+          "background": "#1a1a1a",
+          "projection": {"type": "naturalEarth1"},
+          "layer": [
+            {
+              "data": {
+                "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
+                "format": {"type": "json", "property": "features"}
+              },
+              "mark": {"type": "geoshape", "fill": "#2a2a2a", "stroke": "#444", "strokeWidth": 0.5}
+            },
+            {
+              "data": {"values": data},
+              "transform": [
+                {
+                  "lookup": "country",
+                  "from": {
+                    "data": {
+                      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
+                      "format": {"type": "json", "property": "features"}
+                    },
+                    "key": "properties.NAME",
+                    "fields": ["geometry"]
+                  }
+                }
+              ],
+              "mark": {"type": "geoshape", "stroke": "#444", "strokeWidth": 0.3},
+              "encoding": {
+                "shape": {"field": "geometry", "type": "geojson"},  // THIS IS THE KEY FIX!
+                "color": {
+                  "field": "trade_value",
+                  "type": "quantitative",
+                  "scale": {"type": "log", "scheme": "orangered"},
+                  "legend": {"title": "Export Value (USD)", "format": "~s", "labelColor": "#f0f0f0", "titleColor": "#f0f0f0"}
+                },
+                "tooltip": [
+                  {"field": "country", "type": "nominal", "title": "Country"},
+                  {"field": "trade_value", "type": "quantitative", "title": "Export Value (USD)", "format": ",.0f"}
+                ]
+              }
+            }
+          ]
+        };
+        
+        // CHART 2: Bar Chart (Top 20)
+        const top20 = [...data].sort((a, b) => b.trade_value - a.trade_value).slice(0, 20);
+        
+        const barChartSpec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "Top 20 Textile Exporters",
+            "subtitle": "By total export value (USD)",
+            "fontSize": 16,
+            "subtitleFontSize": 12,
+            "color": "#f0f0f0",
+            "subtitleColor": "#aaa"
+          },
+          "width": "container",
+          "height": 400,
+          "background": "#1a1a1a",
+          "data": {"values": top20},
+          "mark": {"type": "bar", "cornerRadiusEnd": 3},
+          "encoding": {
+            "y": {
+              "field": "country",
+              "type": "nominal",
+              "sort": "-x",
+              "title": null,
+              "axis": {"labelColor": "#f0f0f0", "labelFontSize": 12}
+            },
+            "x": {
+              "field": "trade_value",
+              "type": "quantitative",
+              "title": "Export Value (USD)",
+              "axis": {"format": "~s", "labelColor": "#aaa", "titleColor": "#aaa", "gridColor": "#333"}
+            },
+            "color": {
+              "field": "trade_value",
+              "type": "quantitative",
+              "scale": {"scheme": "orangered"},
+              "legend": null
+            },
+            "tooltip": [
+              {"field": "country", "type": "nominal", "title": "Country"},
+              {"field": "trade_value", "type": "quantitative", "title": "Export Value (USD)", "format": ",.0f"}
+            ]
+          }
+        };
+        
+        // Render both charts
+        vegaEmbed("#choropleth", choroplethSpec, {"actions": false});
+        vegaEmbed("#bar_chart", barChartSpec, {"actions": false});
+        
+        console.log("Charts rendered!");
+        
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('choropleth').innerHTML = `<p style="color: red; padding: 50px;">Error: ${error.message}</p>`;
+      }
+    }
+    
+    loadCharts();
+  </script>
 </body>
 </html>
 
