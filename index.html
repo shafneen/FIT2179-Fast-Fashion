@@ -5,110 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The True Cost of Fast Fashion</title>
 
-  <!-- Vega-Lite libraries -->
+  <!-- Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #111;
-      color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-
-    .hero {
-      background-color: #1a1a1a;
-      text-align: center;
-      padding: 60px 20px;
-      border-bottom: 2px solid #333;
-    }
-
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      color: #ff6b35;
-    }
-
-    .hero p {
-      font-size: 1.2em;
-      color: #aaa;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .section {
-      max-width: 1000px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    .section h2 {
-      font-size: 1.8em;
-      color: #ff6b35;
-      border-bottom: 1px solid #333;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-    }
-
-    .section p {
-      color: #bbb;
-      line-height: 1.7;
-      margin-bottom: 30px;
-    }
-
-    .chart-container {
-      background-color: #1a1a1a;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 40px;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 40px;
-      color: #555;
-      font-size: 0.85em;
-      border-top: 1px solid #222;
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- SECTION 01: HERO -->
+  <!-- SECTION 01: HERO (no chart - stat callouts) -->
   <div class="hero">
     <h1>The True Cost of Fast Fashion</h1>
-    <p>Every year, the global fashion industry produces over 100 billion garments, 
-    employs 300 million workers, and generates 10% of global carbon emissions. 
-    This is the story behind your wardrobe.</p>
+    <div class="stats-grid" id="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">300M+</div>
+        <div class="stat-label">Workers employed globally</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10%</div>
+        <div class="stat-label">of global CO₂ emissions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100B+</div>
+        <div class="stat-label">garments/year</div>
+      </div>
+    </div>
   </div>
 
-  <!-- SECTION 02: TRADE FLOWS -->
+  <!-- SECTION 02: Global Trade -->
   <div class="section">
-    <h2>Section 02 — Global Trade</h2>
-    <p>
-      The global textile trade is dominated by a handful of countries. 
-      China alone accounts for nearly a third of all garment exports worldwide. 
-      Below, explore which nations drive the fashion supply chain — and where Australia fits in.
-    </p>
-
-    <div class="chart-container">
-      <div id="choropleth"></div>
-    </div>
-
-    <div class="chart-container">
-      <div id="bar_chart"></div>
-    </div>
+    <h2>Section 02 — Global Trade Flows</h2>
+    <p>China dominates global textile exports, accounting for nearly one-third of all trade value. These visualizations explore which countries drive the fashion supply chain.</p>
+    
+    <div class="chart-container"><div id="chart1_choropleth"></div></div>
+    <div class="chart-container"><div id="chart2_ranked_bar"></div></div>
+    <div class="chart-container"><div id="chart3_diverging_bar"></div></div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- SECTION 03: Labour Conditions -->
+  <div class="section">
+    <h2>Section 03 — Labour Rights Around the World</h2>
+    <p>Working conditions vary dramatically across textile-producing nations. The Labour Rights Index (LRI) scores countries on a 0-100 scale.</p>
+    
+    <div class="chart-container"><div id="chart4_lri_map"></div></div>
+    <div class="chart-container"><div id="chart5_lri_bar"></div></div>
+    <div class="chart-container"><div id="chart6_slope"></div></div>
+    <div class="chart-container"><div id="chart7_dotplot"></div></div>
+    <div class="chart-container"><div id="chart8_heatmap"></div></div>
+  </div>
+
+  <!-- SECTION 04: Australian Waste -->
+  <div class="section">
+    <h2>Section 04 — Australia's Textile Waste Crisis</h2>
+    <p>Australians are among the world's largest consumers of fast fashion per capita. Where does all this clothing end up?</p>
+    
+    <div class="chart-container"><div id="chart9_dumbbell"></div></div>
+    <div class="chart-container"><div id="chart10_stacked_bar"></div></div>
+    <div class="chart-container"><div id="chart11_small_multiples"></div></div>
+  </div>
+
+  <!-- SECTION 05: Consumer Behaviour -->
+  <div class="section">
+    <h2>Section 05 — The Consumer's Role</h2>
+    <p>Small changes in individual behaviour add up to massive environmental impact.</p>
+    
+    <div class="chart-container"><div id="chart12_lollipop"></div></div>
+  </div>
+
   <div class="footer">
-    <p>Data sources: Wikipedia — List of countries by textile exports. | 
-    Visualisation by Shafneen | FIT2179 Data Visualisation, Monash University, 2026</p>
+    <p>Data sources: Wikipedia Textile Exports, WageIndicator Labour Rights Index, Australian National Waste Report, Fashion Revolution | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
   </div>
 
+  <!-- Load all chart modules -->
+  <script src="js/section2_trade.js"></script>
+  <script src="js/section3_labour.js"></script>
+  <script src="js/section5_australia.js"></script>
+  <script src="js/section6_closing.js"></script>
   <script src="js/charts.js"></script>
 </body>
 </html>
+
+
