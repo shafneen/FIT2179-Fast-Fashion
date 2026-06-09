@@ -227,6 +227,9 @@
     // ============================================
     // LABOUR CHARTS (4-7)
     // ============================================
+    // ============================================
+    // LABOUR CHARTS (4-7) - FIXED VERSION
+    // ============================================
     async function loadLabourCharts() {
       try {
         console.log("Loading labour data...");
@@ -239,59 +242,64 @@
         
         const filteredData = allData.filter(d => targetCountries.includes(d.Country));
         
-        console.log(`Loaded ${filteredData.length} target countries for labour charts`);
+        console.log(`Loaded ${filteredData.length} target countries:`, filteredData.map(d => d.Country));
         
-        // Chart 4: Parallel Coordinates - reshape data for parallel coordinates
+        // Chart 4: Fixed Parallel Coordinates - Using a different approach
+        // Reshape data for parallel coordinates with explicit points
         const dimensions = ["Fair Wages (0-100)", "Safe Work (0-100)", "Freedom of Association (0-100)", "Child and Forced Labour (0-100)", "Employment Security (0-100)"];
+        const dimensionLabels = ["Fair Wages", "Safe Work", "Freedom of Assoc", "Child Labour", "Employment Security"];
         
         const parallelData = [];
         filteredData.forEach(country => {
-          dimensions.forEach(dim => {
+          dimensions.forEach((dim, idx) => {
+            let score = country[dim] || 0;
             parallelData.push({
               country: country.Country,
-              dimension: dim,
-              score: country[dim] || 0
+              dimension: dimensionLabels[idx],
+              dimensionOrder: idx,
+              score: score
             });
           });
         });
         
+        // Fix: Use line mark with detail for each country
         const spec4 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Labour Dimensions Across Textile-Producing Countries", "color": "#2c2c2c", "subtitle": "Higher score = better conditions | Each line = one country"},
-          "width": 800, "height": 400, "background": "#f5efe3",
+          "title": {"text": "Labour Dimensions Across Textile-Producing Countries", "color": "#2c2c2c", "subtitle": "Higher score = better conditions | Follow each country's line across dimensions"},
+          "width": 800, "height": 450, "background": "#f5efe3",
           "data": {"values": parallelData},
-          "mark": {"type": "line", "strokeWidth": 2, "opacity": 0.8},
+          "mark": {"type": "line", "strokeWidth": 2, "opacity": 0.85, "point": {"size": 50, "filled": true}},
           "encoding": {
-            "x": {"field": "dimension", "type": "nominal", "title": "Labour Dimension", "axis": {"labelAngle": -45, "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
-            "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
-            "color": {"field": "country", "type": "nominal", "legend": {"title": "Country", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
+            "x": {"field": "dimension", "type": "ordinal", "title": "Labour Dimension", "axis": {"labelAngle": -35, "labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "labelFontSize": 11}},
+            "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "color": {"field": "country", "type": "nominal", "legend": {"title": "Country", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "columns": 2}},
             "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
           }
         };
         
-        // Chart 5: Grouped Bar Chart
+        // Chart 5: Grouped Bar Chart - Family Responsibilities + Maternity at Work + Fair Wages
         const barData = [];
         filteredData.forEach(country => {
           barData.push({country: country.Country, dimension: "Fair Wages", score: country["Fair Wages (0-100)"] || 0});
-          barData.push({country: country.Country, dimension: "Safe Work", score: country["Safe Work (0-100)"] || 0});
-          barData.push({country: country.Country, dimension: "Freedom of Association", score: country["Freedom of Association (0-100)"] || 0});
+          barData.push({country: country.Country, dimension: "Family Responsibilities", score: country["Family Responsibilities (0-100)"] || 0});
+          barData.push({country: country.Country, dimension: "Maternity at Work", score: country["Maternity at Work (0-100)"] || 0});
         });
         
         const spec5 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Key Labour Dimensions - Top Sourcing Countries", "color": "#2c2c2c"},
-          "width": 800, "height": 400, "background": "#f5efe3",
+          "title": {"text": "Family & Maternity Protections vs Fair Wages", "color": "#2c2c2c", "subtitle": "How do top sourcing countries support working families?"},
+          "width": 800, "height": 450, "background": "#f5efe3",
           "data": {"values": barData},
           "mark": {"type": "bar", "cornerRadiusEnd": 3},
           "encoding": {
-            "x": {"field": "country", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c"}},
-            "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "x": {"field": "country", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c", "labelFontSize": 11}},
+            "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
             "color": {"field": "dimension", "type": "nominal", "scale": {"scheme": "set2"}, "legend": {"title": "Labour Dimension", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
             "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
           }
         };
         
-        // Chart 6: Scatter Plot - Fair Wages vs Freedom of Association
+        // Chart 6: Scatter Plot - Fair Wages vs Freedom of Association (keeping as is - it works well)
         const scatterData = filteredData.map(d => ({
           country: d.Country,
           fair_wages: d["Fair Wages (0-100)"] || 0,
@@ -301,49 +309,49 @@
         
         const spec6 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c", "subtitle": "Top-right quadrant = best conditions"},
+          "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c", "subtitle": "Top-right quadrant = best conditions | Bottom-left = highest risk"},
           "width": "container", "height": 350, "background": "#f5efe3",
           "data": {"values": scatterData},
-          "mark": {"type": "circle", "size": 100, "opacity": 0.8},
+          "mark": {"type": "circle", "size": 120, "opacity": 0.85, "stroke": "#2c2c2c", "strokeWidth": 1},
           "encoding": {
-            "x": {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
-            "y": {"field": "freedom_assoc", "type": "quantitative", "title": "Freedom of Association Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
-            "color": {"field": "overall", "type": "quantitative", "scale": {"scheme": "greenblue"}, "legend": {"title": "Overall Index"}},
+            "x": {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "y": {"field": "freedom_assoc", "type": "quantitative", "title": "Freedom of Association Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "color": {"field": "overall", "type": "quantitative", "scale": {"scheme": "greenblue"}, "legend": {"title": "Overall Index", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
             "tooltip": [{"field": "country"}, {"field": "fair_wages", "format": ".1f"}, {"field": "freedom_assoc", "format": ".1f"}, {"field": "overall", "format": ".1f"}]
           }
         };
         
-        // Chart 7: Heatmap (Country × Labour Dimension)
+        // Chart 7: Heatmap (Country × Labour Dimension) - Fixed with clearer dimensions
         const heatmapData = [];
-        const shortDimensions = ["Fair Wages", "Safe Work", "Freedom of Association", "Child and Forced Labour", "Employment Security"];
-        const dimMapping = {
-          "Fair Wages": "Fair Wages (0-100)",
-          "Safe Work": "Safe Work (0-100)",
-          "Freedom of Association": "Freedom of Association (0-100)",
-          "Child and Forced Labour": "Child and Forced Labour (0-100)",
-          "Employment Security": "Employment Security (0-100)"
-        };
+        const heatDimensions = [
+          {short: "Fair Wages", long: "Fair Wages (0-100)"},
+          {short: "Safe Work", long: "Safe Work (0-100)"},
+          {short: "Freedom of Assoc", long: "Freedom of Association (0-100)"},
+          {short: "Child Labour", long: "Child and Forced Labour (0-100)"},
+          {short: "Family Responsibilities", long: "Family Responsibilities (0-100)"},
+          {short: "Maternity", long: "Maternity at Work (0-100)"}
+        ];
         
         filteredData.forEach(country => {
-          shortDimensions.forEach(shortDim => {
+          heatDimensions.forEach(dim => {
             heatmapData.push({
               country: country.Country,
-              dimension: shortDim,
-              score: country[dimMapping[shortDim]] || 0
+              dimension: dim.short,
+              score: country[dim.long] || 0
             });
           });
         });
         
         const spec7 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Country × Labour Dimension Heatmap", "color": "#2c2c2c", "subtitle": "Red = poor conditions, Green = good conditions"},
-          "width": "container", "height": 350, "background": "#f5efe3",
+          "title": {"text": "Country × Labour Dimension Heatmap", "color": "#2c2c2c", "subtitle": "Red = poor conditions, Green = good conditions | Scores 0-100"},
+          "width": "container", "height": 400, "background": "#f5efe3",
           "data": {"values": heatmapData},
           "mark": "rect",
           "encoding": {
-            "y": {"field": "country", "type": "nominal", "title": null, "sort": "-x", "axis": {"labelColor": "#2c2c2c", "labelFontSize": 11}},
-            "x": {"field": "dimension", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c"}},
-            "color": {"field": "score", "type": "quantitative", "scale": {"scheme": "redyellowgreen"}, "legend": {"title": "Score (0-100)", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
+            "y": {"field": "country", "type": "nominal", "title": null, "sort": targetCountries, "axis": {"labelColor": "#2c2c2c", "labelFontSize": 11}},
+            "x": {"field": "dimension", "type": "nominal", "title": null, "axis": {"labelAngle": -35, "labelColor": "#2c2c2c", "labelFontSize": 11}},
+            "color": {"field": "score", "type": "quantitative", "scale": {"scheme": "redyellowgreen", "domain": [0, 100]}, "legend": {"title": "Score (0-100)", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
             "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
           }
         };
