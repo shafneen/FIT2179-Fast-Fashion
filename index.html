@@ -171,64 +171,8 @@
     // ============================================
     // TRADE CHARTS (1-3)
     // ============================================
-    async function loadTradeCharts() {
-      try {
-        console.log("Loading trade data...");
-        const response = await fetch('data/wiki_exports_cleaned.csv');
-        const csvText = await response.text();
-        const data = parseCSV(csvText);
-        
-        const mapData = data.map(d => ({
-          country: d.country === 'United States' ? 'United States of America' :
-                   d.country === 'Czech Republic' ? 'Czechia' : d.country,
-          trade_value: d.trade_value
-        }));
-        
-        // Chart 1: Choropleth
-        const spec1 = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Global Textile Export Value", "color": "#2c2c2c", "subtitle": "Darker = higher exports", "subtitleColor": "#5a5a5a"},
-          "width": 800, "height": 450, "background": "#f5efe3",
-          "projection": {"type": "naturalEarth1"},
-          "layer": [
-            {"data": {"url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson", "format": {"type": "json", "property": "features"}}, "mark": {"type": "geoshape", "fill": "#e0d0b4", "stroke": "#c8b898"}},
-            {"data": {"values": mapData}, "transform": [{"lookup": "country", "from": {"data": {"url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson", "format": {"type": "json", "property": "features"}}, "key": "properties.NAME", "fields": ["geometry"]}}], "mark": {"type": "geoshape", "stroke": "#c8b898"}, "encoding": {"shape": {"field": "geometry", "type": "geojson"}, "color": {"field": "trade_value", "type": "quantitative", "scale": {"type": "log", "scheme": "orangered"}, "legend": {"title": "USD", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}}, "tooltip": [{"field": "country"}, {"field": "trade_value", "format": ",.0f"}]}}
-          ]};
-        
-        // Chart 2: Bar
-        const top20 = [...data].sort((a,b) => b.trade_value - a.trade_value).slice(0,20);
-        const spec2 = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Top 20 Textile Exporters", "color": "#2c2c2c"}, "width": 800, "height": 400, "background": "#f5efe3",
-          "data": {"values": top20}, "mark": {"type": "bar", "cornerRadiusEnd": 3},
-          "encoding": {"y": {"field": "country", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#2c2c2c"}}, "x": {"field": "trade_value", "type": "quantitative", "title": "USD", "axis": {"format": "~s", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}}, "color": {"field": "trade_value", "scale": {"scheme": "orangered"}}, "tooltip": [{"field": "country"}, {"field": "trade_value", "format": ",.0f"}]}
-        };
-        
-        // Chart 3: Diverging
-        const median = data.sort((a,b) => a.trade_value - b.trade_value)[Math.floor(data.length/2)].trade_value;
-        const divData = data.slice(0,30).map(d => ({...d, deviation: d.trade_value - median}));
-        const spec3 = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Deviation from Median Export Value", "color": "#2c2c2c"}, "width": 800, "height": 400, "background": "#f5efe3",
-          "data": {"values": divData}, "mark": "bar",
-          "encoding": {"y": {"field": "country", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#2c2c2c"}}, "x": {"field": "deviation", "type": "quantitative", "title": "Above/Below Median (USD)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}}, "color": {"condition": {"test": "datum.deviation > 0", "value": "#b8865a"}, "value": "#c8b898"}, "tooltip": [{"field": "country"}, {"field": "deviation", "format": ",.0f"}]}
-        };
-        
-        await vegaEmbed("#chart1_choropleth", spec1, {"actions": false});
-        await vegaEmbed("#chart2_ranked_bar", spec2, {"actions": false});
-        await vegaEmbed("#chart3_diverging_bar", spec3, {"actions": false});
-        console.log("✅ Trade charts loaded");
-        
-      } catch (error) {
-        console.error("Trade charts error:", error);
-      }
-    }
-
     // ============================================
-    // LABOUR CHARTS (4-7)
-    // ============================================
-    // ============================================
-    // LABOUR CHARTS (4-7) - FIXED VERSION
+    // LABOUR CHARTS (4-7) - COMPLETELY FIXED
     // ============================================
     async function loadLabourCharts() {
       try {
@@ -244,8 +188,10 @@
         
         console.log(`Loaded ${filteredData.length} target countries:`, filteredData.map(d => d.Country));
         
-        // Chart 4: Fixed Parallel Coordinates - Using a different approach
-        // Reshape data for parallel coordinates with explicit points
+        // Log sample data to debug
+        console.log("Sample country data:", filteredData[0]);
+        
+        // Chart 4: Parallel Coordinates
         const dimensions = ["Fair Wages (0-100)", "Safe Work (0-100)", "Freedom of Association (0-100)", "Child and Forced Labour (0-100)", "Employment Security (0-100)"];
         const dimensionLabels = ["Fair Wages", "Safe Work", "Freedom of Assoc", "Child Labour", "Employment Security"];
         
@@ -262,7 +208,6 @@
           });
         });
         
-        // Fix: Use line mark with detail for each country
         const spec4 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "title": {"text": "Labour Dimensions Across Textile-Producing Countries", "color": "#2c2c2c", "subtitle": "Higher score = better conditions | Follow each country's line across dimensions"},
@@ -277,7 +222,7 @@
           }
         };
         
-        // Chart 5: Grouped Bar Chart - Family Responsibilities + Maternity at Work + Fair Wages
+        // Chart 5: Grouped Bar Chart - FIXED SCALE
         const barData = [];
         filteredData.forEach(country => {
           barData.push({country: country.Country, dimension: "Fair Wages", score: country["Fair Wages (0-100)"] || 0});
@@ -299,75 +244,144 @@
           }
         };
         
-        // Chart 6: Scatter Plot - Fair Wages vs Freedom of Association (keeping as is - it works well)
-        const scatterData = filteredData.map(d => ({
-          country: d.Country,
-          fair_wages: d["Fair Wages (0-100)"] || 0,
-          freedom_assoc: d["Freedom of Association (0-100)"] || 0,
-          overall: d["Overall Index Score (0-100)"]
-        }));
+        // Chart 6: Scatter Plot - COMPLETELY REWRITTEN with simpler approach
+        const scatterData = [];
+        filteredData.forEach(d => {
+          scatterData.push({
+            country: d.Country,
+            fair_wages: d["Fair Wages (0-100)"] || 0,
+            freedom_assoc: d["Freedom of Association (0-100)"] || 0,
+            overall: d["Overall Index Score (0-100)"] || 0
+          });
+        });
+        
+        console.log("Scatter data:", scatterData);
         
         const spec6 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c", "subtitle": "Top-right quadrant = best conditions | Bottom-left = highest risk"},
-          "width": "container", "height": 350, "background": "#f5efe3",
+          "description": "Scatter plot of Fair Wages vs Freedom of Association",
+          "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c", "subtitle": "Top-right quadrant = best conditions"},
+          "width": 400,
+          "height": 350,
+          "background": "#f5efe3",
           "data": {"values": scatterData},
-          "mark": {"type": "circle", "size": 120, "opacity": 0.85, "stroke": "#2c2c2c", "strokeWidth": 1},
+          "mark": {"type": "circle", "size": 150, "opacity": 0.8, "stroke": "#2c2c2c", "strokeWidth": 1},
           "encoding": {
-            "x": {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
-            "y": {"field": "freedom_assoc", "type": "quantitative", "title": "Freedom of Association Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
-            "color": {"field": "overall", "type": "quantitative", "scale": {"scheme": "greenblue"}, "legend": {"title": "Overall Index", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
-            "tooltip": [{"field": "country"}, {"field": "fair_wages", "format": ".1f"}, {"field": "freedom_assoc", "format": ".1f"}, {"field": "overall", "format": ".1f"}]
+            "x": {
+              "field": "fair_wages", 
+              "type": "quantitative", 
+              "title": "Fair Wages Score (0-100)",
+              "scale": {"domain": [0, 100]},
+              "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}
+            },
+            "y": {
+              "field": "freedom_assoc", 
+              "type": "quantitative", 
+              "title": "Freedom of Association Score (0-100)",
+              "scale": {"domain": [0, 100]},
+              "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}
+            },
+            "color": {
+              "field": "overall", 
+              "type": "quantitative", 
+              "scale": {"scheme": "greenblue", "domain": [0, 100]},
+              "legend": {"title": "Overall Index", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}
+            },
+            "tooltip": [
+              {"field": "country", "type": "nominal", "title": "Country"},
+              {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages", "format": ".1f"},
+              {"field": "freedom_assoc", "type": "quantitative", "title": "Freedom of Association", "format": ".1f"},
+              {"field": "overall", "type": "quantitative", "title": "Overall Index", "format": ".1f"}
+            ]
           }
         };
         
-        // Chart 7: Heatmap (Country × Labour Dimension) - Fixed with clearer dimensions
+        // Chart 7: Heatmap - COMPLETELY REWRITTEN
         const heatmapData = [];
         const heatDimensions = [
-          {short: "Fair Wages", long: "Fair Wages (0-100)"},
-          {short: "Safe Work", long: "Safe Work (0-100)"},
-          {short: "Freedom of Assoc", long: "Freedom of Association (0-100)"},
-          {short: "Child Labour", long: "Child and Forced Labour (0-100)"},
-          {short: "Family Responsibilities", long: "Family Responsibilities (0-100)"},
-          {short: "Maternity", long: "Maternity at Work (0-100)"}
+          "Fair Wages (0-100)",
+          "Safe Work (0-100)", 
+          "Freedom of Association (0-100)",
+          "Child and Forced Labour (0-100)",
+          "Family Responsibilities (0-100)",
+          "Maternity at Work (0-100)"
         ];
         
+        const heatLabels = ["Fair Wages", "Safe Work", "Freedom of Assoc", "Child Labour", "Family Resp", "Maternity"];
+        
         filteredData.forEach(country => {
-          heatDimensions.forEach(dim => {
+          heatDimensions.forEach((dim, idx) => {
+            let score = country[dim] || 0;
             heatmapData.push({
               country: country.Country,
-              dimension: dim.short,
-              score: country[dim.long] || 0
+              dimension: heatLabels[idx],
+              score: score
             });
           });
         });
         
+        console.log("Heatmap data sample:", heatmapData.slice(0, 10));
+        
         const spec7 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Country × Labour Dimension Heatmap", "color": "#2c2c2c", "subtitle": "Red = poor conditions, Green = good conditions | Scores 0-100"},
-          "width": "container", "height": 400, "background": "#f5efe3",
+          "description": "Heatmap of Country vs Labour Dimensions",
+          "title": {"text": "Country × Labour Dimension Heatmap", "color": "#2c2c2c", "subtitle": "Red = poor conditions, Green = good conditions"},
+          "width": 400,
+          "height": 350,
+          "background": "#f5efe3",
           "data": {"values": heatmapData},
           "mark": "rect",
           "encoding": {
-            "y": {"field": "country", "type": "nominal", "title": null, "sort": targetCountries, "axis": {"labelColor": "#2c2c2c", "labelFontSize": 11}},
-            "x": {"field": "dimension", "type": "nominal", "title": null, "axis": {"labelAngle": -35, "labelColor": "#2c2c2c", "labelFontSize": 11}},
-            "color": {"field": "score", "type": "quantitative", "scale": {"scheme": "redyellowgreen", "domain": [0, 100]}, "legend": {"title": "Score (0-100)", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
-            "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
+            "y": {
+              "field": "country", 
+              "type": "nominal", 
+              "title": null,
+              "sort": targetCountries,
+              "axis": {"labelColor": "#2c2c2c", "labelFontSize": 10, "titleColor": "#2c2c2c"}
+            },
+            "x": {
+              "field": "dimension", 
+              "type": "nominal", 
+              "title": null,
+              "sort": heatLabels,
+              "axis": {"labelAngle": -35, "labelColor": "#2c2c2c", "labelFontSize": 10, "titleColor": "#2c2c2c"}
+            },
+            "color": {
+              "field": "score", 
+              "type": "quantitative", 
+              "scale": {"scheme": "redyellowgreen", "domain": [0, 100]},
+              "legend": {"title": "Score (0-100)", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}
+            },
+            "tooltip": [
+              {"field": "country", "type": "nominal", "title": "Country"},
+              {"field": "dimension", "type": "nominal", "title": "Dimension"},
+              {"field": "score", "type": "quantitative", "title": "Score", "format": ".1f"}
+            ]
           }
         };
         
+        // Embed all charts with error catching for each
+        console.log("Rendering Chart 4...");
         await vegaEmbed("#chart4_parallel", spec4, {"actions": false});
+        
+        console.log("Rendering Chart 5...");
         await vegaEmbed("#chart5_grouped_bar", spec5, {"actions": false});
-        await vegaEmbed("#chart6_scatter", spec6, {"actions": false});
-        await vegaEmbed("#chart7_heatmap", spec7, {"actions": false});
-        console.log("✅ Labour charts loaded");
+        
+        console.log("Rendering Chart 6...");
+        await vegaEmbed("#chart6_scatter", spec6, {"actions": false})
+          .catch(err => console.error("Chart 6 specific error:", err));
+        
+        console.log("Rendering Chart 7...");
+        await vegaEmbed("#chart7_heatmap", spec7, {"actions": false})
+          .catch(err => console.error("Chart 7 specific error:", err));
+        
+        console.log("✅ All labour charts loaded");
         
       } catch (error) {
         console.error("Labour charts error:", error);
         document.getElementById('chart4_parallel').innerHTML = `<p style="color: #8b5a3c; padding: 20px;">Error loading labour data: ${error.message}</p>`;
       }
     }
-
     // Placeholder for future charts
     function showPlaceholder() {
       const el = document.getElementById('placeholder');
