@@ -108,7 +108,7 @@
   <!-- SECTION 01: HERO -->
   <div class="hero">
     <h1>The True Cost of Fast Fashion</h1>
-    <div class="stats-grid" id="hero-stats">
+    <div class="stats-grid">
       <div class="stat-card"><div class="stat-number">300M+</div><div class="stat-label">Workers employed globally</div></div>
       <div class="stat-card"><div class="stat-number">10%</div><div class="stat-label">of global CO₂ emissions</div></div>
       <div class="stat-card"><div class="stat-number">100B+</div><div class="stat-label">garments/year</div></div>
@@ -126,43 +126,31 @@
 
   <!-- SECTION 03: Labour Conditions -->
   <div class="section">
-    <h2>Section 03 — Labour Rights Around the World</h2>
-    <p>Working conditions vary dramatically across textile-producing nations. The Labour Rights Index (LRI) scores countries on a 0-100 scale.</p>
-    <div class="chart-container"><div class="chart-title">🗺️ Chart 4: Labour Rights Index by Country</div><div id="chart4_lri_map"></div></div>
-    <div class="chart-container"><div class="chart-title">📊 Chart 5: Labour Rights Scores (Sorted)</div><div id="chart5_lri_bar"></div></div>
-    <div class="chart-container"><div class="chart-title">📈 Chart 6: LRI Score Changes (Slope Chart)</div><div id="chart6_slope"></div></div>
+    <h2>Section 03 — Labour Conditions in Textile-Producing Countries</h2>
+    <p>Using WageIndicator's Labour Rights Index, we examine how major textile-exporting countries perform across key labour dimensions.</p>
+    <div class="chart-container"><div class="chart-title">📈 Chart 4: Parallel Coordinates - Labour Dimensions Across Countries</div><div id="chart4_parallel"></div></div>
+    <div class="chart-container"><div class="chart-title">📊 Chart 5: Top Sourcing Countries - Labour Dimension Comparison</div><div id="chart5_grouped_bar"></div></div>
     <div class="two-columns">
-      <div class="chart-container"><div class="chart-title">🔵 Chart 7: Score Distribution by Region</div><div id="chart7_dotplot"></div></div>
-      <div class="chart-container"><div class="chart-title">🔥 Chart 8: Region × Rating Heatmap</div><div id="chart8_heatmap"></div></div>
+      <div class="chart-container"><div class="chart-title">🎯 Chart 6: Fair Wages vs Freedom of Association</div><div id="chart6_scatter"></div></div>
+      <div class="chart-container"><div class="chart-title">🔥 Chart 7: Country × Labour Dimension Heatmap</div><div id="chart7_heatmap"></div></div>
     </div>
   </div>
 
-  <!-- SECTION 04: Australian Waste -->
+  <!-- SECTION 04: Coming Soon -->
   <div class="section">
-    <h2>Section 04 — Australia's Textile Waste Crisis</h2>
-    <p>Australians are among the world's largest consumers of fast fashion per capita. Where does all this clothing end up?</p>
-    <div class="chart-container"><div class="chart-title">🏋️ Chart 9: Landfill vs Recovery by State</div><div id="chart9_dumbbell"></div></div>
-    <div class="chart-container"><div class="chart-title">📊 Chart 10: Waste Fate Over Time</div><div id="chart10_stacked_bar"></div></div>
-    <div class="chart-container"><div class="chart-title">📐 Chart 11: Waste by Category and State</div><div id="chart11_small_multiples"></div></div>
-  </div>
-
-  <!-- SECTION 05: Consumer Behaviour -->
-  <div class="section">
-    <h2>Section 05 — The Consumer's Role</h2>
-    <p>Small changes in individual behaviour add up to massive environmental impact.</p>
-    <div class="chart-container"><div class="chart-title">🍭 Chart 12: Fast Fashion Key Metrics</div><div id="chart12_lollipop"></div></div>
+    <h2>Section 04 — Australian Waste & Consumer Behaviour</h2>
+    <p>Charts 8-12 coming soon with Australian waste data and fast fashion metrics.</p>
+    <div class="chart-container"><div class="chart-title">🏋️ Chart 8-12: Coming Soon</div><div id="placeholder"></div></div>
   </div>
 
   <div class="footer">
-    <p>Data sources: Wikipedia Textile Exports | WageIndicator Labour Rights Index | Australian National Waste Report | Fashion Revolution | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
+    <p>Data sources: Wikipedia Textile Exports | WageIndicator Labour Rights Index | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
   </div>
 
   <script>
     // ============================================
-    // LOAD CHARTS ONE AT A TIME
+    // HELPER FUNCTIONS
     // ============================================
-    
-    // Helper to parse CSV
     function parseCSV(csvText) {
       const lines = csvText.trim().split('\n');
       const headers = lines[0].split(',');
@@ -179,8 +167,10 @@
       }
       return data;
     }
-    
-    // Chart 1-3: Trade (uses your working CSV)
+
+    // ============================================
+    // TRADE CHARTS (1-3)
+    // ============================================
     async function loadTradeCharts() {
       try {
         console.log("Loading trade data...");
@@ -188,7 +178,6 @@
         const csvText = await response.text();
         const data = parseCSV(csvText);
         
-        // Fix country names
         const mapData = data.map(d => ({
           country: d.country === 'United States' ? 'United States of America' :
                    d.country === 'Czech Republic' ? 'Czechia' : d.country,
@@ -232,22 +221,159 @@
         
       } catch (error) {
         console.error("Trade charts error:", error);
-        document.getElementById('chart1_choropleth').innerHTML = `<p style="color: #8b5a3c; padding: 20px;">Error loading trade data: ${error.message}</p>`;
       }
     }
-    
-    // Placeholder for other charts (will show "coming soon")
-    function showPlaceholders() {
-      const charts = ['chart4_lri_map', 'chart5_lri_bar', 'chart6_slope', 'chart7_dotplot', 'chart8_heatmap', 'chart9_dumbbell', 'chart10_stacked_bar', 'chart11_small_multiples', 'chart12_lollipop'];
-      charts.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = `<p style="color: #8b5a3c; text-align: center; padding: 50px;">📊 Chart coming soon - data being prepared</p>`;
-      });
+
+    // ============================================
+    // LABOUR CHARTS (4-7)
+    // ============================================
+    async function loadLabourCharts() {
+      try {
+        console.log("Loading labour data...");
+        const response = await fetch('data/wageindicator.csv');
+        const csvText = await response.text();
+        const allData = parseCSV(csvText);
+        
+        // Key textile-producing countries for Australia's supply chain
+        const targetCountries = ["China", "Bangladesh", "Vietnam", "India", "Indonesia", "Pakistan", "Cambodia", "Myanmar", "Sri Lanka", "Turkey"];
+        
+        const filteredData = allData.filter(d => targetCountries.includes(d.Country));
+        
+        console.log(`Loaded ${filteredData.length} target countries for labour charts`);
+        
+        // Chart 4: Parallel Coordinates - reshape data for parallel coordinates
+        const dimensions = ["Fair Wages (0-100)", "Safe Work (0-100)", "Freedom of Association (0-100)", "Child and Forced Labour (0-100)", "Employment Security (0-100)"];
+        
+        const parallelData = [];
+        filteredData.forEach(country => {
+          dimensions.forEach(dim => {
+            parallelData.push({
+              country: country.Country,
+              dimension: dim,
+              score: country[dim] || 0
+            });
+          });
+        });
+        
+        const spec4 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Labour Dimensions Across Textile-Producing Countries", "color": "#2c2c2c", "subtitle": "Higher score = better conditions | Each line = one country"},
+          "width": 800, "height": 400, "background": "#f5efe3",
+          "data": {"values": parallelData},
+          "mark": {"type": "line", "strokeWidth": 2, "opacity": 0.8},
+          "encoding": {
+            "x": {"field": "dimension", "type": "nominal", "title": "Labour Dimension", "axis": {"labelAngle": -45, "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
+            "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "color": {"field": "country", "type": "nominal", "legend": {"title": "Country", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
+            "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
+          }
+        };
+        
+        // Chart 5: Grouped Bar Chart
+        const barData = [];
+        filteredData.forEach(country => {
+          barData.push({country: country.Country, dimension: "Fair Wages", score: country["Fair Wages (0-100)"] || 0});
+          barData.push({country: country.Country, dimension: "Safe Work", score: country["Safe Work (0-100)"] || 0});
+          barData.push({country: country.Country, dimension: "Freedom of Association", score: country["Freedom of Association (0-100)"] || 0});
+        });
+        
+        const spec5 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Key Labour Dimensions - Top Sourcing Countries", "color": "#2c2c2c"},
+          "width": 800, "height": 400, "background": "#f5efe3",
+          "data": {"values": barData},
+          "mark": {"type": "bar", "cornerRadiusEnd": 3},
+          "encoding": {
+            "x": {"field": "country", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c"}},
+            "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "color": {"field": "dimension", "type": "nominal", "scale": {"scheme": "set2"}, "legend": {"title": "Labour Dimension", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
+            "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
+          }
+        };
+        
+        // Chart 6: Scatter Plot - Fair Wages vs Freedom of Association
+        const scatterData = filteredData.map(d => ({
+          country: d.Country,
+          fair_wages: d["Fair Wages (0-100)"] || 0,
+          freedom_assoc: d["Freedom of Association (0-100)"] || 0,
+          overall: d["Overall Index Score (0-100)"]
+        }));
+        
+        const spec6 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c", "subtitle": "Top-right quadrant = best conditions"},
+          "width": "container", "height": 350, "background": "#f5efe3",
+          "data": {"values": scatterData},
+          "mark": {"type": "circle", "size": 100, "opacity": 0.8},
+          "encoding": {
+            "x": {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "y": {"field": "freedom_assoc", "type": "quantitative", "title": "Freedom of Association Score (0-100)", "axis": {"labelColor": "#2c2c2c", "titleColor": "#2c2c2c", "gridColor": "#d4c4a8"}},
+            "color": {"field": "overall", "type": "quantitative", "scale": {"scheme": "greenblue"}, "legend": {"title": "Overall Index"}},
+            "tooltip": [{"field": "country"}, {"field": "fair_wages", "format": ".1f"}, {"field": "freedom_assoc", "format": ".1f"}, {"field": "overall", "format": ".1f"}]
+          }
+        };
+        
+        // Chart 7: Heatmap (Country × Labour Dimension)
+        const heatmapData = [];
+        const shortDimensions = ["Fair Wages", "Safe Work", "Freedom of Association", "Child and Forced Labour", "Employment Security"];
+        const dimMapping = {
+          "Fair Wages": "Fair Wages (0-100)",
+          "Safe Work": "Safe Work (0-100)",
+          "Freedom of Association": "Freedom of Association (0-100)",
+          "Child and Forced Labour": "Child and Forced Labour (0-100)",
+          "Employment Security": "Employment Security (0-100)"
+        };
+        
+        filteredData.forEach(country => {
+          shortDimensions.forEach(shortDim => {
+            heatmapData.push({
+              country: country.Country,
+              dimension: shortDim,
+              score: country[dimMapping[shortDim]] || 0
+            });
+          });
+        });
+        
+        const spec7 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Country × Labour Dimension Heatmap", "color": "#2c2c2c", "subtitle": "Red = poor conditions, Green = good conditions"},
+          "width": "container", "height": 350, "background": "#f5efe3",
+          "data": {"values": heatmapData},
+          "mark": "rect",
+          "encoding": {
+            "y": {"field": "country", "type": "nominal", "title": null, "sort": "-x", "axis": {"labelColor": "#2c2c2c", "labelFontSize": 11}},
+            "x": {"field": "dimension", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c"}},
+            "color": {"field": "score", "type": "quantitative", "scale": {"scheme": "redyellowgreen"}, "legend": {"title": "Score (0-100)", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}},
+            "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
+          }
+        };
+        
+        await vegaEmbed("#chart4_parallel", spec4, {"actions": false});
+        await vegaEmbed("#chart5_grouped_bar", spec5, {"actions": false});
+        await vegaEmbed("#chart6_scatter", spec6, {"actions": false});
+        await vegaEmbed("#chart7_heatmap", spec7, {"actions": false});
+        console.log("✅ Labour charts loaded");
+        
+      } catch (error) {
+        console.error("Labour charts error:", error);
+        document.getElementById('chart4_parallel').innerHTML = `<p style="color: #8b5a3c; padding: 20px;">Error loading labour data: ${error.message}</p>`;
+      }
+    }
+
+    // Placeholder for future charts
+    function showPlaceholder() {
+      const el = document.getElementById('placeholder');
+      if (el) el.innerHTML = `<p style="color: #8b5a3c; text-align: center; padding: 50px;">📊 Charts 8-12 (Australian Waste & Consumer Behaviour) coming soon with additional datasets</p>`;
     }
     
-    // Load just the working charts first
-    loadTradeCharts();
-    showPlaceholders();
+    // Load all charts
+    async function loadAllCharts() {
+      await loadTradeCharts();
+      await loadLabourCharts();
+      showPlaceholder();
+    }
+    
+    loadAllCharts();
   </script>
 </body>
 </html>
