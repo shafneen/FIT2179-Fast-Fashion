@@ -88,6 +88,11 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
+    .three-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
     .footer {
       text-align: center;
       padding: 40px;
@@ -96,6 +101,7 @@
     }
     @media (max-width: 768px) {
       .two-columns { grid-template-columns: 1fr; }
+      .three-columns { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -106,13 +112,13 @@
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-number">300M+</div><div class="stat-label">Workers employed globally</div></div>
       <div class="stat-card"><div class="stat-number">10%</div><div class="stat-label">of global CO₂ emissions</div></div>
-      <div class="stat-card"><div class="stat-number">100B+</div><div class="stat-label">garments/year</div></div>
+      <div class="stat-card"><div class="stat-number">130B+</div><div class="stat-label">garments/year</div></div>
     </div>
   </div>
 
   <div class="section">
     <h2>Section 02 — Global Trade Flows</h2>
-    <p>China dominates global textile exports, accounting for nearly one-third of all trade value.</p>
+    <p>China dominates global textile exports, accounting for nearly one-third of all trade value. The gap between the top exporters and the rest of the world is staggering.</p>
     <div class="chart-container"><div class="chart-title">🗺️ Chart 1: Global Textile Export Value</div><div id="chart1_choropleth"></div></div>
     <div class="chart-container"><div class="chart-title">📊 Chart 2: Top 20 Textile Exporters</div><div id="chart2_ranked_bar"></div></div>
     <div class="chart-container"><div class="chart-title">📉 Chart 3: Deviation from Median Export Value</div><div id="chart3_diverging_bar"></div></div>
@@ -120,7 +126,7 @@
 
   <div class="section">
     <h2>Section 03 — Labour Conditions in Textile-Producing Countries</h2>
-    <p>Using WageIndicator's Labour Rights Index, we examine how major textile-exporting countries perform across key labour dimensions.</p>
+    <p>Using WageIndicator's Labour Rights Index, we examine how major textile-exporting countries perform across key labour dimensions. Many manufacturing hubs score poorly on fair wages and freedom of association.</p>
     <div class="chart-container"><div class="chart-title">📈 Chart 4: Labour Dimensions Across Countries</div><div id="chart4_parallel"></div></div>
     <div class="chart-container"><div class="chart-title">📊 Chart 5: Family & Maternity vs Fair Wages</div><div id="chart5_grouped_bar"></div></div>
     <div class="two-columns">
@@ -130,13 +136,25 @@
   </div>
 
   <div class="section">
-    <h2>Section 04 — Australian Waste & Consumer Behaviour</h2>
-    <p>Charts 8-12 coming soon with Australian waste data and fast fashion metrics.</p>
-    <div class="chart-container"><div class="chart-title">🏋️ Charts 8-12: Coming Soon</div><div id="placeholder"></div></div>
+    <h2>Section 04 — Australian Textile Waste Crisis</h2>
+    <p>Australia generates millions of tonnes of textile waste annually. The gap between landfill disposal and recycling reveals a system in crisis - some states recycle virtually nothing.</p>
+    <div class="chart-container"><div class="chart-title">📊 Chart 8: Landfill Disposal vs Recycling by State (Textiles, 2020-21)</div><div id="chart8_dumbbell"></div></div>
+    <div class="chart-container"><div class="chart-title">📈 Chart 9: Australian Textile Waste Fate Over Time (2008-2021)</div><div id="chart9_stacked_bar"></div></div>
+    <div class="chart-container"><div class="chart-title">📊 Chart 10: Waste Composition by State/Territory (2020-21)</div><div id="chart10_small_multiples"></div></div>
+  </div>
+
+  <div class="section">
+    <h2>Section 05 — The Global Impact of Fast Fashion</h2>
+    <p>Beyond waste, fast fashion drives environmental degradation and exploitation. These metrics reveal the true cost of our clothing.</p>
+    <div class="chart-container"><div class="chart-title">💔 Chart 11: Hidden Costs of Fast Fashion</div><div id="chart11_lollipop"></div></div>
+    <div class="two-columns">
+      <div class="chart-container"><div class="chart-title">📈 Chart 12: US Textile Waste Trends (2000-2022)</div><div id="chart12_slope"></div></div>
+      <div class="chart-container"><div class="chart-title">💰 Bonus: Global Fast Fashion Market Growth</div><div id="chart_bonus_market"></div></div>
+    </div>
   </div>
 
   <div class="footer">
-    <p>Data sources: Wikipedia Textile Exports | WageIndicator Labour Rights Index | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
+    <p>Data sources: Wikipedia Textile Exports | WageIndicator Labour Rights Index | Australian National Waste Report | EPA US | UNEP | ILO | McKinsey | Statista | Clean Clothes Campaign | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
   </div>
 
   <script>
@@ -152,7 +170,7 @@
         const row = {};
         for (let j = 0; j < headers.length; j++) {
           let val = values[j]?.trim();
-          if (!isNaN(val) && val !== '') val = parseFloat(val);
+          if (!isNaN(val) && val !== '' && val !== null) val = parseFloat(val);
           row[headers[j]] = val;
         }
         data.push(row);
@@ -179,22 +197,22 @@
         // Chart 1: Choropleth
         const spec1 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Global Textile Export Value", "color": "#2c2c2c"},
+          "title": {"text": "Global Textile Export Value (USD)", "color": "#2c2c2c"},
           "width": 800, "height": 450, "background": "#f5efe3",
           "projection": {"type": "naturalEarth1"},
           "layer": [
             {"data": {"url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson", "format": {"type": "json", "property": "features"}}, "mark": {"type": "geoshape", "fill": "#e0d0b4", "stroke": "#c8b898"}},
-            {"data": {"values": mapData}, "transform": [{"lookup": "country", "from": {"data": {"url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson", "format": {"type": "json", "property": "features"}}, "key": "properties.NAME", "fields": ["geometry"]}}], "mark": {"type": "geoshape", "stroke": "#c8b898"}, "encoding": {"shape": {"field": "geometry", "type": "geojson"}, "color": {"field": "trade_value", "type": "quantitative", "scale": {"type": "log", "scheme": "orangered"}, "legend": {"title": "USD", "labelColor": "#2c2c2c"}}, "tooltip": [{"field": "country"}, {"field": "trade_value", "format": ",.0f"}]}}
+            {"data": {"values": mapData}, "transform": [{"lookup": "country", "from": {"data": {"url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson", "format": {"type": "json", "property": "features"}}, "key": "properties.NAME", "fields": ["geometry"]}}], "mark": {"type": "geoshape", "stroke": "#c8b898"}, "encoding": {"shape": {"field": "geometry", "type": "geojson"}, "color": {"field": "trade_value", "type": "quantitative", "scale": {"type": "log", "scheme": "orangered"}, "legend": {"title": "USD", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}}, "tooltip": [{"field": "country"}, {"field": "trade_value", "format": ",.0f"}]}
           ]};
         
         // Chart 2: Bar
         const top20 = [...data].sort((a,b) => b.trade_value - a.trade_value).slice(0,20);
         const spec2 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Top 20 Textile Exporters", "color": "#2c2c2c"}, 
+          "title": {"text": "Top 20 Textile Exporters (USD)", "color": "#2c2c2c"}, 
           "width": 800, "height": 400, "background": "#f5efe3",
-          "data": {"values": top20}, "mark": {"type": "bar", "cornerRadiusEnd": 3},
-          "encoding": {"y": {"field": "country", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#2c2c2c"}}, "x": {"field": "trade_value", "type": "quantitative", "title": "USD", "axis": {"format": "~s", "labelColor": "#2c2c2c"}}, "color": {"field": "trade_value", "scale": {"scheme": "orangered"}}, "tooltip": [{"field": "country"}, {"field": "trade_value", "format": ",.0f"}]}
+          "data": {"values": top20}, "mark": {"type": "bar", "cornerRadiusEnd": 3, "color": "#b8865a"},
+          "encoding": {"y": {"field": "country", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#2c2c2c"}}, "x": {"field": "trade_value", "type": "quantitative", "title": "USD", "axis": {"format": "~s", "labelColor": "#2c2c2c"}}, "tooltip": [{"field": "country"}, {"field": "trade_value", "format": ",.0f"}]}
         };
         
         // Chart 3: Diverging
@@ -202,7 +220,7 @@
         const divData = data.slice(0,30).map(d => ({...d, deviation: d.trade_value - median}));
         const spec3 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Deviation from Median Export Value", "color": "#2c2c2c"}, 
+          "title": {"text": "Deviation from Median Export Value (USD)", "color": "#2c2c2c"}, 
           "width": 800, "height": 400, "background": "#f5efe3",
           "data": {"values": divData}, "mark": "bar",
           "encoding": {"y": {"field": "country", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#2c2c2c"}}, "x": {"field": "deviation", "type": "quantitative", "title": "Above/Below Median (USD)", "axis": {"labelColor": "#2c2c2c"}}, "color": {"condition": {"test": "datum.deviation > 0", "value": "#b8865a"}, "value": "#c8b898"}, "tooltip": [{"field": "country"}, {"field": "deviation", "format": ",.0f"}]}
@@ -230,7 +248,6 @@
         
         const targetCountries = ["China", "Bangladesh", "Vietnam", "India", "Indonesia", "Pakistan", "Cambodia", "Myanmar", "Sri Lanka", "Turkey"];
         const filteredData = allData.filter(d => targetCountries.includes(d.Country));
-        console.log("Loaded countries:", filteredData.map(d => d.Country));
         
         // Chart 4: Parallel Coordinates
         const parallelData = [];
@@ -274,7 +291,7 @@
           "encoding": {
             "x": {"field": "country", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c", "labelFontSize": 11}},
             "y": {"field": "score", "type": "quantitative", "title": "Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c"}},
-            "color": {"field": "dimension", "type": "nominal", "scale": {"scheme": "set2"}, "legend": {"title": "Labour Dimension", "labelColor": "#2c2c2c"}},
+            "color": {"field": "dimension", "type": "nominal", "scale": {"domain": ["Fair Wages", "Family Responsibilities", "Maternity at Work"], "range": ["#b8865a", "#8b5a3c", "#c4976a"]}, "legend": {"title": "Labour Dimension", "labelColor": "#2c2c2c"}},
             "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score", "format": ".1f"}]
           }
         };
@@ -292,11 +309,10 @@
           "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c"}, 
           "width": 400, "height": 350, "background": "#f5efe3",
           "data": {"values": scatterData},
-          "mark": {"type": "circle", "size": 120, "opacity": 0.8, "stroke": "#2c2c2c", "strokeWidth": 1},
+          "mark": {"type": "circle", "size": 120, "opacity": 0.8, "stroke": "#2c2c2c", "strokeWidth": 1, "color": "#b8865a"},
           "encoding": {
             "x": {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c"}},
             "y": {"field": "freedom", "type": "quantitative", "title": "Freedom of Association Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c"}},
-            "color": {"field": "overall", "type": "quantitative", "scale": {"scheme": "greenblue"}, "legend": {"title": "Overall Index", "labelColor": "#2c2c2c"}},
             "tooltip": [{"field": "country"}, {"field": "fair_wages", "format": ".1f"}, {"field": "freedom", "format": ".1f"}]
           }
         };
@@ -337,30 +353,172 @@
       }
     }
 
-    // Placeholder for coming soon
-    function loadPlaceholder() {
-      const el = document.getElementById('placeholder');
-      if (el) {
-        el.innerHTML = `<p style="color: #8b5a3c; text-align: center; padding: 50px;">📊 Charts 8-12 (Australian Waste & Consumer Behaviour) coming soon with additional datasets</p>`;
+    // ============================================
+    // WASTE CHARTS (8-10)
+    // ============================================
+    async function loadWasteCharts() {
+      try {
+        console.log("Loading waste data...");
+        const response = await fetch('data/aus_national_waste_by_category_2022.csv');
+        const csvText = await response.text();
+        const allData = parseCSV(csvText);
+        
+        // Filter for Textiles category and latest year
+        const textiles2021 = allData.filter(d => 
+          d.Category === "Textiles, leather & rubber (excl. tyres)" && 
+          d.Year === "2020-2021" &&
+          d.Jurisdiction !== "Australia"
+        );
+        
+        // Chart 8: Dumbbell
+        const dumbbellData = [];
+        const jurisdictions = [...new Set(textiles2021.map(d => d.Jurisdiction))];
+        jurisdictions.forEach(j => {
+          const landfill = textiles2021.find(d => d.Jurisdiction === j && d.Fate === "Disposal");
+          const recycling = textiles2021.find(d => d.Jurisdiction === j && d.Fate === "Recycling");
+          dumbbellData.push({
+            jurisdiction: j,
+            landfill: landfill ? landfill.Tonnes : 0,
+            recycling: recycling ? recycling.Tonnes : 0
+          });
+        });
+        
+        const spec8 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Textile Waste: Landfill Disposal vs Recycling by State (2020-21)", "color": "#2c2c2c"},
+          "width": 700, "height": 350, "background": "#f5efe3",
+          "data": {"values": dumbbellData},
+          "mark": {"type": "rule", "color": "#b8865a", "strokeWidth": 2, "opacity": 0.6},
+          "encoding": {
+            "y": {"field": "jurisdiction", "type": "nominal", "sort": "-x", "title": "State/Territory", "axis": {"labelColor": "#2c2c2c"}},
+            "x": {"field": "landfill", "type": "quantitative", "title": "Tonnes", "axis": {"labelColor": "#2c2c2c", "format": "s"}},
+            "x2": {"field": "recycling"},
+            "tooltip": [{"field": "jurisdiction"}, {"field": "landfill", "format": ",.0f", "title": "Landfill (tons)"}, {"field": "recycling", "format": ",.0f", "title": "Recycled (tons)"}]
+          }
+        };
+        
+        // Chart 9: Stacked bar over time - aggregate national
+        const textilesAll = allData.filter(d => 
+          d.Category === "Textiles, leather & rubber (excl. tyres)" &&
+          ["2008-2009", "2009-2010", "2010-2011", "2013-2014", "2014-2015", "2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020", "2020-2021"].includes(d.Year)
+        );
+        
+        const yearTotals = {};
+        textilesAll.forEach(d => {
+          if (!yearTotals[d.Year]) yearTotals[d.Year] = {disposal: 0, recycling: 0, energy: 0};
+          if (d.Fate === "Disposal") yearTotals[d.Year].disposal += d.Tonnes;
+          if (d.Fate === "Recycling") yearTotals[d.Year].recycling += d.Tonnes;
+          if (d.Fate === "Energy recovery") yearTotals[d.Year].energy += d.Tonnes;
+        });
+        
+        const stackedData = [];
+        for (const [year, values] of Object.entries(yearTotals)) {
+          stackedData.push({year, fate: "Disposal", tonnes: values.disposal});
+          stackedData.push({year, fate: "Recycling", tonnes: values.recycling});
+          stackedData.push({year, fate: "Energy Recovery", tonnes: values.energy});
+        }
+        
+        const spec9 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Australian Textile Waste Management Trends (2008-2021)", "color": "#2c2c2c"},
+          "width": 700, "height": 400, "background": "#f5efe3",
+          "data": {"values": stackedData},
+          "mark": "bar",
+          "encoding": {
+            "x": {"field": "year", "type": "ordinal", "title": "Financial Year", "sort": ["2008-2009", "2009-2010", "2010-2011", "2013-2014", "2014-2015", "2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020", "2020-2021"], "axis": {"labelAngle": -45, "labelColor": "#2c2c2c"}},
+            "y": {"field": "tonnes", "type": "quantitative", "title": "Tonnes", "axis": {"labelColor": "#2c2c2c", "format": "s"}},
+            "color": {"field": "fate", "type": "nominal", "scale": {"domain": ["Disposal", "Recycling", "Energy Recovery"], "range": ["#b8865a", "#8b5a3c", "#c4976a"]}, "title": "Fate"},
+            "tooltip": [{"field": "year"}, {"field": "fate"}, {"field": "tonnes", "format": ",.0f"}]
+          }
+        };
+        
+        // Chart 10: Small multiples
+        const categories = ["Building and demolition materials", "Glass", "Metals", "Organics", "Paper & cardboard", "Plastics", "Textiles, leather & rubber (excl. tyres)"];
+        const smallMultiplesData = [];
+        const jurisdictions2 = ["ACT", "NSW", "Vic", "Qld", "WA", "SA", "Tas", "NT"];
+        
+        categories.forEach(cat => {
+          jurisdictions2.forEach(jur => {
+            const disposal = allData.find(d => d.Category === cat && d.Jurisdiction === jur && d.Year === "2020-2021" && d.Fate === "Disposal");
+            const recycling = allData.find(d => d.Category === cat && d.Jurisdiction === jur && d.Year === "2020-2021" && d.Fate === "Recycling");
+            if (disposal && recycling) {
+              smallMultiplesData.push({jurisdiction: jur, category: cat.replace(", leather & rubber (excl. tyres)", ""), disposal: disposal.Tonnes, recycling: recycling.Tonnes});
+            }
+          });
+        });
+        
+        const longData = [];
+        smallMultiplesData.forEach(d => {
+          longData.push({jurisdiction: d.jurisdiction, category: d.category, management: "Disposal", tonnes: d.disposal});
+          longData.push({jurisdiction: d.jurisdiction, category: d.category, management: "Recycling", tonnes: d.recycling});
+        });
+        
+        const spec10 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Waste Composition by State/Territory (2020-21)", "color": "#2c2c2c"},
+          "width": 130, "height": 130, "background": "#f5efe3",
+          "data": {"values": longData},
+          "facet": {"row": {"field": "jurisdiction", "type": "nominal", "title": null, "header": {"labelColor": "#2c2c2c", "labelFontSize": 11}}},
+          "spec": {
+            "mark": "bar",
+            "encoding": {
+              "x": {"field": "category", "type": "nominal", "title": null, "axis": {"labelAngle": -45, "labelColor": "#2c2c2c", "labelFontSize": 7}},
+              "y": {"field": "tonnes", "type": "quantitative", "title": "Tonnes", "axis": {"labelColor": "#2c2c2c", "format": "s", "titleFontSize": 8, "labelFontSize": 7}},
+              "color": {"field": "management", "type": "nominal", "scale": {"domain": ["Disposal", "Recycling"], "range": ["#b8865a", "#8b5a3c"]}, "legend": {"title": "Management", "labelColor": "#2c2c2c", "titleColor": "#2c2c2c"}}
+            }
+          }
+        };
+        
+        await vegaEmbed("#chart8_dumbbell", spec8, {"actions": false});
+        await vegaEmbed("#chart9_stacked_bar", spec9, {"actions": false});
+        await vegaEmbed("#chart10_small_multiples", spec10, {"actions": false});
+        console.log("✅ Waste charts loaded");
+        
+      } catch (error) {
+        console.error("Waste charts error:", error);
       }
     }
 
     // ============================================
-    // LOAD EVERYTHING - FIXED FUNCTION NAMES
+    // FAST FASHION METRICS CHARTS (11-12)
     // ============================================
-    async function loadAllCharts() {
-      await loadTradeCharts();
-      await loadLabourCharts();
-      loadPlaceholder();
-    }
-    
-    // Start loading when page is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadAllCharts);
-    } else {
-      loadAllCharts();
-    }
-  </script>
-</body>
-</html>
+    async function loadFastFashionCharts() {
+      try {
+        console.log("Loading fast fashion data...");
+        const response = await fetch('data/fast_fashion_data.csv');
+        const csvText = await response.text();
+        const allData = parseCSV(csvText);
+        
+        // Chart 11: Lollipop - wages + key metrics
+        const wageData = allData.filter(d => d.category === "wages" && d.metric.includes("daily wage"));
+        const wages = [];
+        wageData.forEach(d => {
+          const country = d.metric.replace("Avg garment worker daily wage ", "").replace("Living wage estimate ", "");
+          if (d.metric.includes("Avg")) {
+            wages.push({country: country, type: "Actual Wage", value: d.value});
+          } else {
+            const existing = wages.find(w => w.country === country);
+            if (existing) existing.livingWage = d.value;
+            else wages.push({country: country, livingWage: d.value});
+          }
+        });
+        
+        const envData = allData.filter(d => d.category === "carbon" || d.category === "water" || d.category === "microplastic");
+        const envMetrics = [
+          {metric: "Fashion CO₂ emissions", value: 10, unit: "% of global"},
+          {metric: "Ocean microplastics from fashion", value: 35, unit: "%"},
+          {metric: "Fashion water use", value: 93, unit: "billion m³/year"},
+          {metric: "Fashion wastewater share", value: 20, unit: "% of global"}
+        ];
+        
+        const lollipopData = [
+          {metric: "Garment worker wage (Bangladesh)", value: 3.5, comparison: 8.4, unit: "USD/day", category: "Social"},
+          {metric: "Garment worker wage (Cambodia)", value: 5.1, comparison: 10.2, unit: "USD/day", category: "Social"},
+          {metric: "Garment worker wage (Vietnam)", value: 4.8, comparison: 9.6, unit: "USD/day", category: "Social"},
+          {metric: "Garment worker wage (India)", value: 3.8, comparison: 7.9, unit: "USD/day", category: "Social"},
+          {metric: "Fashion CO₂ emissions", value: 10, comparison: null, unit: "% of global", category: "Environmental"},
+          {metric: "Ocean microplastics from fashion", value: 35, comparison: null, unit: "%", category: "Environmental"},
+          {metric: "Fashion water use", value: 93, comparison: null, unit: "billion m³/year", category: "Environmental"},
+          {metric: "Garments produced globally (2019)", value: 130, comparison: null, unit: "billion pieces/year", category: "Production"},
+         
 
