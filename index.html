@@ -170,7 +170,7 @@
         const row = {};
         for (let j = 0; j < headers.length; j++) {
           let val = values[j]?.trim();
-          if (!isNaN(val) && val !== '' && val !== null) val = parseFloat(val);
+          if (!isNaN(val) && val !== '' && val !== null && val !== 'null') val = parseFloat(val);
           row[headers[j]] = val;
         }
         data.push(row);
@@ -216,7 +216,7 @@
         };
         
         // Chart 3: Diverging
-        const median = data.sort((a,b) => a.trade_value - b.trade_value)[Math.floor(data.length/2)].trade_value;
+        const median = [...data].sort((a,b) => a.trade_value - b.trade_value)[Math.floor(data.length/2)].trade_value;
         const divData = data.slice(0,30).map(d => ({...d, deviation: d.trade_value - median}));
         const spec3 = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -376,11 +376,13 @@
         jurisdictions.forEach(j => {
           const landfill = textiles2021.find(d => d.Jurisdiction === j && d.Fate === "Disposal");
           const recycling = textiles2021.find(d => d.Jurisdiction === j && d.Fate === "Recycling");
-          dumbbellData.push({
-            jurisdiction: j,
-            landfill: landfill ? landfill.Tonnes : 0,
-            recycling: recycling ? recycling.Tonnes : 0
-          });
+          if (landfill && recycling) {
+            dumbbellData.push({
+              jurisdiction: j,
+              landfill: landfill.Tonnes || 0,
+              recycling: recycling.Tonnes || 0
+            });
+          }
         });
         
         const spec8 = {
@@ -397,7 +399,7 @@
           }
         };
         
-        // Chart 9: Stacked bar over time - aggregate national
+        // Chart 9: Stacked bar over time
         const textilesAll = allData.filter(d => 
           d.Category === "Textiles, leather & rubber (excl. tyres)" &&
           ["2008-2009", "2009-2010", "2010-2011", "2013-2014", "2014-2015", "2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020", "2020-2021"].includes(d.Year)
@@ -406,9 +408,9 @@
         const yearTotals = {};
         textilesAll.forEach(d => {
           if (!yearTotals[d.Year]) yearTotals[d.Year] = {disposal: 0, recycling: 0, energy: 0};
-          if (d.Fate === "Disposal") yearTotals[d.Year].disposal += d.Tonnes;
-          if (d.Fate === "Recycling") yearTotals[d.Year].recycling += d.Tonnes;
-          if (d.Fate === "Energy recovery") yearTotals[d.Year].energy += d.Tonnes;
+          if (d.Fate === "Disposal") yearTotals[d.Year].disposal += d.Tonnes || 0;
+          if (d.Fate === "Recycling") yearTotals[d.Year].recycling += d.Tonnes || 0;
+          if (d.Fate === "Energy recovery") yearTotals[d.Year].energy += d.Tonnes || 0;
         });
         
         const stackedData = [];
@@ -434,15 +436,15 @@
         
         // Chart 10: Small multiples
         const categories = ["Building and demolition materials", "Glass", "Metals", "Organics", "Paper & cardboard", "Plastics", "Textiles, leather & rubber (excl. tyres)"];
-        const smallMultiplesData = [];
         const jurisdictions2 = ["ACT", "NSW", "Vic", "Qld", "WA", "SA", "Tas", "NT"];
+        const smallMultiplesData = [];
         
         categories.forEach(cat => {
           jurisdictions2.forEach(jur => {
             const disposal = allData.find(d => d.Category === cat && d.Jurisdiction === jur && d.Year === "2020-2021" && d.Fate === "Disposal");
             const recycling = allData.find(d => d.Category === cat && d.Jurisdiction === jur && d.Year === "2020-2021" && d.Fate === "Recycling");
             if (disposal && recycling) {
-              smallMultiplesData.push({jurisdiction: jur, category: cat.replace(", leather & rubber (excl. tyres)", ""), disposal: disposal.Tonnes, recycling: recycling.Tonnes});
+              smallMultiplesData.push({jurisdiction: jur, category: cat.replace("Textiles, leather & rubber (excl. tyres)", "Textiles").replace("Building and demolition materials", "Building & demo"), disposal: disposal.Tonnes || 0, recycling: recycling.Tonnes || 0});
             }
           });
         });
@@ -489,28 +491,7 @@
         const csvText = await response.text();
         const allData = parseCSV(csvText);
         
-        // Chart 11: Lollipop - wages + key metrics
-        const wageData = allData.filter(d => d.category === "wages" && d.metric.includes("daily wage"));
-        const wages = [];
-        wageData.forEach(d => {
-          const country = d.metric.replace("Avg garment worker daily wage ", "").replace("Living wage estimate ", "");
-          if (d.metric.includes("Avg")) {
-            wages.push({country: country, type: "Actual Wage", value: d.value});
-          } else {
-            const existing = wages.find(w => w.country === country);
-            if (existing) existing.livingWage = d.value;
-            else wages.push({country: country, livingWage: d.value});
-          }
-        });
-        
-        const envData = allData.filter(d => d.category === "carbon" || d.category === "water" || d.category === "microplastic");
-        const envMetrics = [
-          {metric: "Fashion CO₂ emissions", value: 10, unit: "% of global"},
-          {metric: "Ocean microplastics from fashion", value: 35, unit: "%"},
-          {metric: "Fashion water use", value: 93, unit: "billion m³/year"},
-          {metric: "Fashion wastewater share", value: 20, unit: "% of global"}
-        ];
-        
+        // Chart 11: Lollipop
         const lollipopData = [
           {metric: "Garment worker wage (Bangladesh)", value: 3.5, comparison: 8.4, unit: "USD/day", category: "Social"},
           {metric: "Garment worker wage (Cambodia)", value: 5.1, comparison: 10.2, unit: "USD/day", category: "Social"},
@@ -520,5 +501,92 @@
           {metric: "Ocean microplastics from fashion", value: 35, comparison: null, unit: "%", category: "Environmental"},
           {metric: "Fashion water use", value: 93, comparison: null, unit: "billion m³/year", category: "Environmental"},
           {metric: "Garments produced globally (2019)", value: 130, comparison: null, unit: "billion pieces/year", category: "Production"},
-         
+          {metric: "Times worn before discard (2022)", value: 7, comparison: 15, unit: "wears", category: "Consumer"}
+        ];
+        
+        const spec11 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "The Hidden Costs of Fast Fashion", "color": "#2c2c2c"},
+          "width": 700, "height": 450, "background": "#f5efe3",
+          "data": {"values": lollipopData},
+          "transform": [{"calculate": "datum.comparison != null ? datum.comparison : datum.value", "as": "x_end"}],
+          "mark": {"type": "rule", "color": "#b8865a", "strokeWidth": 2, "opacity": 0.7},
+          "encoding": {
+            "y": {"field": "metric", "type": "nominal", "title": null, "sort": "-x"},
+            "x": {"field": "value", "type": "quantitative", "title": "Value"},
+            "x2": {"field": "comparison"},
+            "color": {"field": "category", "type": "nominal", "scale": {"domain": ["Social", "Environmental", "Production", "Consumer"], "range": ["#b8865a", "#8b5a3c", "#a0714a", "#c4976a"]}, "title": "Category"},
+            "tooltip": [{"field": "metric"}, {"field": "value", "format": ".1f"}, {"field": "comparison", "format": ".1f"}, {"field": "unit"}]
+          }
+        };
+        
+        // Chart 12: Slope - US textile waste
+        const usWaste = allData.filter(d => d.category === "waste" && (d.metric === "Textile waste to landfill" || d.metric === "Textile waste recycled"));
+        const usWasteData = [];
+        usWaste.forEach(d => {
+          usWasteData.push({year: d.year, fate: "Landfill", tonnes: d.value});
+        });
+        const recycledData = allData.filter(d => d.category === "waste" && d.metric === "Textile waste recycled");
+        recycledData.forEach(d => {
+          usWasteData.push({year: d.year, fate: "Recycled", tonnes: d.value});
+        });
+        
+        const spec12 = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "US Textile Waste: Landfill vs Recycled (2000-2022)", "color": "#2c2c2c"},
+          "width": 350, "height": 350, "background": "#f5efe3",
+          "data": {"values": usWasteData},
+          "mark": {"type": "line", "strokeWidth": 3, "opacity": 0.8, "point": {"filled": true, "size": 80}},
+          "encoding": {
+            "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelColor": "#2c2c2c"}},
+            "y": {"field": "tonnes", "type": "quantitative", "title": "Million Tons", "axis": {"labelColor": "#2c2c2c"}},
+            "color": {"field": "fate", "type": "nominal", "scale": {"domain": ["Landfill", "Recycled"], "range": ["#b8865a", "#8b5a3c"]}, "title": "Fate"},
+            "tooltip": [{"field": "year"}, {"field": "fate"}, {"field": "tonnes", "format": ".1f"}]
+          }
+        };
+        
+        // Bonus: Market growth
+        const marketData = allData.filter(d => d.category === "market");
+        const specBonus = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Global Fast Fashion Market Growth (2015-2023)", "color": "#2c2c2c"},
+          "width": 350, "height": 350, "background": "#f5efe3",
+          "data": {"values": marketData},
+          "mark": {"type": "area", "color": "#b8865a", "opacity": 0.7, "line": {"color": "#8b5a3c", "strokeWidth": 2}},
+          "encoding": {
+            "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelColor": "#2c2c2c"}},
+            "y": {"field": "value", "type": "quantitative", "title": "Market Size (Billion USD)", "axis": {"labelColor": "#2c2c2c"}},
+            "tooltip": [{"field": "year"}, {"field": "value", "format": "d", "title": "Billion USD"}]
+          }
+        };
+        
+        await vegaEmbed("#chart11_lollipop", spec11, {"actions": false});
+        await vegaEmbed("#chart12_slope", spec12, {"actions": false});
+        await vegaEmbed("#chart_bonus_market", specBonus, {"actions": false});
+        console.log("✅ Fast fashion charts loaded");
+        
+      } catch (error) {
+        console.error("Fast fashion charts error:", error);
+      }
+    }
 
+    // ============================================
+    // LOAD ALL CHARTS
+    // ============================================
+    async function loadAllCharts() {
+      await loadTradeCharts();
+      await loadLabourCharts();
+      await loadWasteCharts();
+      await loadFastFashionCharts();
+      console.log("✅ All charts loaded!");
+    }
+    
+    // Start loading when page is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadAllCharts);
+    } else {
+      loadAllCharts();
+    }
+  </script>
+</body>
+</html>
