@@ -154,7 +154,7 @@
     <h2>The Global Production Machine</h2>
     <p>Fast fashion may appear on shelves in Melbourne, London, or New York, but its journey begins thousands of kilometres away. Behind every $10 T-shirt and trend-driven collection lies a vast global network of factories, suppliers, and shipping routes connecting producers to consumers. To understand the true cost of fast fashion, we first need to assess where it's made.</p>
     <div class="chart-container">
-      <div class="chart-title"> </div>
+      <div class="chart-title"> Global Textiles Exports Trade Value</div>
       <div id="chart1"></div>
       <div style="margin-top: 15px; padding: 12px; background: #e8dcc8; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6;">
         The map shows that fast fashion production is far from evenly spread. <strong>China</strong> dominates as the largest textile exporter, with major manufacturing hotspots across <strong>India, Bangladesh, Pakistan, Vietnam, Cambodia</strong>, and <strong>Indonesia.</strong>
@@ -170,7 +170,7 @@ The key takeaway is clear: fast fashion is sold everywhere, but it is made in a 
     <h2>The People Behind the Price Tag</h2>
     <p> Behind every low-cost garment is a workforce responsible for producing it. Labour conditions vary significantly across countries, influencing workers' wages, rights, safety, and ability to advocate for better treatment. By comparing key labour indicators, we can better understand the human impact of the fast fashion industry and the inequalities that exist within global supply chains.</p>
       <div class="chart-container">
-        <div class="chart-title"> Chart 5: Country × Labour Dimension Heatmap</div>
+        <div class="chart-title"> Labour Rights in Fast Fashion: Producers and Consumers Compared</div>
         <div id="chart5a"></div>
         <div id="chart5b"></div>
         <div style="margin-top: 15px; padding: 12px; background: #e8dcc8; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6;">
@@ -187,14 +187,14 @@ The key takeaway is clear: fast fashion is sold everywhere, but it is made in a 
 
       </div>
       </div>    
-    <p><strong><i>Now, let’s take a closer look at these key labour dimensions and see how major garment-producing countries compare with Australia...</i></strong></p>
+    <p><strong><i>Now, taking a closer look at these key labour dimensions, some garment-producing countries appear to outperform Australia on working-hours protections. But labour rights are more than what exists in legislation...</i></strong></p>
     <div class="two-columns">
       <div class="chart-container">
-        <div class="chart-title"> Chart 2: Labour Dimensions Across Countries (Parallel Coordinates)</div>
+        <div class="chart-title"> How do garment producers compare to Australia on working hours?</div>
         <div id="chart2"></div>
       </div>
       <div class="chart-container">
-        <div class="chart-title"> Chart 4: Fair Wages vs Freedom of Association (Scatter)</div>
+        <div class="chart-title"> How do garment producers compare to Australia on union rights?</div>
         <div id="chart4"></div>
       </div>
     </div>
@@ -223,11 +223,11 @@ The key takeaway is clear: fast fashion is sold everywhere, but it is made in a 
     <p>The true cost of fast fashion extends far beyond the checkout counter. From intensive water consumption to greenhouse gas emissions and synthetic fibre production, clothing manufacturing places considerable pressure on the environment. Examining these impacts reveals how the industry's pursuit of cheap and rapidly produced clothing contributes to broader environmental challenges.</p>
     <div class="two-columns">
       <div class="chart-container">
-        <div class="chart-title"> Chart 8: Textile Waste by State (Stacked Bar)</div>
+        <div class="chart-title"> Where Australia's Textiles End Up</div>
         <div id="chart8"></div>
       </div>
       <div class="chart-container">
-        <div class="chart-title"> Chart 6: Landfill vs Recycling by State (Dumbbell Chart)</div>
+        <div class="chart-title"> Landfill vs Recycling by Australian State</div>
         <div id="chart6"></div>
       </div>
     </div>
@@ -245,7 +245,7 @@ The key takeaway is clear: fast fashion is sold everywhere, but it is made in a 
     </div>
     <div class="two-columns">
     <div class="chart-container">
-      <div class="chart-title"> Chart 7: Australian Textile Waste Trends (Line Graph)</div>
+      <div class="chart-title"> How much water is needed to produce everyday garments?</div>
       <div id="chart7"></div>
             <div style="margin-top: 15px; padding: 12px; background: #e8dcc8; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6;">
         Every purchase has a hidden water cost. Producing a single T-shirt requires around <strong>2,700 litres of water</strong>, while a pair of jeans uses approximately <strong>7,500 litres</strong>, that's nearly three times as much. These figures highlight the significant environmental footprint of clothing production and the pressure that fast fashion places on global freshwater resources.
@@ -253,7 +253,7 @@ The key takeaway is clear: fast fashion is sold everywhere, but it is made in a 
       </div>
     </div>
         <div class="chart-container">
-      <!-- <div class="chart-title"> Chart 10: Global Fast Fashion Market Growth</div> -->
+      <div class="chart-title"> Carbon Footprint For Common Fabric Types</div>
       <div id="chart10"></div>
                   <div style="margin-top: 15px; padding: 12px; background: #e8dcc8; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6;">
         Polyester, the most common fibre in the industry, accounting for an estimated <strong>50 - 60% of all fast fashion garments</strong>, has the highest carbon footprint among the fabrics shown. The industry's heavy reliance on synthetic fibres such as polyester highlights how the demand for cheap, durable clothing often comes at a significant environmental cost.
@@ -268,11 +268,11 @@ The key takeaway is clear: fast fashion is sold everywhere, but it is made in a 
     <p>Fast fashion has transformed the way people consume clothing. Constant trend cycles, low prices, and aggressive marketing encourage consumers to purchase more garments than ever before while wearing them for shorter periods. This shift in behaviour has fuelled a culture of overconsumption, driving both rising sales and increasing textile waste.</p>
     <div class="two-columns">
       <div class="chart-container">
-        <!-- <div class="chart-title"> Chart 9: Hidden Costs of Fast Fashion</div> -->
+        <div class="chart-title"> The Growth of Fast Fashion Giants</div>
         <div id="chart9"></div>
       </div>
       <div class="chart-container">
-        <!-- <div class="chart-title"> Chart: Garment Lifespan Decline (2000-2022)</div> -->
+        <div class="chart-title"> How Quickly Are Australians Disposing Their Clothes</div>
         <div id="wearsChart"></div>
       </div>
     </div>
@@ -431,7 +431,7 @@ async function loadChart1() {
     
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Global Textile Export Value (Thousand USD)", "color": "#2c2c2c"},
+      // "title": {"text": "Global Textile Export Value (Thousand USD)", "color": "#2c2c2c"},
       "width": 1000,
       "height": 450,
       "background": "#f5efe3",
@@ -512,7 +512,7 @@ async function loadChart1() {
         const spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "title": {
-            "text": "How do garment producers compare to Australia on working hours?",
+            // "text": "How do garment producers compare to Australia on working hours?",
             "subtitle": "Decent Working Hours score (0–100). Australia = 80 is the vertical baseline.",
             "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
             "fontSize": 15, "subtitleFontSize": 11, "anchor": "start", "offset": 12
@@ -764,7 +764,7 @@ Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
-        "text": "Fair Wages Around the World",
+        // "text": "Fair Wages Around the World",
         "subtitle": "Each dot is one country. Highlighted dots are the key fast-fashion producers and two consumer countries.",
         "color": "#2c2c2c",
         "subtitleColor": "#5c5c5c",
@@ -892,7 +892,7 @@ Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
         const spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "title": {
-            "text": "How do garment producers compare to Australia on union rights?",
+            // "text": "How do garment producers compare to Australia on union rights?",
             "subtitle": "Freedom of Association score (0–100). Australia = 75 is the vertical baseline.",
             "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
             "fontSize": 15, "subtitleFontSize": 11, "anchor": "start", "offset": 12
@@ -1172,7 +1172,7 @@ Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
-        "text": "Textile Waste: Landfill vs Recycling by State (2020-21)",
+        // "text": "Textile Waste: Landfill vs Recycling by State (2020-21)",
         "color": "#2c2c2c",
         "fontSize": 16,
         "anchor": "start"
@@ -1297,7 +1297,7 @@ Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
         const spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "title": {
-            "text": "The Hidden Water Footprint of Clothing",
+            // "text": "The Hidden Water Footprint of Clothing",
             "subtitle": `Each 💧 represents ${DROPLET_VALUE} litres of water. One pair of jeans uses nearly 3× the water of a t-shirt.`,
             "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
             "fontSize": 16, "subtitleFontSize": 12, "anchor": "start", "offset": 12
@@ -1373,7 +1373,7 @@ Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
         
         const spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Australian Textile Waste Fate (2020-21)", "color": "#2c2c2c", "fontSize": 16, "anchor": "start"},
+          // "title": {"text": "Australian Textile Waste Fate (2020-21)", "color": "#2c2c2c", "fontSize": 16, "anchor": "start"},
           "width": 436,
           "height": 450,
           "padding": {"right": 20, "bottom": 10, "left": 60},
@@ -1468,7 +1468,7 @@ Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
         const spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "title": {
-            "text": "Garment Lifespan Decline: Times Worn Before Discard (2000-2022)",
+            // "text": "Garment Lifespan Decline: Times Worn Before Discard (2000-2022)",
             "subtitle": " ",
             "color": "#2c2c2c", "subtitleColor": "#f5efe3",
             "fontSize": 16, "subtitleFontSize": 11, "anchor": "start", "offset": 5
@@ -1570,7 +1570,7 @@ async function loadChart10() {
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
-        "text": "Carbon Footprint by Fabric Type",
+        // "text": "Carbon Footprint by Fabric Type",
         "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
         "fontSize": 15, "subtitleFontSize": 11, "anchor": "start"
       },
@@ -1634,7 +1634,7 @@ async function loadChart10() {
         
         const spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {"text": "Garment Lifespan Decline: Times Worn Before Discard (2000-2022)", "color": "#2c2c2c", "fontSize": 16, "anchor": "start","offset": 12},
+          // "title": {"text": "Garment Lifespan Decline: Times Worn Before Discard (2000-2022)", "color": "#2c2c2c", "fontSize": 16, "anchor": "start","offset": 12},
           "width": 450,
           "height": 450,
           "background": "#f5efe3",
