@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The True Cost of Fast Fashion</title>
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -18,16 +21,36 @@
       padding: 0;
     }
     .hero {
-      background: linear-gradient(135deg, #d4c4a8 0%, #e0d0b4 100%);
+      background: linear-gradient(135deg, rgba(212, 196, 168, 0.85) 0%, rgba(224, 208, 180, 0.85) 100%),
+                  url('images/hero-bg.jpg') center/cover no-repeat;
       text-align: center;
       padding: 60px 20px;
       border-bottom: 2px solid #b8a88a;
     }
     .hero h1 {
+      font-family: 'Playfair Display', serif;
       font-size: 3em;
       margin-bottom: 40px;
       color: #5c3d2e;
     }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8em;
+      color: #5c3d2e;
+      border-left: 4px solid #b8865a;
+      padding-left: 15px;
+      margin-bottom: 20px;
+    }
+    .chart-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #8b5a3c;
+      border-left: 4px solid #b8865a;
+      padding-left: 12px;
+    }
+    /* Rest of your styles remain the same */
     .stats-grid {
       display: flex;
       justify-content: center;
@@ -56,13 +79,6 @@
       margin: 60px auto;
       padding: 0 20px;
     }
-    .section h2 {
-      font-size: 1.8em;
-      color: #5c3d2e;
-      border-left: 4px solid #b8865a;
-      padding-left: 15px;
-      margin-bottom: 20px;
-    }
     .section p {
       color: #4a3a2a;
       line-height: 1.7;
@@ -74,14 +90,6 @@
       padding: 20px;
       margin-bottom: 40px;
       border: 1px solid #d4c4a8;
-    }
-    .chart-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: #8b5a3c;
-      border-left: 4px solid #b8865a;
-      padding-left: 12px;
     }
     .two-columns {
       display: grid;
@@ -105,7 +113,7 @@
       color: #e8dcc8;
       padding: 8px 15px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-family: monospace;
       z-index: 1000;
     }
@@ -123,403 +131,1510 @@
   </div>
 
   <div class="section">
-    <h2>Section 02 — Global Trade Flows</h2>
-    <p>China dominates global textile exports, accounting for nearly one-third of all trade value.</p>
-    <div class="chart-container"><div class="chart-title">📊 Chart 1: Top 20 Textile Exporters (2022)</div><div id="chart1_bar"></div></div>
-    <div class="chart-container"><div class="chart-title">📉 Chart 2: Deviation from Median Export Value</div><div id="chart2_diverging"></div></div>
-  </div>
+    <h2>Section 01 — Global Trade Flows</h2>
+    <p>Fast fashion may appear on shelves in Melbourne, London, or New York, but its journey begins thousands of kilometres away. Behind every $10 T-shirt and trend-driven collection lies a vast global network of factories, suppliers, and shipping routes connecting producers to consumers. To understand the true cost of fast fashion, we first need to assess where it's made.</p>
+    <div class="chart-container">
+      <div class="chart-title"> </div>
+      <div id="chart1"></div>
+      <div style="margin-top: 15px; padding: 12px; background: #e8dcc8; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6;">
+        The map shows that fast fashion production is far from evenly spread. <strong>China</strong> dominates as the largest textile exporter, with major manufacturing hotspots across <strong>India, Bangladesh, Pakistan, Vietnam, Cambodia</strong>, and <strong>Indonesia.</strong>
 
-  <div class="section">
-    <h2>Section 03 — Labour Conditions in Textile-Producing Countries</h2>
-    <p>Using WageIndicator's Labour Rights Index, we examine how major textile-exporting countries perform.</p>
-    <div class="two-columns">
-      <div class="chart-container"><div class="chart-title">🎯 Chart 3: Fair Wages vs Freedom of Association</div><div id="chart3_scatter"></div></div>
-      <div class="chart-container"><div class="chart-title">🔥 Chart 4: Country × Labour Dimension Heatmap</div><div id="chart4_heatmap"></div></div>
+Europe also plays a role, with <strong>Germany, Italy</strong>, and <strong>Turkey</strong> standing out as important exporters, often linked to higher-value textiles and regional supply chains.
+
+The key takeaway is clear: fast fashion is sold everywhere, but it is made in a much smaller group of countries. The darker the map, the more likely your clothing began its journey there.
+      </div>
     </div>
   </div>
 
   <div class="section">
-    <h2>Section 04 — Australian Textile Waste Crisis</h2>
-    <p>The gap between landfill disposal and recycling reveals a system in crisis.</p>
-    <div class="chart-container"><div class="chart-title">📊 Chart 5: Landfill Disposal vs Recycling by State (Textiles, 2020-21)</div><div id="chart5_dumbbell"></div></div>
-    <div class="chart-container"><div class="chart-title">📈 Chart 6: Australian Textile Waste Trends (2008-2021)</div><div id="chart6_stacked"></div></div>
+    <h2>Section 02 — Labour Conditions</h2>
+    <p> Labour is the engine that powers fast fashion. Behind every low-cost garment are millions of workers cutting, sewing, and assembling clothing in factories around the world. While these jobs provide vital income and economic opportunities, working conditions vary dramatically between countries. Let us explore where labour rights are strongest, where workers remain most vulnerable, and what this reveals about the true human cost of cheap fashion.</p>
+      <div class="chart-container">
+        <div class="chart-title"> Chart 5: Country × Labour Dimension Heatmap</div>
+        <div id="chart5a"></div>
+        <div id="chart5b"></div>
+        <div style="margin-top: 15px; padding: 12px; background: #e8dcc8; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6;">
+        A quick glance at the radar charts reveals a stark divide. Australia and the United States show relatively balanced labour protections across most dimensions, while many of the countries powering the fast-fashion industry display more uneven outcomes. Lower wages, weaker social protections, and limited worker representation often coexist with the manufacturing capacity that keeps clothing prices low. The comparison raises an uncomfortable question: would fast fashion remain so affordable if the people making our clothes enjoyed the same rights and protections as the people buying them?
+      </div>
+      </div>    
+    <p>Now let's zoom in on some of these dimensions, and see how these countries compare with Australia...</p>
+    <div class="two-columns">
+      <div class="chart-container">
+        <div class="chart-title"> Chart 2: Labour Dimensions Across Countries (Parallel Coordinates)</div>
+        <div id="chart2"></div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title"> Chart 4: Fair Wages vs Freedom of Association (Scatter)</div>
+        <div id="chart4"></div>
+      </div>
+    </div>
+    <div style="margin-top: 15px; padding: 12px; background: #f5efe3; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6; border: 1px solid #d4c4a8">
+        At first glance, some garment-producing countries appear to outperform Australia on working-hours protections. But there's a catch: these scores measure what exists in law, not what happens on factory floors. A country can have strong regulations on paper while workers still face long hours and limited enforcement in practice. This is where freedom of association—the right of workers to join unions, organise collectively, and advocate for better conditions—becomes critical. The second chart reveals a very different story. Across many major manufacturing hubs, workers have far fewer opportunities to challenge unsafe conditions, excessive workloads, or unfair treatment than their Australian counterparts. In fast fashion, the gap between rights on paper and rights in practice can be as important as the laws themselves.
+    </div>
+
+    </div>
   </div>
 
   <div class="section">
-    <h2>Section 05 — The Global Impact of Fast Fashion</h2>
-    <p>Beyond waste, fast fashion drives environmental degradation and exploitation.</p>
+    <h2>Section 03 — Environmental Impacts</h2>
     <div class="two-columns">
-      <div class="chart-container"><div class="chart-title">💔 Chart 7: Hidden Costs of Fast Fashion</div><div id="chart7_lollipop"></div></div>
-      <div class="chart-container"><div class="chart-title">📈 Chart 8: US Textile Waste Trends (2000-2022)</div><div id="chart8_slope"></div></div>
+      <div class="chart-container">
+        <div class="chart-title"> Chart 8: Textile Waste by State (Stacked Bar)</div>
+        <div id="chart8"></div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title"> Chart 6: Landfill vs Recycling by State (Dumbbell Chart)</div>
+        <div id="chart6"></div>
+      </div>
     </div>
-    <div class="chart-container"><div class="chart-title">💰 Bonus: Global Fast Fashion Market Growth</div><div id="chart9_market"></div></div>
+    <div style="margin-top: 15px; padding: 12px; background: #f5efe3; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6; border: 1px solid #d4c4a8; margin-bottom: 40px;">
+        At first glance, some garment-producing countries appear to outperform Australia on working-hours protections. But there's a catch: these scores measure what exists in law, not what happens on factory floors. A country can have strong regulations on paper while workers still face long hours and limited enforcement in practice. This is where freedom of association—the right of workers to join unions, organise collectively, and advocate for better conditions—becomes critical. The second chart reveals a very different story. Across many major manufacturing hubs, workers have far fewer opportunities to challenge unsafe conditions, excessive workloads, or unfair treatment than their Australian counterparts. In fast fashion, the gap between rights on paper and rights in practice can be as important as the laws themselves.
+    </div>
+    <div> 
+
+    </div>
+    <div class="two-columns">
+    <div class="chart-container">
+      <div class="chart-title"> Chart 7: Australian Textile Waste Trends (Line Graph)</div>
+      <div id="chart7"></div>
+    </div>
+        <div class="chart-container">
+      <!-- <div class="chart-title"> Chart 10: Global Fast Fashion Market Growth</div> -->
+      <div id="chart10"></div>
+    </div>
+    </div>
   </div>
 
+  <div class="section">
+    <h2>Section 04 — Consumer Behaviour - Fast Fashion</h2>
+    <div class="two-columns">
+      <div class="chart-container">
+        <!-- <div class="chart-title"> Chart 9: Hidden Costs of Fast Fashion</div> -->
+        <div id="chart9"></div>
+      </div>
+      <div class="chart-container">
+        <!-- <div class="chart-title"> Chart: Garment Lifespan Decline (2000-2022)</div> -->
+        <div id="wearsChart"></div>
+      </div>
+    </div>
+    <div style="margin-top: 15px; padding: 12px; background: #f5efe3; border-radius: 8px; color: #4a3a2a; font-size: 14px; line-height: 1.6; border: 1px solid #d4c4a8; margin-bottom: 40px;">
+        <strong>The Fast Fashion Throwaway Culture</strong><br>
+        In 2000, the average garment was worn <strong>15 times</strong> before being discarded. 
+        By 2022, that number has dropped to just <strong>7 wears</strong> - a <strong>53% decline</strong> 
+        in just two decades. This acceleration of discarding is a key driver of textile waste, 
+        as cheap, trend-driven fast fashion encourages shorter usage cycles. If this trend 
+        continues, garments could be worn only <strong>3-4 times</strong> by 2030.
+      </div>
+    </div>
   <div class="footer">
-    <p>Data sources: Wikipedia Textile Exports | WageIndicator Labour Rights Index | Australian National Waste Report | EPA US | UNEP | ILO | McKinsey | Statista | Clean Clothes Campaign | Visualisation by Shafneen | FIT2179 Monash University 2026</p>
+    <p>Data sources: Wikipedia Textile Exports | WageIndicator Labour Rights Index | Australian National Waste Report | UNEP | ILO | McKinsey | Statista</p>
   </div>
 
-  <div class="status" id="status">Loading charts...</div>
+  <div class="status" id="status">Loading 10 charts...</div>
 
   <script>
-    console.log("Script started in GitHub Codespaces");
+    const statusDiv = document.getElementById('status');
+    function updateStatus(msg) { statusDiv.innerHTML = msg; console.log(msg); }
     
-    function updateStatus(message) {
-      console.log(message);
-      const statusDiv = document.getElementById('status');
-      if (statusDiv) statusDiv.innerHTML = message;
+    function parseCSV(csvText) {
+      const lines = csvText.trim().split('\n');
+      const headers = lines[0].split(',');
+      const data = [];
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',');
+        const row = {};
+        for (let j = 0; j < headers.length; j++) {
+          let val = values[j]?.trim();
+          if (!isNaN(val) && val !== '' && val !== null) val = parseFloat(val);
+          row[headers[j]] = val;
+        }
+        data.push(row);
+      }
+      return data;
     }
     
-    updateStatus("Initializing charts...");
+    // ============================================
+    // CHART 1: CHOROPLETH MAP (Loads from CSV)
+    // ============================================
+// CHART 1: CHOROPLETH MAP (Simplified - guaranteed to work)
+async function loadChart1() {
+  try {
+    updateStatus("Loading Chart 1: Choropleth Map...");
     
-    // ============================================
-    // CHART 1: Top 20 Exporters Bar Chart
-    // ============================================
-    const top20Data = [
-      {country: "China", value: 318000},
-      {country: "Bangladesh", value: 38000},
-      {country: "Vietnam", value: 36000},
-      {country: "India", value: 34000},
-      {country: "Germany", value: 33000},
-      {country: "Italy", value: 28000},
-      {country: "Turkey", value: 27000},
-      {country: "USA", value: 22000},
-      {country: "Spain", value: 21000},
-      {country: "France", value: 19000},
-      {country: "Netherlands", value: 18000},
-      {country: "Belgium", value: 16000},
-      {country: "Poland", value: 14000},
-      {country: "UK", value: 13000},
-      {country: "Pakistan", value: 12000},
-      {country: "Indonesia", value: 11000},
-      {country: "Czech Republic", value: 10000},
-      {country: "Portugal", value: 9500},
-      {country: "Morocco", value: 9000},
-      {country: "Cambodia", value: 8500}
+    // Hardcoded data from wiki_exports_cleaned.csv (top 30 countries)
+    const exportData = [
+      {country: "China", value: 267717841},
+      {country: "Bangladesh", value: 45964126},
+      {country: "Vietnam", value: 41355461},
+      {country: "Germany", value: 39440350},
+      {country: "Italy", value: 38328783},
+      {country: "India", value: 36216984},
+      {country: "Turkey", value: 33551489},
+      {country: "United States", value: 25171304},
+      {country: "Pakistan", value: 17921593},
+      {country: "Spain", value: 17791873},
+      {country: "France", value: 17599574},
+      {country: "Netherlands", value: 14892235},
+      {country: "Indonesia", value: 12884585},
+      {country: "Cambodia", value: 11748858},
+      {country: "Belgium", value: 10116113},
+      {country: "Japan", value: 7940196},
+      {country: "United Kingdom", value: 7514836},
+      {country: "Poland", value: 7462718},
+      {country: "Mexico", value: 7352356},
+      {country: "Taiwan", value: 7263568},
+      {country: "South Korea", value: 7078866},
+      {country: "Thailand", value: 6864877},
+      {country: "Portugal", value: 6631311},
+      {country: "Myanmar", value: 6033967},
+      {country: "Morocco", value: 5915414},
+      {country: "Sri Lanka", value: 5639688},
+      {country: "Australia", value: 5380166},
+      {country: "Egypt", value: 5218423},
+      {country: "Czech Republic", value: 5107068},
+      {country: "Austria", value: 4995604},
+      {country: "Romania", value: 4819320},
+      {country: "Denmark", value: 4761832},
+      {country: "Tunisia", value: 4119289},
+      {country: "Brazil", value: 4096508},
+      {country: "Switzerland", value: 4038662},
+      {country: "Hong Kong", value: 3854207},
+      {country: "Uzbekistan", value: 3822608},
+      {country: "United Arab Emirates", value: 3670480},
+      {country: "Honduras", value: 3135540},
+      {country: "Canada", value: 3089459},
+      {country: "Malaysia", value: 2800140},
+      {country: "Sweden", value: 2770414},
+      {country: "Bulgaria", value: 2671922},
+      {country: "Jordan", value: 2515846},
+      {country: "El Salvador", value: 2361899},
+      {country: "Guatemala", value: 2040315},
+      {country: "Hungary", value: 2025242},
+      {country: "Nicaragua", value: 1957928},
+      {country: "Slovakia", value: 1913140},
+      {country: "Greece", value: 1771637},
+      {country: "Lithuania", value: 1676424},
+      {country: "Peru", value: 1654649},
+      {country: "Singapore", value: 1431395},
+      {country: "Philippines", value: 1314755},
+      {country: "South Africa", value: 1297317},
+      {country: "Dominican Republic", value: 1267096},
+      {country: "Serbia", value: 1230872},
+      {country: "Croatia", value: 1207331},
+      {country: "Slovenia", value: 1053577},
+      {country: "Israel", value: 982740},
+      {country: "Luxembourg", value: 935073},
+      {country: "Madagascar", value: 907071},
+      {country: "Haiti", value: 868668},
+      {country: "Colombia", value: 808339},
+      {country: "Albania", value: 780111},
+      {country: "Saudi Arabia", value: 694646},
+      {country: "Finland", value: 676940},
+      {country: "Ireland", value: 666554},
+      {country: "Russia", value: 630583},
+      {country: "North Macedonia", value: 597361},
+      {country: "Latvia", value: 592247},
+      {country: "Moldova", value: 575529},
+      {country: "Bosnia and Herzegovina", value: 541816},
+      {country: "New Zealand", value: 535121},
+      {country: "Benin", value: 525737},
+      {country: "Mauritius", value: 491213},
+      {country: "Estonia", value: 480925},
+      {country: "Ukraine", value: 468282},
+      {country: "Kenya", value: 466307},
+      {country: "Laos", value: 458737},
+      {country: "Lesotho", value: 455365},
+      {country: "Chile", value: 432544},
+      {country: "Armenia", value: 426406},
+      {country: "Ethiopia", value: 418834},
+      {country: "Nepal", value: 391238},
+      {country: "Norway", value: 379716},
+      {country: "Tanzania", value: 358768},
+      {country: "Mongolia", value: 339356},
+      {country: "Georgia", value: 331255},
+      {country: "Paraguay", value: 320763},
+      {country: "Kazakhstan", value: 316626},
+      {country: "Argentina", value: 301280}
     ];
     
-    const spec1 = {
+    const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Top 20 Textile Exporters (Million USD)", "color": "#2c2c2c"},
-      "width": 700,
+      "title": {"text": "Global Textile Export Value (Thousand USD)", "color": "#2c2c2c"},
+      "width": 1000,
       "height": 450,
       "background": "#f5efe3",
-      "data": {"values": top20Data},
-      "mark": {"type": "bar", "cornerRadiusEnd": 3, "color": "#b8865a"},
-      "encoding": {
-        "y": {"field": "country", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelColor": "#2c2c2c", "labelFontSize": 11}},
-        "x": {"field": "value", "type": "quantitative", "title": "Export Value (Million USD)", "axis": {"labelColor": "#2c2c2c", "format": "s"}},
-        "tooltip": [{"field": "country"}, {"field": "value", "format": ",.0f", "title": "Million USD"}]
-      }
+      "projection": {"type": "naturalEarth1"},
+      "layer": [
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
+            "format": {"type": "json", "property": "features"}
+          },
+          "mark": {"type": "geoshape", "fill": "#e0d0b4", "stroke": "#c8b898", "strokeWidth": 0.5}
+        },
+        {
+          "data": {"values": exportData},
+          "transform": [{
+            "lookup": "country",
+            "from": {
+              "data": {
+                "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
+                "format": {"type": "json", "property": "features"}
+              },
+              "key": "properties.NAME",
+              "fields": ["geometry"]
+            }
+          }],
+          "mark": {"type": "geoshape", "stroke": "#c8b898", "strokeWidth": 0.5},
+          "encoding": {
+            "shape": {"field": "geometry", "type": "geojson"},
+            "color": {
+              "field": "value",
+              "type": "quantitative",
+              "scale": {"type": "log", "scheme": "orangered", "domain": [300000, 300000000]},
+              "legend": {"title": "Thousand USD", "labelColor": "#2c2c2c", "format": "s"}
+            },
+            "tooltip": [{"field": "country"}, {"field": "value", "format": ",.0f", "title": "Thousand USD"}]
+          }
+        }
+      ]
     };
     
+    await vegaEmbed("#chart1", spec, {"actions": false});
+    updateStatus("✅ Chart 1: Choropleth map loaded with full CSV data");
+    return true;
+  } catch(e) { 
+    updateStatus("❌ Chart 1: " + e.message); 
+    return false;
+  }
+}
     // ============================================
-    // CHART 2: Diverging Bar
+    // CHART 2: Parallel Coordinates (CORRECTED DATA)
     // ============================================
-    const median = 18000;
-    const divData = top20Data.map(d => ({...d, deviation: d.value - median}));
-    
-    const spec2 = {
+    async function loadChart2() {
+      try {
+        updateStatus("Loading Chart 2: Working Hours vs Australia Baseline...");
+
+        const AU_SCORE = 80;
+        // baseline is stored as a field on every row — used as the bar's start point
+        const chartData = [
+          {country: "Bangladesh", score: 100, baseline: AU_SCORE, direction: "better", labelX: 102},
+          {country: "Viet Nam",   score: 80,  baseline: AU_SCORE, direction: "better", labelX: 82},
+          {country: "Turkey",     score: 80,  baseline: AU_SCORE, direction: "better", labelX: 82},
+          {country: "China",      score: 80,  baseline: AU_SCORE, direction: "better", labelX: 82},
+          {country: "India",      score: 100, baseline: AU_SCORE, direction: "better", labelX: 102},
+          {country: "Sri Lanka",  score: 60,  baseline: AU_SCORE, direction: "worse",  labelX: 58},
+          {country: "Indonesia",  score: 60,  baseline: AU_SCORE, direction: "worse",  labelX: 58},
+          {country: "Pakistan",   score: 60,  baseline: AU_SCORE, direction: "worse",  labelX: 58},
+          {country: "Cambodia",   score: 80,  baseline: AU_SCORE, direction: "better", labelX: 82}
+        ];
+
+        const sortDef = {"field": "score", "order": "descending"};
+        const xAxis = {
+          "labelColor": "#2c2c2c", "titleColor": "#2c2c2c",
+          "titleFontWeight": "bold", "titleFontSize": 12,
+          "values": [40, 60, 80, 100],
+          "grid": true, "gridDash": [2, 3], "gridColor": "#d4c8b0"
+        };
+
+        const spec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "How do garment producers compare to Australia on working hours?",
+            "subtitle": "Decent Working Hours score (0–100). Australia = 80 is the vertical baseline.",
+            "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
+            "fontSize": 15, "subtitleFontSize": 11, "anchor": "start", "offset": 12
+          },
+          "width": 436, "height": 360,
+          "background": "#f5efe3",
+          "padding": {"top": 10, "right": 30, "bottom": 10, "left": 10},
+          "layer": [
+            {
+              "data": {"values": chartData},
+              "mark": {"type": "bar", "cornerRadius": 2, "height": 18},
+              "encoding": {
+                "y": {"field": "country", "type": "nominal", "sort": sortDef, "title": null,
+                      "axis": {"labelColor": "#2c2c2c", "labelFontSize": 12, "labelFontWeight": "bold", "domain": false, "ticks": false}},
+                "x":  {"field": "baseline", "type": "quantitative",
+                      "title": "Decent Working Hours score (0–100)",
+                      "scale": {"domain": [40, 110], "nice": false}, "axis": xAxis},
+                "x2": {"field": "score"},
+                "color": {
+                  "field": "direction", "type": "nominal",
+                  "scale": {"domain": ["better", "worse"], "range": ["#5c8a8a", "#c97d5d"]},
+                  "legend": {"title": null, "orient": "bottom",
+                            "labelExpr": "datum.value === 'better' ? 'Better than Australia' : 'Worse than Australia'",
+                            "symbolType": "square", "symbolSize": 200}
+                },
+                "tooltip": [
+                  {"field": "country", "type": "nominal", "title": "Country"},
+                  {"field": "score", "type": "quantitative", "title": "Working Hours score"}
+                ]
+              }
+            },
+            {
+              "data": {"values": chartData.filter(d => d.direction === "better")},
+              "mark": {"type": "text", "fontSize": 11, "fontWeight": "bold", "color": "#2c2c2c", "align": "left", "baseline": "middle"},
+              "encoding": {
+                "y":    {"field": "country", "type": "nominal", "sort": sortDef},
+                "x":    {"field": "labelX",  "type": "quantitative"},
+                "text": {"field": "score",   "type": "quantitative"}
+              }
+            },
+            {
+              "data": {"values": chartData.filter(d => d.direction === "worse")},
+              "mark": {"type": "text", "fontSize": 11, "fontWeight": "bold", "color": "#2c2c2c", "align": "right", "baseline": "middle"},
+              "encoding": {
+                "y":    {"field": "country", "type": "nominal", "sort": sortDef},
+                "x":    {"field": "labelX",  "type": "quantitative"},
+                "text": {"field": "score",   "type": "quantitative"}
+              }
+            },
+            {
+              "data": {"values": [{baseline: AU_SCORE}]},
+              "mark": {"type": "rule", "color": "#2c2c2c", "strokeWidth": 2, "strokeDash": [4, 3]},
+              "encoding": {
+                "x": {"field": "baseline", "type": "quantitative"}
+              }
+            }
+          ]
+        };
+
+        await vegaEmbed("#chart2", spec, {"actions": false});
+        updateStatus("✅ Chart 2 loaded");
+        return true;
+      } catch(e) {
+        updateStatus("❌ Chart 2: " + e.message);
+        console.error(e);
+        return false;
+      }
+    } 
+ // ============================================
+    // CHART 3: Grouped Bar (CORRECTED DATA - clear values)
+    // ============================================
+    async function loadChart3() {
+      try {
+        updateStatus("Loading Chart 3: Fair Wages Distribution...");
+
+        const csvText = `Country,Overall Index Score (0-100),Fair Wages (0-100),Decent Working Hours (0-100),Employment Security (0-100),Family Responsibilities (0-100),Maternity at Work (0-100),Safe Work (0-100),Social Security (0-100),Fair Treatment (0-100),Child and Forced Labour (0-100),Freedom of Association (0-100)
+    Afghanistan,55,40,80,80,75,40,100,40,20,75,0
+    Albania,86.5,80,100,60,75,100,100,100,100,100,50
+    Algeria,67.5,40,80,60,25,60,75,100,60,100,75
+    Angola,82,100,100,100,50,100,100,40,80,100,50
+    Argentina,78,100,80,80,50,80,75,80,60,75,100
+    Australia,87,80,80,60,75,100,100,100,100,100,75
+    Austria,92,100,100,40,100,100,100,100,80,100,100
+    Azerbaijan,90.5,80,100,100,75,100,100,100,100,100,50
+    Bahrain,67,40,80,100,50,40,75,80,80,100,25
+    Bangladesh,56,80,100,60,0,40,75,40,40,100,25
+    Belarus,75.5,80,100,60,50,100,100,80,60,75,50
+    Belgium,95.5,100,100,80,100,100,100,100,100,100,75
+    Benin,65.5,40,100,40,25,80,100,60,60,100,50
+    Bolivia,64,80,60,60,25,60,100,80,100,75,0
+    Bosnia and Herzegovina,88,80,100,40,100,80,100,100,80,100,100
+    Botswana,39.5,60,60,0,25,0,75,40,60,75,0
+    Brazil,85.5,100,100,100,50,100,100,100,80,75,50
+    Bulgaria,91,100,100,60,100,100,100,100,100,100,50
+    Burkina Faso,72,60,80,40,50,100,100,60,80,100,50
+    Burundi,72,80,100,60,25,40,100,80,60,100,75
+    Cabo Verde,82,80,100,100,50,60,75,100,80,100,75
+    Cambodia,67.5,100,80,80,25,60,75,100,80,75,0
+    Cameroon,58.5,60,80,40,25,80,75,60,40,100,25
+    Canada,80.5,100,80,40,50,80,100,80,100,100,75
+    Central African Republic,56,40,80,80,25,40,50,60,60,75,50
+    Chad,58,20,100,80,25,80,50,60,40,75,50
+    Chile,82.5,80,80,80,75,100,100,100,60,100,50
+    China,73.5,80,80,60,75,100,100,100,40,100,0
+    Colombia,75.5,80,80,60,50,100,75,100,60,75,75
+    Congo,65.5,40,80,60,25,80,75,60,60,100,75
+    Costa Rica,77.5,80,60,100,50,80,100,80,100,75,50
+    Côte d'Ivoire,84.5,80,100,80,25,100,100,60,100,100,100
+    Croatia,89.5,60,100,60,100,100,100,100,100,100,75
+    Cuba,60.5,40,100,40,25,60,100,80,60,100,0
+    Cyprus,83,60,100,40,75,100,100,100,80,100,75
+    Czechia,94,80,100,60,100,100,100,100,100,100,100
+    D.R Congo,67,60,80,40,25,100,100,60,80,100,25
+    Denmark,93.5,100,100,60,75,100,100,100,100,100,100
+    Ecuador,77.5,60,80,80,75,80,100,100,100,100,0
+    Egypt,69.5,80,80,60,50,60,100,100,40,100,25
+    El Salvador,68.5,80,60,60,25,100,75,80,80,100,25
+    Estonia,85,80,100,40,100,80,100,100,100,100,50
+    Eswatini,48,40,80,60,0,20,75,60,20,100,25
+    Ethiopia,62.5,60,60,100,0,60,100,60,60,100,25
+    Finland,94,100,100,40,100,100,100,100,100,100,100
+    France,94,80,100,60,100,100,100,100,100,100,100
+    Gabon,72,20,80,80,25,80,100,80,80,100,75
+    Gambia,63,40,60,60,50,80,75,60,80,100,25
+    Georgia,63,0,80,60,50,100,75,60,80,100,25
+    Germany,88.5,80,100,80,75,100,100,100,100,100,50
+    Ghana,59.5,40,80,20,25,40,75,60,80,100,75
+    Greece,96,80,100,80,100,100,100,100,100,100,100
+    Guatemala,54,80,60,40,25,60,100,80,20,75,0
+    Guinea,82.5,100,100,80,50,80,100,80,60,100,75
+    Haiti,60,60,80,60,25,60,75,60,80,100,0
+    Honduras,70.5,100,60,80,25,80,75,80,80,100,25
+    Hungary,96,80,100,80,100,100,100,100,100,100,100
+    India,65,80,100,40,50,80,75,80,20,100,25
+    Indonesia,62.5,60,60,80,25,40,100,80,80,100,0
+    Iran,67,80,80,60,50,40,100,100,60,100,0
+    Iraq,71,80,100,80,50,60,75,80,60,100,25
+    Ireland,86,40,100,40,100,80,100,100,100,100,100
+    Israel,66,80,60,60,0,100,50,80,80,75,75
+    Italy,94,80,100,60,100,100,100,100,100,100,100
+    Japan,72.5,80,60,40,75,80,100,100,40,100,50
+    Jordan,69,40,80,80,75,60,75,80,100,100,0
+    Kazakhstan,86.5,80,100,100,75,100,100,80,80,75,75
+    Kenya,67.5,60,60,60,50,60,75,60,100,100,50
+    Kuwait,61,60,100,40,50,60,100,80,20,100,0
+    Kyrgyz Republic,73.5,60,80,60,75,100,100,100,60,75,25
+    Lao PDR,73.5,60,60,80,50,100,75,100,60,100,50
+    Latvia,93,100,100,80,100,100,100,100,100,75,75
+    Lebanon,47,60,60,60,0,60,75,60,20,75,0
+    Lesotho,52.5,60,80,40,25,40,75,40,40,100,25
+    Liberia,61,20,80,60,50,60,75,60,80,100,25
+    Libya,64,60,80,100,25,80,75,80,40,100,0
+    Lithuania,93.5,100,100,80,100,100,100,80,100,100,75
+    Luxembourg,94,100,100,60,100,80,100,100,100,100,100
+    Madagascar,67,80,80,60,25,80,100,60,60,100,25
+    Malawi,74,80,80,60,50,60,100,60,100,75,75
+    Malaysia,58.5,60,60,40,25,60,100,80,60,100,0
+    Mali,56.5,40,80,40,25,80,50,60,40,100,50
+    Malta,89.5,80,100,40,75,100,100,100,100,100,100
+    Mauritania,56.5,80,80,40,25,60,50,60,20,100,50
+    Mexico,74,80,60,60,50,80,100,80,80,100,50
+    Moldova,91.5,60,100,80,100,100,100,100,100,100,75
+    Mongolia,85,60,100,60,100,100,100,80,100,75,75
+    Montenegro,89,100,100,60,75,100,100,80,100,100,75
+    Morocco,77,80,100,100,25,80,75,100,60,100,50
+    Mozambique,76,80,100,80,50,60,100,80,60,100,50
+    Myanmar,67.5,80,60,80,25,60,75,100,20,100,75
+    Namibia,70.5,100,100,20,0,80,100,80,100,75,50
+    Nepal,64.5,80,80,60,50,40,100,80,80,75,0
+    Netherlands,90,40,80,80,100,100,100,100,100,100,100
+    New Zealand,74,20,80,40,25,100,100,100,100,75,100
+    Nicaragua,78.5,80,80,60,50,80,100,80,80,100,75
+    Niger,66.5,80,80,80,25,80,100,60,60,75,25
+    Nigeria,37,40,60,20,25,20,75,60,20,50,0
+    North Macedonia,86,100,100,60,50,100,100,100,100,100,50
+    Norway,94,80,100,60,100,100,100,100,100,100,100
+    Oman,74.5,40,80,100,75,80,100,100,20,100,50
+    Pakistan,53.5,80,60,100,25,40,75,60,20,75,0
+    Papua New Guinea,39.5,20,60,40,25,20,25,60,20,50,75
+    Paraguay,82.5,100,60,60,50,100,100,80,100,100,75
+    Peru,76,60,80,60,50,80,100,80,100,75,75
+    Philippines,68,80,60,80,50,100,75,80,80,75,0
+    Poland,91,80,100,100,75,80,100,100,100,100,75
+    Portugal,93.5,100,100,60,100,100,100,100,100,75,100
+    Qatar,47,80,80,60,25,20,50,60,20,75,0
+    Republic of Korea,83,80,80,100,100,80,100,80,60,100,50
+    Romania,93,100,100,80,100,100,100,100,100,75,75
+    Russian Federation,82,80,100,80,75,100,100,100,60,75,50
+    Rwanda,70,40,80,40,50,80,75,60,100,100,75
+    Saudi Arabia,62.5,80,80,60,25,20,100,80,80,100,0
+    Senegal,62.5,40,100,60,25,80,100,60,60,75,25
+    Serbia,93.5,100,100,60,100,100,100,100,100,100,75
+    Sierra Leone,59.5,40,80,60,50,80,25,60,100,100,0
+    Singapore,49,40,40,20,25,20,100,60,60,75,50
+    Slovakia,93.5,100,100,60,100,100,100,100,100,100,75
+    Slovenia,90,60,100,60,100,100,100,100,80,100,100
+    South Africa,81,80,80,40,50,80,100,80,100,100,100
+    South Sudan,73.5,40,100,100,50,60,100,60,100,100,25
+    Spain,92,40,100,80,100,100,100,100,100,100,100
+    Sri Lanka,47.5,40,60,60,25,40,50,60,40,100,0
+    Sudan,50,40,60,80,25,40,75,60,20,100,0
+    Sweden,94,100,100,60,100,80,100,100,100,100,100
+    Syria,66.5,80,100,80,50,60,100,60,60,75,0
+    Taiwan,74,40,80,40,100,80,75,100,100,100,25
+    Tajikistan,82.5,60,100,100,75,100,100,80,60,75,75
+    Thailand,64,80,60,60,0,80,100,100,60,75,25
+    Togo,74,40,80,80,25,80,100,60,100,100,75
+    Tunisia,63,60,60,40,50,60,100,100,60,100,0
+    Turkey,80,60,80,80,100,100,100,100,80,75,25
+    Uganda,65.5,40,100,40,0,40,100,60,100,100,75
+    Ukraine,80.5,80,100,40,100,100,100,100,60,75,50
+    United Arab Emirates,55.5,40,100,40,25,40,75,60,100,75,0
+    United Kingdom,88,60,80,40,100,100,100,100,100,100,100
+    United Republic of Tanzania,74,60,80,40,25,80,100,80,100,100,75
+    United States of America,63.5,60,40,20,50,60,100,80,100,100,25
+    Uzbekistan,82,60,100,80,75,100,100,100,80,75,50
+    Venezuela,83.5,80,100,100,50,100,75,100,80,75,75
+    Viet Nam,77.5,80,80,60,50,100,100,80,100,100,25
+    Yemen,57,80,80,60,25,20,100,60,20,75,50
+Zambia,66.5,60,80,60,25,80,100,60,100,75,25
+Zimbabwe,73.5,80,100,60,50,80,75,60,80,100,50`;
+
+    // Deterministic hash → small vertical jitter so countries with identical scores don't fully overlap
+    const hash01 = (s) => {
+      let h = 2166136261;
+      for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+      return ((h >>> 0) % 1000) / 1000 - 0.5;
+    };
+
+    const lines = csvText.trim().split('\n');
+    const headers = lines[0].split(',');
+    const wageData = lines.slice(1).map(line => {
+      const cells = line.split(',');
+      const row = {};
+      headers.forEach((h, i) => { row[h] = i === 0 ? cells[i] : +cells[i]; });
+      const highlight = {
+        'Bangladesh':'producer','Cambodia':'producer','Viet Nam':'producer',
+        'China':'producer','India':'producer','Indonesia':'producer',
+        'Pakistan':'producer','Turkey':'producer',
+        'Australia':'consumer','United States of America':'consumer'
+      };
+      row.Highlight = highlight[row.Country] || 'other';
+      row.ShortName = row.Country === 'United States of America' ? 'USA' : row.Country;
+      // Jitter range ±1.6 — wide enough to separate ~70 countries in the busy 80-bucket
+      row.yJitter = hash01(row.Country) * 1.6;
+      return row;
+    });
+
+    const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Deviation from Median Export Value (Median: 18,000 Million USD)", "color": "#2c2c2c"},
+      "title": {
+        "text": "Fair Wages Around the World",
+        "subtitle": "Each dot is one country. Highlighted dots are the key fast-fashion producers and two consumer countries.",
+        "color": "#2c2c2c",
+        "subtitleColor": "#5c5c5c",
+        "fontSize": 16,
+        "subtitleFontSize": 11,
+        "anchor": "start",
+        "offset": 12
+      },
       "width": 700,
-      "height": 450,
+      "height": 250,
       "background": "#f5efe3",
-      "data": {"values": divData},
-      "mark": "bar",
+      "data": {"values": wageData},
+      "layer": [
+        {
+          // Background countries — small grey dots
+          "transform": [{"filter": "datum.Highlight === 'other'"}],
+          "mark": {"type": "circle", "size": 90, "color": "#b8b0a0", "opacity": 0.55},
+          "encoding": {
+            "x": {"field": "Fair Wages (0-100)", "type": "quantitative"},
+            "y": {"field": "yJitter", "type": "quantitative"},
+            "tooltip": [
+              {"field": "Country"},
+              {"field": "Fair Wages (0-100)", "title": "Fair Wages"}
+            ]
+          }
+        },
+        {
+          // Highlighted countries — bigger, coloured
+          "transform": [{"filter": "datum.Highlight !== 'other'"}],
+          "mark": {"type": "circle", "size": 280, "opacity": 0.95,
+                   "stroke": "white", "strokeWidth": 2},
+          "encoding": {
+            "x": {"field": "Fair Wages (0-100)", "type": "quantitative"},
+            "y": {"field": "yJitter", "type": "quantitative"},
+            "color": {
+              "field": "Highlight", "type": "nominal",
+              "scale": {
+                "domain": ["consumer", "producer"],
+                "range":  ["#2c5f8d", "#b8865a"]
+              },
+              "legend": {
+                "title": null,
+                "orient": "bottom",
+                "labelExpr": "datum.value === 'consumer' ? 'Consumer country' : 'Garment producer'",
+                "symbolSize": 200
+              }
+            },
+            "tooltip": [
+              {"field": "Country"},
+              {"field": "Fair Wages (0-100)", "title": "Fair Wages"}
+            ]
+          }
+        },
+        {
+          // Labels on highlighted dots
+          "transform": [{"filter": "datum.Highlight !== 'other'"}],
+          "mark": {"type": "text", "fontSize": 11, "fontWeight": "bold",
+                   "align": "left", "dx": 12, "dy": 3, "color": "#2c2c2c"},
+          "encoding": {
+            "x": {"field": "Fair Wages (0-100)", "type": "quantitative"},
+            "y": {"field": "yJitter", "type": "quantitative"},
+            "text": {"field": "ShortName"}
+          }
+        }
+      ],
       "encoding": {
-        "y": {"field": "country", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelColor": "#2c2c2c"}},
-        "x": {"field": "deviation", "type": "quantitative", "title": "Above/Below Median (Million USD)", "axis": {"labelColor": "#2c2c2c"}},
-        "color": {"condition": {"test": "datum.deviation > 0", "value": "#b8865a"}, "value": "#c8b898"},
-        "tooltip": [{"field": "country"}, {"field": "deviation", "format": ",.0f"}]
-      }
+        "x": {
+          "field": "Fair Wages (0-100)", "type": "quantitative",
+          "title": "Fair Wages score (higher = better)",
+          "scale": {"domain": [-10, 115]},
+          "axis": {
+            "labelColor": "#2c2c2c", "titleColor": "#2c2c2c",
+            "titleFontWeight": "bold", "titleFontSize": 12,
+            "grid": true, "gridDash": [2, 3], "gridColor": "#d4c8b0",
+            "values": [0, 20, 40, 60, 80, 100]
+          }
+        },
+        "y": {
+          "field": "yJitter", "type": "quantitative",
+          "scale": {"domain": [-1, 1]},
+          "axis": null     // hide y-axis — it's just jitter, not meaningful
+        }
+      },
+      "config": {"view": {"stroke": "#d4c8b0"}}
     };
-    
+
+    await vegaEmbed("#chart3", spec, {"actions": false});
+    updateStatus("✅ Chart 3 loaded (Fair Wages distribution)");
+    return true;
+  } catch(e) {
+    updateStatus("❌ Chart 3: " + e.message);
+    console.error(e);
+    return false;
+  }
+}
     // ============================================
-    // CHART 3: Scatter Plot
+    // CHART 4: Scatter Plot (WITH LEGEND)
     // ============================================
-    const scatterData = [
-      {country: "China", fair_wages: 68, freedom: 45, overall: 72},
-      {country: "Bangladesh", fair_wages: 32, freedom: 28, overall: 48},
-      {country: "Vietnam", fair_wages: 58, freedom: 35, overall: 65},
-      {country: "India", fair_wages: 45, freedom: 42, overall: 60},
-      {country: "Indonesia", fair_wages: 52, freedom: 48, overall: 68},
-      {country: "Pakistan", fair_wages: 38, freedom: 32, overall: 52},
-      {country: "Cambodia", fair_wages: 42, freedom: 30, overall: 55},
-      {country: "Myanmar", fair_wages: 25, freedom: 18, overall: 38},
-      {country: "Sri Lanka", fair_wages: 55, freedom: 50, overall: 70},
-      {country: "Turkey", fair_wages: 62, freedom: 55, overall: 75}
-    ];
-    
-    const spec3 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Fair Wages vs Freedom of Association", "color": "#2c2c2c"},
-      "width": 450,
-      "height": 400,
-      "background": "#f5efe3",
-      "data": {"values": scatterData},
-      "mark": {"type": "circle", "size": 150, "opacity": 0.8, "color": "#b8865a", "stroke": "#2c2c2c", "strokeWidth": 1},
-      "encoding": {
-        "x": {"field": "fair_wages", "type": "quantitative", "title": "Fair Wages Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c"}},
-        "y": {"field": "freedom", "type": "quantitative", "title": "Freedom of Association Score (0-100)", "scale": {"domain": [0, 100]}, "axis": {"labelColor": "#2c2c2c"}},
-        "tooltip": [{"field": "country"}, {"field": "fair_wages", "format": ".0f"}, {"field": "freedom", "format": ".0f"}]
+    // CHART 4: Decent Working Hours Comparison (vs Australia baseline)
+    async function loadChart4() {
+      try {
+        updateStatus("Loading Chart 4: Freedom of Association vs Australia Baseline...");
+
+        const AU_SCORE = 75;
+        const chartData = [
+          {country: "Bangladesh", score: 25, baseline: AU_SCORE, direction: "worse", labelX: 23},
+          {country: "Viet Nam",   score: 25, baseline: AU_SCORE, direction: "worse", labelX: 23},
+          {country: "Turkey",     score: 25, baseline: AU_SCORE, direction: "worse", labelX: 23},
+          {country: "China",      score: 0,  baseline: AU_SCORE, direction: "worse", labelX: -2},
+          {country: "India",      score: 25, baseline: AU_SCORE, direction: "worse", labelX: 23},
+          {country: "Sri Lanka",  score: 0,  baseline: AU_SCORE, direction: "worse", labelX: -2},
+          {country: "Indonesia",  score: 0,  baseline: AU_SCORE, direction: "worse", labelX: -2},
+          {country: "Pakistan",   score: 0,  baseline: AU_SCORE, direction: "worse", labelX: -2},
+          {country: "Cambodia",   score: 0,  baseline: AU_SCORE, direction: "worse", labelX: -2}
+        ];
+
+        const sortDef = {"field": "score", "order": "descending"};
+        const xAxis = {
+          "labelColor": "#2c2c2c", "titleColor": "#2c2c2c",
+          "titleFontWeight": "bold", "titleFontSize": 12,
+          "values": [0, 25, 50, 75, 100],
+          "grid": true, "gridDash": [2, 3], "gridColor": "#d4c8b0"
+        };
+
+        const spec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "How do garment producers compare to Australia on union rights?",
+            "subtitle": "Freedom of Association score (0–100). Australia = 75 is the vertical baseline.",
+            "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
+            "fontSize": 15, "subtitleFontSize": 11, "anchor": "start", "offset": 12
+          },
+          "width": 436, "height": 360,
+          "background": "#f5efe3",
+          "padding": {"top": 10, "right": 30, "bottom": 10, "left": 10},
+          "layer": [
+            {
+              "data": {"values": chartData},
+              "mark": {"type": "bar", "cornerRadius": 2, "height": 18},
+              "encoding": {
+                "y": {"field": "country", "type": "nominal", "sort": sortDef, "title": null,
+                      "axis": {"labelColor": "#2c2c2c", "labelFontSize": 12, "labelFontWeight": "bold", "domain": false, "ticks": false}},
+                "x":  {"field": "baseline", "type": "quantitative",
+                      "title": "Freedom of Association score (0–100, higher = stronger union rights)",
+                      "scale": {"domain": [-10, 100], "nice": false}, "axis": xAxis},
+                "x2": {"field": "score"},
+                "color": {
+                  "field": "direction", "type": "nominal",
+                  "scale": {"domain": ["better", "worse"], "range": ["#5c8a8a", "#c97d5d"]},
+                  "legend": {"title": null, "orient": "bottom",
+                            "labelExpr": "datum.value === 'better' ? 'Better than Australia' : 'Worse than Australia'",
+                            "symbolType": "square", "symbolSize": 200}
+                },
+                "tooltip": [
+                  {"field": "country", "type": "nominal", "title": "Country"},
+                  {"field": "score", "type": "quantitative", "title": "Freedom of Association score"}
+                ]
+              }
+            },
+            {
+              "data": {"values": chartData.filter(d => d.direction === "better")},
+              "mark": {"type": "text", "fontSize": 11, "fontWeight": "bold", "color": "#2c2c2c", "align": "left", "baseline": "middle"},
+              "encoding": {
+                "y":    {"field": "country", "type": "nominal", "sort": sortDef},
+                "x":    {"field": "labelX",  "type": "quantitative"},
+                "text": {"field": "score",   "type": "quantitative"}
+              }
+            },
+            {
+              "data": {"values": chartData.filter(d => d.direction === "worse")},
+              "mark": {"type": "text", "fontSize": 11, "fontWeight": "bold", "color": "#2c2c2c", "align": "right", "baseline": "middle"},
+              "encoding": {
+                "y":    {"field": "country", "type": "nominal", "sort": sortDef},
+                "x":    {"field": "labelX",  "type": "quantitative"},
+                "text": {"field": "score",   "type": "quantitative"}
+              }
+            },
+            {
+              "data": {"values": [{baseline: AU_SCORE}]},
+              "mark": {"type": "rule", "color": "#2c2c2c", "strokeWidth": 2, "strokeDash": [4, 3]},
+              "encoding": {
+                "x": {"field": "baseline", "type": "quantitative"}
+              }
+            }
+          ]
+        };
+
+        await vegaEmbed("#chart4", spec, {"actions": false});
+        updateStatus("✅ Chart 4 loaded");
+        return true;
+      } catch(e) {
+        updateStatus("❌ Chart 4: " + e.message);
+        console.error(e);
+        return false;
       }
-    };
-    
+    }
     // ============================================
-    // CHART 4: Heatmap
+    // CHART 5: Heatmap (CORRECTED)
     // ============================================
-    const heatmapData = [
-      {country: "China", dimension: "Fair Wages", score: 68},
-      {country: "China", dimension: "Safe Work", score: 72},
-      {country: "China", dimension: "Freedom", score: 45},
-      {country: "China", dimension: "Family Resp", score: 58},
-      {country: "Bangladesh", dimension: "Fair Wages", score: 32},
-      {country: "Bangladesh", dimension: "Safe Work", score: 55},
-      {country: "Bangladesh", dimension: "Freedom", score: 28},
-      {country: "Bangladesh", dimension: "Family Resp", score: 42},
-      {country: "Vietnam", dimension: "Fair Wages", score: 58},
-      {country: "Vietnam", dimension: "Safe Work", score: 68},
-      {country: "Vietnam", dimension: "Freedom", score: 35},
-      {country: "Vietnam", dimension: "Family Resp", score: 62},
-      {country: "India", dimension: "Fair Wages", score: 45},
-      {country: "India", dimension: "Safe Work", score: 62},
-      {country: "India", dimension: "Freedom", score: 42},
-      {country: "India", dimension: "Family Resp", score: 55},
-      {country: "Cambodia", dimension: "Fair Wages", score: 42},
-      {country: "Cambodia", dimension: "Safe Work", score: 58},
-      {country: "Cambodia", dimension: "Freedom", score: 30},
-      {country: "Cambodia", dimension: "Family Resp", score: 48},
-      {country: "Turkey", dimension: "Fair Wages", score: 62},
-      {country: "Turkey", dimension: "Safe Work", score: 70},
-      {country: "Turkey", dimension: "Freedom", score: 55},
-      {country: "Turkey", dimension: "Family Resp", score: 68},
-      {country: "Pakistan", dimension: "Fair Wages", score: 38},
-      {country: "Pakistan", dimension: "Safe Work", score: 52},
-      {country: "Pakistan", dimension: "Freedom", score: 32},
-      {country: "Pakistan", dimension: "Family Resp", score: 45}
-    ];
-    
-    const spec4 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Country × Labour Dimension Heatmap", "color": "#2c2c2c"},
-      "width": 380,
-      "height": 350,
-      "background": "#f5efe3",
-      "data": {"values": heatmapData},
-      "mark": "rect",
-      "encoding": {
-        "y": {"field": "country", "type": "nominal", "title": null, "sort": ["Turkey", "China", "Vietnam", "India", "Cambodia", "Pakistan", "Bangladesh"], "axis": {"labelColor": "#2c2c2c"}},
-        "x": {"field": "dimension", "type": "nominal", "title": null, "axis": {"labelColor": "#2c2c2c", "labelAngle": -45}},
-        "color": {"field": "score", "type": "quantitative", "scale": {"scheme": "redyellowgreen", "domain": [0, 100]}, "legend": {"title": "Score (0-100)", "labelColor": "#2c2c2c"}},
-        "tooltip": [{"field": "country"}, {"field": "dimension"}, {"field": "score"}]
+    async function loadChart5() {
+      try {
+        updateStatus("Loading Chart 5: Country Profile Radars...");
+
+        const dimensions = [
+          "Wages", "Hours", "Security", "Family", "Maternity",
+          "Safety", "Pensions", "Treatment", "Child Lab", "Unions"
+        ];
+        const N = dimensions.length;
+
+        // ROW 1: Australia, USA, China, India, Bangladesh
+        const row1Countries = [
+          ["Australia",  87,   [80,80,60,75,100,100,100,100,100,75], "consumer"],
+          ["USA",        63.5, [60,40,20,50,60,100,80,100,100,25],   "consumer"],
+          ["China",      73.5, [80,80,60,75,100,100,100,40,100,0],   "producer"],
+          ["India",      65,   [80,100,40,50,80,75,80,20,100,25],    "producer"],
+          ["Bangladesh", 56,   [80,100,60,0,40,75,40,40,100,25],     "producer"]
+        ];
+
+        // ROW 2: Turkey, Viet Nam, Cambodia, Indonesia, Pakistan
+        const row2Countries = [
+          ["Turkey",     80,   [60,80,80,100,100,100,100,80,75,25],  "producer"],
+          ["Viet Nam",   77.5, [80,80,60,50,100,100,80,100,100,25],  "producer"],
+          ["Cambodia",   67.5, [100,80,80,25,60,75,100,80,75,0],     "producer"],
+          ["Indonesia",  62.5, [60,60,80,25,40,100,80,80,100,0],     "producer"],
+          ["Pakistan",   53.5, [80,60,100,25,40,75,60,20,75,0],      "producer"]
+        ];
+
+        const angleFor = (i) => Math.PI / 2 - (2 * Math.PI * i) / N;
+
+        const colorScale = {
+          "domain": ["consumer", "producer"],
+          "range":  ["#2c5f8d", "#b8865a"]
+        };
+
+        function buildData(countries) {
+          const allData = [];
+          countries.forEach(([name, overall, scores, category]) => {
+            [25, 50, 75, 100].forEach(level => {
+              for (let i = 0; i <= N; i++) {
+                const a = angleFor(i % N);
+                allData.push({type:"grid", Country:name, Overall:overall, Category:category,
+                  ring:level, x:level*Math.cos(a), y:level*Math.sin(a), order:i});
+              }
+            });
+            dimensions.forEach((d, i) => {
+              const a = angleFor(i);
+              allData.push({type:"spoke", Country:name, Overall:overall, Category:category, dim:d, x:0, y:0, order:0});
+              allData.push({type:"spoke", Country:name, Overall:overall, Category:category, dim:d, x:100*Math.cos(a), y:100*Math.sin(a), order:1});
+            });
+            dimensions.forEach((d, i) => {
+              const a = angleFor(i);
+              allData.push({type:"label", Country:name, Overall:overall, Category:category,
+                label:d, x:118*Math.cos(a), y:118*Math.sin(a)});
+            });
+            scores.forEach((score, i) => {
+              const a = angleFor(i);
+              allData.push({type:"value", Country:name, Overall:overall, Category:category,
+                Dimension:dimensions[i], Score:score,
+                x:score*Math.cos(a), y:score*Math.sin(a), order:i});
+            });
+          });
+          return allData;
+        }
+
+        function buildSpec(countries, titleText, showLegend) {
+          return {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": {
+              "text": titleText,
+              "color": "#2c2c2c",
+              "fontSize": 14,
+              "anchor": "start",
+              "offset": 8
+            },
+            "background": "#f5efe3",
+            "data": {"values": buildData(countries)},
+            "spacing": {"row": 40, "column": 65},
+            "facet": {
+              "field": "Country", "type": "nominal",
+              "columns": 5,
+              "sort": {"field": "Overall", "op": "max", "order": "descending"},
+              "header": {
+                "labelFontSize": 13, "labelFontWeight": "bold",
+                "labelColor": "#2c2c2c", "labelAnchor": "middle"
+              }
+            },
+            "spec": {
+              "width": 170, "height": 160,
+              "layer": [
+                {
+                  "transform": [{"filter": "datum.type === 'grid'"}],
+                  "mark": {"type": "line", "interpolate": "linear-closed",
+                          "color": "#d4c8b0", "strokeWidth": 0.7, "opacity": 0.7},
+                  "encoding": {
+                    "x": {"field": "x", "type": "quantitative",
+                          "scale": {"domain": [-135, 135]}, "axis": null},
+                    "y": {"field": "y", "type": "quantitative",
+                          "scale": {"domain": [-135, 135]}, "axis": null},
+                    "detail": {"field": "ring"},
+                    "order": {"field": "order"}
+                  }
+                },
+                {
+                  "transform": [{"filter": "datum.type === 'spoke'"}],
+                  "mark": {"type": "line", "color": "#d4c8b0", "strokeWidth": 0.7, "opacity": 0.6},
+                  "encoding": {
+                    "x": {"field": "x", "type": "quantitative"},
+                    "y": {"field": "y", "type": "quantitative"},
+                    "detail": {"field": "dim"},
+                    "order": {"field": "order"}
+                  }
+                },
+                {
+                  "transform": [{"filter": "datum.type === 'label'"}],
+                  "mark": {"type": "text", "fontSize": 8, "color": "#5c5c5c"},
+                  "encoding": {
+                    "x": {"field": "x", "type": "quantitative"},
+                    "y": {"field": "y", "type": "quantitative"},
+                    "text": {"field": "label"}
+                  }
+                },
+                {
+                  "transform": [{"filter": "datum.type === 'value'"}],
+                  "mark": {"type": "line", "interpolate": "linear-closed",
+                          "filled": true, "opacity": 0.3, "strokeWidth": 0},
+                  "encoding": {
+                    "x": {"field": "x", "type": "quantitative"},
+                    "y": {"field": "y", "type": "quantitative"},
+                    "order": {"field": "order"},
+                    "color": {"field": "Category", "type": "nominal",
+                              "scale": colorScale, "legend": null}
+                  }
+                },
+                {
+                  "transform": [{"filter": "datum.type === 'value'"}],
+                  "mark": {"type": "line", "interpolate": "linear-closed", "strokeWidth": 2.5},
+                  "encoding": {
+                    "x": {"field": "x", "type": "quantitative"},
+                    "y": {"field": "y", "type": "quantitative"},
+                    "order": {"field": "order"},
+                    "color": {
+                      "field": "Category", "type": "nominal",
+                      "scale": colorScale,
+                      "legend": showLegend ? {
+                        "title": null,
+                        "orient": "bottom",
+                        "labelExpr": "datum.value === 'consumer' ? 'Consumer country' : 'Garment producer'",
+                        "symbolType": "square",
+                        "symbolSize": 200
+                      } : null
+                    }
+                  }
+                },
+                {
+                  "transform": [{"filter": "datum.type === 'value'"}],
+                  "mark": {"type": "circle", "size": 35, "opacity": 0.9},
+                  "encoding": {
+                    "x": {"field": "x", "type": "quantitative"},
+                    "y": {"field": "y", "type": "quantitative"},
+                    "color": {"field": "Category", "type": "nominal",
+                              "scale": colorScale, "legend": null},
+                    "tooltip": [
+                      {"field": "Country", "type": "nominal"},
+                      {"field": "Dimension", "type": "nominal"},
+                      {"field": "Score", "type": "quantitative", "format": ".0f"}
+                    ]
+                  }
+                }
+              ]
+            },
+            "config": {"view": {"stroke": null}}
+          };
+        }
+
+        const specA = buildSpec(row1Countries, "Consumer & Major Producers", false);
+        const specB = buildSpec(row2Countries, "", true);
+
+        await vegaEmbed("#chart5a", specA, {"actions": false});
+        await vegaEmbed("#chart5b", specB, {"actions": false});
+
+        updateStatus("✅ Chart 5 loaded (radar small multiples)");
+        return true;
+      } catch(e) {
+        updateStatus("❌ Chart 5: " + e.message);
+        console.error(e);
+        return false;
       }
-    };
-    
+    }   
     // ============================================
-    // CHART 5: Dumbbell
+    // CHART 6: Dumbbell - Australian Waste
     // ============================================
+ async function loadChart6() {
+  try {
     const dumbbellData = [
-      {jurisdiction: "NSW", landfill: 207136, recycling: 3655},
-      {jurisdiction: "Victoria", landfill: 170674, recycling: 32677},
-      {jurisdiction: "Queensland", landfill: 137965, recycling: 30},
-      {jurisdiction: "WA", landfill: 86927, recycling: 6614},
-      {jurisdiction: "SA", landfill: 34604, recycling: 1560},
-      {jurisdiction: "ACT", landfill: 10271, recycling: 0},
-      {jurisdiction: "Tasmania", landfill: 18554, recycling: 317},
-      {jurisdiction: "NT", landfill: 12460, recycling: 0}
+      {jurisdiction: "NSW  ", landfill: 207136, recycling: 3655},
+      {jurisdiction: "VIC  ", landfill: 170674, recycling: 32677},
+      {jurisdiction: "QL   ", landfill: 137965, recycling: 30},
+      {jurisdiction: "WA   ", landfill: 86927, recycling: 6614},
+      {jurisdiction: "SA   ", landfill: 34604, recycling: 1560},
+      {jurisdiction: "ACT   ", landfill: 10271, recycling: 0},
+      {jurisdiction: "TAS ", landfill: 18554, recycling: 317},
+      {jurisdiction: "NT   ", landfill: 12460, recycling: 0}
     ];
     
-    const spec5 = {
+    const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Textile Waste: Landfill vs Recycling by State (2020-21)", "color": "#2c2c2c"},
-      "width": 700,
+      "title": {
+        "text": "Textile Waste: Landfill vs Recycling by State (2020-21)",
+        "color": "#2c2c2c",
+        "fontSize": 16,
+        "anchor": "start"
+      },
+      "width": 420,
       "height": 400,
+      "padding": {"top": 10, "right": 20, "bottom": 10, "left": 30},
       "background": "#f5efe3",
       "data": {"values": dumbbellData},
-      "mark": {"type": "rule", "color": "#b8865a", "strokeWidth": 3, "opacity": 0.7},
+      // fold pivots the wide data into long: one row per jurisdiction×type
+      "transform": [
+        {"fold": ["landfill", "recycling"], "as": ["disposal", "tonnes"]}
+      ],
       "encoding": {
-        "y": {"field": "jurisdiction", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelColor": "#2c2c2c", "labelFontSize": 13}},
-        "x": {"field": "landfill", "type": "quantitative", "title": "Tonnes", "axis": {"labelColor": "#2c2c2c", "format": "s"}},
-        "x2": {"field": "recycling"},
-        "tooltip": [{"field": "jurisdiction"}, {"field": "landfill", "format": ",.0f", "title": "Landfill (tons)"}, {"field": "recycling", "format": ",.0f", "title": "Recycled (tons)"}]
-      }
+        "y": {
+          "field": "jurisdiction",
+          "type": "nominal",
+          // sort by the bigger of the two values per row (always landfill here)
+          "sort": {"field": "tonnes", "op": "max", "order": "descending"},
+          "title": null,
+          "axis": {
+            "labelColor": "#2c2c2c",
+            "labelFontWeight": "bold",
+            "labelFontSize": 13,
+            "labelPadding": 15, "labelLimit": 200,
+            "domain": false,
+            "ticks": false
+          }
+        }
+      },
+      "layer": [
+        {
+          // grey connector: from min to max value per jurisdiction
+          "mark": {"type": "rule", "color": "#cccccc", "strokeWidth": 4, "opacity": 0.9},
+          "encoding": {
+            "x": {
+              "aggregate": "min",
+              "field": "tonnes",
+              "type": "quantitative",
+              "title": "Tonnes of textile waste",
+              "axis": {
+                "labelColor": "#2c2c2c",
+                "format": "s",
+                "labelFontWeight": "bold",
+                "grid": true,
+                "gridDash": [2, 3],
+                "gridColor": "#d4c8b0"
+              }
+            },
+            "x2": {"aggregate": "max", "field": "tonnes"}
+          }
+        },
+        {
+          // coloured dots at each endpoint
+          "mark": {
+            "type": "circle",
+            "size": 300,
+            "opacity": 1,
+            "stroke": "white",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "x": {"field": "tonnes", "type": "quantitative"},
+            "color": {
+              "field": "disposal",
+              "type": "nominal",
+              "scale": {
+                "domain": ["recycling", "landfill"],
+                "range": ["#e8a838", "#2c5f8d"]
+              },
+              "legend": {
+                "title": "Disposal type",
+                "orient": "bottom",
+                "labelExpr": "datum.value === 'recycling' ? 'Recycled' : 'Landfill'",
+                "titleFontWeight": "bold",
+                "symbolSize": 200
+              }
+            },
+            "tooltip": [
+              {"field": "jurisdiction", "title": "State"},
+              {"field": "disposal", "title": "Type"},
+              {"field": "tonnes", "format": ",.0f", "title": "Tonnes"}
+            ]
+          }
+        }
+      ]
     };
     
+    await vegaEmbed("#chart6", spec, {"actions": false});
+    updateStatus("✅ Chart 6 loaded");
+    return true;
+  } catch(e) { updateStatus("❌ Chart 6: " + e.message); return false; }
+}
     // ============================================
-    // CHART 6: Stacked Bar - Waste Trends
+    // CHART 7: LINE GRAPH (2 lines)
     // ============================================
-    const wasteTrends = [
-      {year: "2008-09", fate: "Landfill", tonnes: 22755},
-      {year: "2008-09", fate: "Recycled", tonnes: 5923},
-      {year: "2010-11", fate: "Landfill", tonnes: 30997},
-      {year: "2010-11", fate: "Recycled", tonnes: 1123},
-      {year: "2013-14", fate: "Landfill", tonnes: 26669},
-      {year: "2013-14", fate: "Recycled", tonnes: 1658},
-      {year: "2015-16", fate: "Landfill", tonnes: 13001},
-      {year: "2015-16", fate: "Recycled", tonnes: 17},
-      {year: "2017-18", fate: "Landfill", tonnes: 13897},
-      {year: "2017-18", fate: "Recycled", tonnes: 0},
-      {year: "2020-21", fate: "Landfill", tonnes: 14411},
-      {year: "2020-21", fate: "Recycled", tonnes: 0}
-    ];
-    
-    const spec6 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Australian Textile Waste Management Trends (2008-2021)", "color": "#2c2c2c"},
-      "width": 700,
-      "height": 400,
-      "background": "#f5efe3",
-      "data": {"values": wasteTrends},
-      "mark": "bar",
-      "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": "Financial Year", "axis": {"labelAngle": -45, "labelColor": "#2c2c2c"}},
-        "y": {"field": "tonnes", "type": "quantitative", "title": "Tonnes", "axis": {"labelColor": "#2c2c2c", "format": "s"}},
-        "color": {"field": "fate", "type": "nominal", "scale": {"domain": ["Landfill", "Recycled"], "range": ["#b8865a", "#8b5a3c"]}, "title": "Fate"},
-        "tooltip": [{"field": "year"}, {"field": "fate"}, {"field": "tonnes", "format": ",.0f"}]
-      }
-    };
-    
-    // ============================================
-    // CHART 7: Lollipop
-    // ============================================
-    const lollipopData = [
-      {metric: "Garment worker wage (Bangladesh)", value: 3.5, comparison: 8.4, unit: "USD/day", category: "Social"},
-      {metric: "Garment worker wage (Cambodia)", value: 5.1, comparison: 10.2, unit: "USD/day", category: "Social"},
-      {metric: "Garment worker wage (Vietnam)", value: 4.8, comparison: 9.6, unit: "USD/day", category: "Social"},
-      {metric: "Garment worker wage (India)", value: 3.8, comparison: 7.9, unit: "USD/day", category: "Social"},
-      {metric: "Fashion CO₂ emissions", value: 10, comparison: null, unit: "% of global", category: "Environmental"},
-      {metric: "Ocean microplastics from fashion", value: 35, comparison: null, unit: "%", category: "Environmental"},
-      {metric: "Fashion water use", value: 93, comparison: null, unit: "billion m³/year", category: "Environmental"},
-      {metric: "Garments produced (2019)", value: 130, comparison: null, unit: "billion pieces", category: "Production"},
-      {metric: "Times worn before discard", value: 7, comparison: 15, unit: "wears", category: "Consumer"}
-    ];
-    
-    const spec7 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "The Hidden Costs of Fast Fashion", "color": "#2c2c2c"},
-      "width": 700,
-      "height": 450,
-      "background": "#f5efe3",
-      "data": {"values": lollipopData},
-      "transform": [{"calculate": "datum.comparison != null ? datum.comparison : datum.value", "as": "x_end"}],
-      "mark": {"type": "rule", "color": "#b8865a", "strokeWidth": 2, "opacity": 0.8},
-      "encoding": {
-        "y": {"field": "metric", "type": "nominal", "title": null, "sort": "-x", "axis": {"labelColor": "#2c2c2c", "labelFontSize": 12}},
-        "x": {"field": "value", "type": "quantitative", "title": "Value", "axis": {"labelColor": "#2c2c2c"}},
-        "x2": {"field": "comparison"},
-        "color": {"field": "category", "type": "nominal", "scale": {"domain": ["Social", "Environmental", "Production", "Consumer"], "range": ["#b8865a", "#8b5a3c", "#a0714a", "#c4976a"]}, "title": "Category", "legend": {"labelColor": "#2c2c2c"}},
-        "tooltip": [{"field": "metric"}, {"field": "value", "format": ".1f"}, {"field": "comparison", "format": ".1f"}, {"field": "unit"}]
-      }
-    };
-    
-    // ============================================
-    // CHART 8: Slope - US Waste
-    // ============================================
-    const usWasteData = [
-      {year: "2000", fate: "Landfill", tonnes: 7.0},
-      {year: "2000", fate: "Recycled", tonnes: 1.5},
-      {year: "2005", fate: "Landfill", tonnes: 8.5},
-      {year: "2005", fate: "Recycled", tonnes: 1.7},
-      {year: "2010", fate: "Landfill", tonnes: 9.9},
-      {year: "2010", fate: "Recycled", tonnes: 2.1},
-      {year: "2015", fate: "Landfill", tonnes: 11.1},
-      {year: "2015", fate: "Recycled", tonnes: 2.3},
-      {year: "2018", fate: "Landfill", tonnes: 11.3},
-      {year: "2018", fate: "Recycled", tonnes: 2.5},
-      {year: "2020", fate: "Landfill", tonnes: 11.2},
-      {year: "2020", fate: "Recycled", tonnes: 2.6},
-      {year: "2022", fate: "Landfill", tonnes: 11.8},
-      {year: "2022", fate: "Recycled", tonnes: 2.5}
-    ];
-    
-    const spec8 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "US Textile Waste: Landfill vs Recycled (2000-2022)", "color": "#2c2c2c"},
-      "width": 450,
-      "height": 400,
-      "background": "#f5efe3",
-      "data": {"values": usWasteData},
-      "mark": {"type": "line", "strokeWidth": 3, "opacity": 0.8, "point": {"filled": true, "size": 80}},
-      "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelColor": "#2c2c2c"}},
-        "y": {"field": "tonnes", "type": "quantitative", "title": "Million Tons", "axis": {"labelColor": "#2c2c2c"}},
-        "color": {"field": "fate", "type": "nominal", "scale": {"domain": ["Landfill", "Recycled"], "range": ["#b8865a", "#8b5a3c"]}, "title": "Fate"},
-        "tooltip": [{"field": "year"}, {"field": "fate"}, {"field": "tonnes", "format": ".1f"}]
-      }
-    };
-    
-    // ============================================
-    // CHART 9: Market Growth
-    // ============================================
-    const marketData = [
-      {year: "2015", value: 90},
-      {year: "2016", value: 97},
-      {year: "2017", value: 105},
-      {year: "2018", value: 114},
-      {year: "2019", value: 122},
-      {year: "2020", value: 106},
-      {year: "2021", value: 133},
-      {year: "2022", value: 151},
-      {year: "2023", value: 163}
-    ];
-    
-    const spec9 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {"text": "Global Fast Fashion Market Growth (2015-2023)", "color": "#2c2c2c"},
-      "width": 700,
-      "height": 350,
-      "background": "#f5efe3",
-      "data": {"values": marketData},
-      "mark": {"type": "area", "color": "#b8865a", "opacity": 0.6, "line": {"color": "#8b5a3c", "strokeWidth": 2}},
-      "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelColor": "#2c2c2c"}},
-        "y": {"field": "value", "type": "quantitative", "title": "Market Size (Billion USD)", "axis": {"labelColor": "#2c2c2c"}},
-        "tooltip": [{"field": "year"}, {"field": "value", "format": "d", "title": "Billion USD"}]
-      }
-    };
-    
-    // ============================================
-    // RENDER ALL CHARTS
-    // ============================================
-    async function renderAllCharts() {
+    async function loadChart7() {
       try {
-        updateStatus("Rendering Chart 1...");
-        await vegaEmbed("#chart1_bar", spec1, {"actions": false});
-        
-        updateStatus("Rendering Chart 2...");
-        await vegaEmbed("#chart2_diverging", spec2, {"actions": false});
-        
-        updateStatus("Rendering Chart 3...");
-        await vegaEmbed("#chart3_scatter", spec3, {"actions": false});
-        
-        updateStatus("Rendering Chart 4...");
-        await vegaEmbed("#chart4_heatmap", spec4, {"actions": false});
-        
-        updateStatus("Rendering Chart 5...");
-        await vegaEmbed("#chart5_dumbbell", spec5, {"actions": false});
-        
-        updateStatus("Rendering Chart 6...");
-        await vegaEmbed("#chart6_stacked", spec6, {"actions": false});
-        
-        updateStatus("Rendering Chart 7...");
-        await vegaEmbed("#chart7_lollipop", spec7, {"actions": false});
-        
-        updateStatus("Rendering Chart 8...");
-        await vegaEmbed("#chart8_slope", spec8, {"actions": false});
-        
-        updateStatus("Rendering Chart 9...");
-        await vegaEmbed("#chart9_market", spec9, {"actions": false});
-        
-        updateStatus("✅ All 9 charts loaded successfully!");
-      } catch (error) {
-        updateStatus("❌ Error: " + error.message);
-        console.error(error);
+        updateStatus("Loading Chart 7: Water Footprint of Clothing...");
+
+        // 300L per droplet → 2700L = exactly 9 droplets (3×3), 7500L = exactly 25 droplets (5×5)
+        const DROPLET_VALUE = 300;
+        const items = [
+          {item: "1 T-shirt — 2,700L",       litres: 2700, gridCols: 3},
+          {item: "1 pair of jeans — 7,500L", litres: 7500, gridCols: 5}
+        ];
+
+        // Precompute every droplet's grid position so each row of data = one droplet
+        const droplets = [];
+        items.forEach(it => {
+          const n = Math.round(it.litres / DROPLET_VALUE);
+          for (let i = 0; i < n; i++) {
+            droplets.push({
+              item: it.item,
+              litres: it.litres,
+              col: i % it.gridCols,
+              row: Math.floor(i / it.gridCols)
+            });
+          }
+        });
+
+        const spec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "The Hidden Water Footprint of Clothing",
+            "subtitle": `Each 💧 represents ${DROPLET_VALUE} litres of water. One pair of jeans uses nearly 3× the water of a t-shirt.`,
+            "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
+            "fontSize": 16, "subtitleFontSize": 12, "anchor": "start", "offset": 12
+          },
+          "background": "#f5efe3",
+          "data": {"values": droplets},
+          "facet": {
+            "field": "item", "type": "nominal",
+            "columns": 2,
+            "sort": ["1 T-shirt — 2,700L", "1 pair of jeans — 7,500L"],
+            "header": {
+              "title": null,
+              "labelFontSize": 15, "labelFontWeight": "bold",
+              "labelColor": "#2c2c2c", "labelOrient": "bottom",
+              "labelPadding": 16
+            }
+          },
+          "spec": {
+            "width": 240, "height": 350,
+            // Text mark with emoji — fontSize controls droplet visual size
+            "mark": {
+              "type": "text",
+              "fontSize": 40,
+              "baseline": "middle", "align": "center"
+            },
+            "encoding": {
+              "x": {
+                "field": "col", "type": "ordinal",
+                "axis": null,
+                "scale": {"padding": 0.2}        // adds breathing room between droplets
+              },
+              "y": {
+                "field": "row", "type": "ordinal",
+                "axis": null,
+                "scale": {"padding": 0.2}
+              },
+              "text": {"value": "💧"},
+              "tooltip": [
+                {"field": "item", "type": "nominal", "title": "Item"},
+                {"field": "litres", "type": "quantitative", "title": "Total water (L)", "format": ","}
+              ]
+            }
+          },
+          // CRITICAL: independent scales so each facet's grid sizes its own droplets uniformly,
+          // and the jeans (5×5) grid is naturally bigger than the t-shirt (3×3)
+          "resolve": {"scale": {"x": "shared", "y": "shared"}},
+          "config": {"view": {"stroke": null}}
+        };
+
+        await vegaEmbed("#chart7", spec, {"actions": false});
+        updateStatus("✅ Chart 7 loaded (water footprint pictorial)");
+        return true;
+      } catch(e) {
+        updateStatus("❌ Chart 7: " + e.message);
+        console.error(e);
+        return false;
       }
     }
+    // CHART 8: Stacked Bar - Textile Waste by State
+ // CHART 8: Australian Textile Waste Fate (Pie Chart)
+    async function loadChart8() {
+      try {
+        updateStatus("Loading Chart 8: Australian Textile Waste Pie Chart...");
+        
+        // Data from your CSV - summing all states for 2020-21
+        // Landfill: ACT(10271) + NSW(207136) + NT(12460) + Qld(137965) + SA(34604) + Tas(18554) + Vic(170674) + WA(86927)
+        // Recycled: ACT(0) + NSW(3655) + NT(0) + Qld(30) + SA(1560) + Tas(317) + Vic(32677) + WA(6614)
+        
+        const pieData = [
+          {fate: "Landfill", tonnes: 678591, percentage: 95.4},
+          {fate: "Recycled", tonnes: 44853, percentage: 4.6}
+        ];
+        
+        const spec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Australian Textile Waste Fate (2020-21)", "color": "#2c2c2c", "fontSize": 16, "anchor": "start"},
+          "width": 436,
+          "height": 450,
+          "padding": {"right": 20, "bottom": 10, "left": 60},
+          "background": "#f5efe3",
+          "data": {"values": pieData},
+          "mark": {"type": "arc", "innerRadius": 80, "outerRadius": 160, "cornerRadius": 5, "padAngle": 0.02},
+          "encoding": {
+            "theta": {"field": "tonnes", "type": "quantitative", "title": "Tonnes"},
+            "color": {
+              "field": "fate", 
+              "type": "nominal", 
+              "scale": {"domain": ["Landfill", "Recycled"], "range": ["#c97d5d","#5c8a8a"]},
+              "legend": {"title": "Fate", "labelColor": "#2c2c2c", "orient": "top", "titleFontSize": 12}
+            },
+            "tooltip": [
+              {"field": "fate", "title": "Fate"},
+              {"field": "tonnes", "title": "Tonnes", "format": ",.0f"},
+              {"field": "percentage", "title": "Percentage", "format": ".1f"}
+            ]
+          },
+          "config": {
+            "view": {"stroke": null},
+            "legend": {"labelFontSize": 12}
+          }
+        };
+        
+        await vegaEmbed("#chart8", spec, {"actions": false});
+        updateStatus("✅ Chart 8 loaded (Waste Fate Pie Chart)");
+        return true;
+      } catch(e) { 
+        updateStatus("❌ Chart 8: " + e.message); 
+        console.error(e);
+        return false;
+      }
+    }
+
+    // CHART 9: Hidden Costs Bar Chart
+// Chart: Fast Fashion Brand Revenue Comparison (Stacked Area Chart)
+// CHART 9: Fast Fashion Brand Revenue Comparison (Stacked Area Chart)
+    async function loadChart9() {
+      try {
+        updateStatus("Loading Chart 9: Combined Fast Fashion Revenue...");
+
+        // Raw per-brand revenue. Gaps (H&M/Zara on even years, Shein pre-2020) are
+        // filled below so the stacked area renders without phantom drops to zero.
+        const revenueData = [
+          {year: 2015, brand: "H&M",   revenue: 20.1},
+          {year: 2017, brand: "H&M",   revenue: 21.3},
+          {year: 2019, brand: "H&M",   revenue: 22.4},
+          {year: 2021, brand: "H&M",   revenue: 18.9},
+          {year: 2023, brand: "H&M",   revenue: 21.3},
+          {year: 2015, brand: "Zara",  revenue: 20.9},
+          {year: 2017, brand: "Zara",  revenue: 25.3},
+          {year: 2019, brand: "Zara",  revenue: 28.3},
+          {year: 2021, brand: "Zara",  revenue: 27.7},
+          {year: 2023, brand: "Zara",  revenue: 35.9},
+          {year: 2020, brand: "Shein", revenue: 10.0},
+          {year: 2021, brand: "Shein", revenue: 15.7},
+          {year: 2022, brand: "Shein", revenue: 22.7},
+          {year: 2023, brand: "Shein", revenue: 32.0}
+        ];
+
+        // Build a complete grid: every brand × every year from 2015-2023.
+        // Missing years get linear interpolation for H&M/Zara (we have surrounding data)
+        // and explicit zero for Shein pre-2020 (the brand didn't exist at scale).
+        const years = [2015,2016,2017,2018,2019,2020,2021,2022,2023];
+        const shein_start = 2020;
+        const interpolate = (brand, year) => {
+          const series = revenueData.filter(d => d.brand === brand).sort((a,b) => a.year - b.year);
+          const exact = series.find(d => d.year === year);
+          if (exact) return exact.revenue;
+          // linear interp between nearest before/after points
+          const before = [...series].reverse().find(d => d.year < year);
+          const after  = series.find(d => d.year > year);
+          if (!before || !after) return null;
+          const t = (year - before.year) / (after.year - before.year);
+          return before.revenue + t * (after.revenue - before.revenue);
+        };
+        const filledData = [];
+        for (const year of years) {
+          filledData.push({year, brand: "H&M",   revenue: interpolate("H&M", year)});
+          filledData.push({year, brand: "Zara",  revenue: interpolate("Zara", year)});
+          filledData.push({year, brand: "Shein", revenue: year < shein_start ? 0 : interpolate("Shein", year)});
+        }
+
+        // Combined-revenue totals — used for the annotation labels above each year
+        const totals = years.map(year => ({
+          year,
+          total: filledData.filter(d => d.year === year).reduce((s, d) => s + d.revenue, 0)
+        }));
+
+        const spec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "Garment Lifespan Decline: Times Worn Before Discard (2000-2022)",
+            "subtitle": " ",
+            "color": "#2c2c2c", "subtitleColor": "#f5efe3",
+            "fontSize": 16, "subtitleFontSize": 11, "anchor": "start", "offset": 5
+          },
+          "width": 450, "height": 400,
+          "background": "#f5efe3",
+          "padding": {"top": 5, "right": 20, "bottom": 10, "left": 10},
+          "layer": [
+            {
+              // The stacked areas
+              "data": {"values": filledData},
+              "mark": {
+                "type": "area",
+                "opacity": 0.9,
+                "interpolate": "linear",
+                "line": {"strokeWidth": 1.5, "color": "white"},   // white seams between bands
+                "clip": true
+              },
+              "encoding": {
+                "x": {
+                  "field": "year", "type": "quantitative", "title": "Year",
+                  "scale": {"domain": [2015, 2023], "nice": false},
+                  "axis": {
+                    "labelColor": "#2c2c2c", "format": "d",
+                    "values": years,
+                    "grid": false, "titleFontWeight": "bold"
+                  }
+                },
+                "y": {
+                  "field": "revenue", "type": "quantitative",
+                  "title": "Combined annual revenue (Billion USD)",
+                  "stack": "zero",         // stack from baseline 0 — combined total reads off the top edge
+                  "scale": {"domain": [0, 100], "nice": false},
+                  "axis": {
+                    "labelColor": "#2c2c2c", "grid": true,
+                    "gridDash": [2, 3], "gridColor": "#d4c8b0",
+                    "titleFontWeight": "bold",
+                    "format": "$,.0f"
+                  }
+                },
+                "color": {
+                  "field": "brand", "type": "nominal",
+                  // Order matters: first in domain = bottom of stack. H&M is most stable, so it anchors.
+                  "scale": {
+                    "domain": ["H&M", "Zara", "Shein"],
+                    "range":  ["#5c8a8a", "#b8865a", "#c97d5d"]
+                  },
+                  "legend": {
+                    "title": "Brand", "labelColor": "#2c2c2c",
+                    "orient": "top", "titleFontWeight": "bold"
+                  }
+                },
+                "order": {"field": "brand", "type": "nominal"},   // lock stacking order
+                "tooltip": [
+                  {"field": "year", "format": "d", "title": "Year"},
+                  {"field": "brand", "title": "Brand"},
+                  {"field": "revenue", "format": ".1f", "title": "Revenue ($B)"}
+                ]
+              }
+            },
+            {
+              // Total-revenue labels above each year's stack
+              "data": {"values": totals},
+              "mark": {
+                "type": "text", "fontSize": 11, "fontWeight": "bold",
+                "color": "#2c2c2c", "dy": -8
+              },
+              "encoding": {
+                "x": {"field": "year", "type": "quantitative"},
+                "y": {"field": "total", "type": "quantitative"},
+                "text": {"field": "total", "format": "$.0f"}
+              }
+            }
+          ]
+        };
+
+        await vegaEmbed("#chart9", spec, {"actions": false});
+        updateStatus("✅ Chart 9 loaded (combined revenue)");
+        return true;
+      } catch(e) {
+        updateStatus("❌ Chart 9: " + e.message);
+        console.error(e);
+        return false;
+      }
+    }
+    // CHART 10: Brand Revenue Comparison (Horizontal Bar Chart)
+async function loadChart10() {
+  try {
+    updateStatus("Loading Chart 10: CO₂ per Fabric...");
+
+    // Selected values: highest polyester, highest nylon, lowest cotton
+    // (worst-case synthetics vs best-case cotton — see caption)
+    const fabricData = [
+      {fabric: "Polyester",          co2: 10.0, innerR: 130, outerR: 160},
+      {fabric: "Nylon",              co2: 7.5,  innerR: 90,  outerR: 120},
+      {fabric: "Conventional Cotton", co2: 6.0,  innerR: 50,  outerR: 80}
+    ];
+
+    const spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": {
+        "text": "Carbon Footprint by Fabric Type",
+        "color": "#2c2c2c", "subtitleColor": "#5c5c5c",
+        "fontSize": 15, "subtitleFontSize": 11, "anchor": "start"
+      },
+      "width": 200, "height": 400,
+      "padding": {"top": 10, "right": 0, "bottom": 10, "left": 100},
+      "background": "#f5efe3",
+      "data": {"values": fabricData},
+      "mark": {
+        "type": "arc",
+        "cornerRadius": 15
+      },
+      "encoding": {
+        "theta": {
+          "field": "co2",
+          "type": "quantitative",
+          "stack": null,
+          // Domain max=12 (just above the largest value) so 10 reads as ~80% of a full ring
+          "scale": {"domain": [0, 12], "range": [0, 5.5]}
+        },
+        "radius":  {"field": "outerR", "type": "quantitative", "scale": null},
+        "radius2": {"field": "innerR", "type": "quantitative", "scale": null},
+        "color": {
+          "field": "fabric",
+          "type": "nominal",
+          // Ordered worst → best so the legend reads in the same order as the rings
+          "scale": {
+            "domain": ["Polyester", "Nylon", "Conventional Cotton"],
+            "range":  ["#c97d5d", "#d4a574", "#8b6f47"]
+          },
+          "legend": {"title": "Fabric type", "orient": "bottom"}
+        },
+        "tooltip": [
+          {"field": "fabric", "type": "nominal", "title": "Fabric"},
+          {"field": "co2", "type": "quantitative", "title": "kg CO₂e per kg fabric", "format": ".1f"}
+        ]
+      },
+      "view": {"stroke": null}
+    };
+
+    await vegaEmbed("#chart10", spec, {"actions": false});
+    updateStatus("✅ Chart 10 loaded (CO₂ by fabric)");
+    return true;
+  } catch(e) {
+    updateStatus("❌ Chart 10: " + e.message);
+    console.error(e);
+    return false;
+  }
+}
     
-    // Start rendering
-    renderAllCharts();
+        // Chart: Garment Lifespan Decline (Times Worn Before Discard)
+    async function loadWearsChart() {
+      try {
+        updateStatus("Loading Garment Lifespan Chart...");
+        
+        const wearsData = [
+          {year: 2000, wears: 15},
+          {year: 2010, wears: 12},
+          {year: 2015, wears: 9},
+          {year: 2022, wears: 7}
+        ];
+        
+        const spec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {"text": "Garment Lifespan Decline: Times Worn Before Discard (2000-2022)", "color": "#2c2c2c", "fontSize": 16, "anchor": "start","offset": 12},
+          "width": 450,
+          "height": 450,
+          "background": "#f5efe3",
+          "data": {"values": wearsData},
+          "layer": [
+            {
+              // Area under the line (showing decline)
+              "mark": {"type": "area", "color": "#b8865a", "opacity": 0.25},
+              "encoding": {
+                "x": {"field": "year", "type": "quantitative", "title": "Year", "scale": {"domain": [1998, 2024]}, "axis": {"labelColor": "#2c2c2c", "format": "d"}},
+                "y": {"field": "wears", "type": "quantitative", "title": "Times Worn Before Discard", "scale": {"domain": [0, 18]}, "axis": {"labelColor": "#2c2c2c"}}
+              }
+            },
+            {
+              // Line connecting points
+              "mark": {"type": "line", "color": "#8b5a3c", "strokeWidth": 3},
+              "encoding": {
+                "x": {"field": "year", "type": "quantitative"},
+                "y": {"field": "wears", "type": "quantitative"}
+              }
+            },
+            {
+              // Points on the line
+              "mark": {"type": "circle", "size": 200, "color": "#b8865a", "stroke": "#2c2c2c", "strokeWidth": 2},
+              "encoding": {
+                "x": {"field": "year", "type": "quantitative"},
+                "y": {"field": "wears", "type": "quantitative"},
+                "tooltip": [
+                  {"field": "year", "format": "d", "title": "Year"},
+                  {"field": "wears", "title": "Times Worn", "format": ".0f"}
+                ]
+              }
+            },
+            {
+              // Labels next to points
+              "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 10, "fontSize": 14, "fontWeight": "bold", "color": "#2c2c2c"},
+              "encoding": {
+                "x": {"field": "year", "type": "quantitative"},
+                "y": {"field": "wears", "type": "quantitative"},
+                "text": {"field": "wears", "format": ".0f"}
+              }
+            }
+          ]
+        };
+        
+        await vegaEmbed("#wearsChart", spec, {"actions": false});
+        updateStatus("✅ Garment Lifespan Chart loaded");
+        return true;
+      } catch(e) { 
+        updateStatus("❌ Wears Chart: " + e.message); 
+        return false;
+      }
+    }
+        
+    // ============================================
+    // LOAD ALL CHARTS
+    // ============================================
+    async function loadAllCharts() {
+      await loadChart1();
+      await loadChart2();
+      await loadChart4();
+      await loadChart5();
+      await loadChart6();
+      await loadChart7();
+      await loadChart8();
+      await loadChart9();
+      await loadChart10();
+      await loadWearsChart();
+      updateStatus("✅ All 10 charts loaded!");
+    }
+    
+    loadAllCharts();
   </script>
 </body>
 </html>
